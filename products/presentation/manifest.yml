@@ -1,0 +1,51 @@
+product_id: community-review-presentation
+status: draft
+core_release: v0.1.0
+canonical_source_revision: uncommitted-initial-draft
+
+brief: brief.yml
+product_source: slides.json
+output: ../../output/Immunization-CDS-v0.1.0-review.pptx
+
+build:
+  date: null
+  method: process/tools/build_rapid_presentation.py
+  template: process/templates/powerpoint/AIRA Rapid Presentation Template.pptx
+
+sources:
+  - path: ../../content/00-status-and-scope.md
+    revision: v0.1.0-working-draft
+  - path: ../../content/03-architecture.md
+    revision: v0.1.0-working-draft
+  - path: ../../content/05-contextual-conditions.md
+    revision: v0.1.0-working-draft
+  - path: ../../content/06-knowledge-bases-and-guidance.md
+    revision: v0.1.0-working-draft
+  - path: ../../content/07-results-and-transparency.md
+    revision: v0.1.0-working-draft
+  - path: ../../content/08-capability-discovery.md
+    revision: v0.1.0-working-draft
+  - path: ../../content/90-working-decisions.md
+    revision: v0.1.0-working-draft
+
+new_or_changed_claims: []
+edge_innovations_awaiting_core_adjudication: []
+deliberate_departures:
+  - The presentation selects and simplifies material for a short community review.
+unresolved_issues:
+  - Schedule Authority is provisional terminology.
+  - Diagram slides need visual design and accessibility review.
+
+review:
+  subject_matter:
+    reviewer: null
+    date: null
+    status: pending
+  audience:
+    reviewer: null
+    date: null
+    status: pending
+  publication:
+    approver: null
+    date: null
+    status: pending

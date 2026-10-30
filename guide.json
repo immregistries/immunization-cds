@@ -1,0 +1,23 @@
+{
+  "id": "immunization-cds",
+  "documentType": "Topic Reference",
+  "status": "Draft",
+  "interophubTopic": 1,
+  "repository": "https://github.com/immregistries/immunization-cds",
+  "license": "Content licensed CC BY 4.0",
+  "navLabels": {
+    "status-and-scope": "Scope",
+    "related-work": "Related Work",
+    "problem-and-principles": "Problem",
+    "architecture": "Architecture",
+    "forecast-interaction": "Forecast",
+    "contextual-conditions": "Context",
+    "knowledge-bases-and-guidance": "Knowledge Bases",
+    "results-and-transparency": "Results",
+    "capability-discovery": "Capabilities",
+    "fhir-working-model": "FHIR Model",
+    "examples": "Examples",
+    "adoption-and-boundaries": "Boundaries",
+    "working-decisions": "Decisions"
+  }
+}

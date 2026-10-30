@@ -1,0 +1,32 @@
+---
+title: "Immunization CDS (ImmDS + HALO)"
+subtitle: "Working Proposal for Community Discussion — Not a Standard or Final Decision"
+date: last-modified
+date-format: "MMMM YYYY"
+---
+
+{{< include content/00-status-and-scope.md >}}
+
+{{< include content/01-related-work.md >}}
+
+{{< include content/02-problem-and-principles.md >}}
+
+{{< include content/03-architecture.md >}}
+
+{{< include content/04-forecast-interaction.md >}}
+
+{{< include content/05-contextual-conditions.md >}}
+
+{{< include content/06-knowledge-bases-and-guidance.md >}}
+
+{{< include content/07-results-and-transparency.md >}}
+
+{{< include content/08-capability-discovery.md >}}
+
+{{< include content/09-fhir-working-model.md >}}
+
+{{< include content/10-examples.md >}}
+
+{{< include content/11-adoption-and-boundaries.md >}}
+
+{{< include content/90-working-decisions.md >}}

@@ -1,0 +1,55 @@
+id: web-guide
+status: draft
+core_release: v0.1.0
+
+product:
+  type: web page
+  format: self-contained HTML, published with GitHub Pages
+  length: the complete core document
+  presentation_time: null
+  template: process/templates/guide (AIRA Web theme)
+
+audience:
+  name: Participants in InteropHub topic 1 and related implementation efforts
+  assumed_knowledge:
+    - Familiar with immunization information systems or immunization CDS
+
+purpose: >-
+  Publish the Topic Reference: one readable, linkable version of the current
+  ImmDS + HALO model for discussion and review.
+
+desired_outcome: >-
+  Readers can understand the architecture, find open questions, and provide
+  feedback that is adjudicated into the canonical source.
+
+emphasize:
+  - Draft status and version
+  - Return route to InteropHub topic 1
+  - Distinction between guidance provenance and executable Knowledge Bases
+
+exclude_or_deemphasize:
+  - Repository maintenance details
+  - Unapproved clinical policy
+
+tone:
+  - Plain language
+  - Concrete but explicitly provisional
+
+allowed_sources:
+  - ../../content/
+
+required_elements:
+  - Status tag and version
+  - Return link to InteropHub topic 1
+  - Downloadable local comments supported by the shared guide template
+
+published_locations:
+  latest_release: https://immregistries.github.io/immunization-cds/latest/
+  each_release: https://immregistries.github.io/immunization-cds/<version>/
+  main_branch: https://immregistries.github.io/immunization-cds/main/
+
+assumptions: []
+delivery_context: []
+requested_by: null
+requested_date: null
+needed_by: null

@@ -1,0 +1,54 @@
+id: community-review-presentation
+status: planned
+core_release: v0.1.0
+
+product:
+  type: presentation
+  format: PowerPoint
+  length: 8-12 slides
+  presentation_time: 15-20 minutes
+  template: process/templates/powerpoint/AIRA Rapid Presentation Template.pptx
+
+audience:
+  name: InteropHub topic 1 participants and implementers
+  assumed_knowledge:
+    - Familiar with immunization forecasting
+
+purpose: >-
+  Introduce the v0.1.0 architecture and focus discussion on the distinction
+  between guidance provenance and executable Knowledge Bases.
+
+desired_outcome: >-
+  Participants can correct the model, react to a diagram, and prioritize the
+  open questions for the next version.
+
+emphasize:
+  - This is a working proposal
+  - Stateless request and response boundary
+  - Contextual Conditions
+  - Guidance source versus Knowledge Base
+  - Transparency and capability discovery
+
+exclude_or_deemphasize:
+  - Detailed FHIR conformance syntax
+  - Full historical chronology
+
+tone:
+  - Visual
+  - Discussion-oriented
+
+allowed_sources:
+  - ../../content/
+
+required_elements:
+  - One architecture diagram
+  - One guidance-source versus Knowledge-Base diagram
+  - Visible open questions
+  - Link to InteropHub topic 1 and the Topic Reference
+
+assumptions:
+  - Version 0.1.0 is a discussion deck and may contain text-first diagram slides pending design review.
+delivery_context: []
+requested_by: null
+requested_date: null
+needed_by: null

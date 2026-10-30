@@ -1,0 +1,99 @@
+{
+  "core_release": "v0.1.0",
+  "slides": [
+    {
+      "layout": "Rapid - Title - Green Light",
+      "title": "Immunization CDS (ImmDS + HALO)",
+      "subtitle": "Version 0.1.0 · Topic Reference for community discussion",
+      "content": [],
+      "speaker_notes": "This is an intentionally incomplete discussion artifact, not an approved standard or final design.",
+      "sources": ["content/00-status-and-scope.md"]
+    },
+    {
+      "layout": "Rapid - Title and Content - Green",
+      "title": "A forecast needs more than age and vaccination history",
+      "content": [[
+        {"text": "Patient and assessment date"},
+        {"text": "Immunization history"},
+        {"text": "Optional Contextual Conditions"},
+        {"text": "An identifiable executable Knowledge Base"},
+        {"text": "Visible limitations and provenance"}
+      ]],
+      "speaker_notes": "The Topic Reference makes all five parts visible so systems can exchange a result without hiding assumptions.",
+      "sources": ["content/02-problem-and-principles.md"]
+    },
+    {
+      "layout": "Rapid - Title Only - Green",
+      "title": "One bounded request, one coherent Knowledge Base, a transparent response",
+      "content": [],
+      "speaker_notes": "Diagram: Requesting system sends assessment date, patient, immunization history, and optional context to a CDS service. The service applies one Knowledge Base. The response contains evaluations, recommendations, transparency, and provenance.",
+      "sources": ["content/03-architecture.md", "content/04-forecast-interaction.md"]
+    },
+    {
+      "layout": "Rapid - Title and Content - Blue",
+      "title": "Contextual Conditions make important forecast inputs explicit",
+      "content": [[
+        {"text": "The requesting system supplies the assertion"},
+        {"text": "Omission means unknown, not No"},
+        {"text": "The service reports whether it recognized and used the condition"},
+        {"text": "The detailed concept remains in the related Contextual Conditions Topic Reference"}
+      ]],
+      "speaker_notes": "Examples include pregnancy, relevant immune status, travel, or maternal RSV vaccination. These are operational CDS inputs, not arbitrary diagnoses inferred by the forecast operation.",
+      "sources": ["content/05-contextual-conditions.md"]
+    },
+    {
+      "layout": "Rapid - Comparison - Green",
+      "title": "Published guidance and executable rules are related—not identical",
+      "content": [
+        [{"text": "Guidance source", "bold": true}],
+        [{"text": "Publishes clinical recommendations and intent"}, {"text": "Currently called Schedule Authority; the term is provisional"}],
+        [{"text": "Knowledge Base", "bold": true}],
+        [{"text": "Identifiable executable rules applied by a CDS service"}, {"text": "May operationalize one or more sources of guidance"}]
+      ],
+      "speaker_notes": "The distinction answers whose guidance is relevant versus which executable rules actually ran.",
+      "sources": ["content/06-knowledge-bases-and-guidance.md"]
+    },
+    {
+      "layout": "Rapid - Title Only - Blue",
+      "title": "Clients select a Knowledge Base—not a runtime mix of authorities",
+      "content": [],
+      "speaker_notes": "Diagram: one or more guidance publishers feed a predefined Knowledge Base; the client selects the Knowledge Base; the CDS service executes it; the response identifies what ran and preserves useful provenance.",
+      "sources": ["content/06-knowledge-bases-and-guidance.md"]
+    },
+    {
+      "layout": "Rapid - Title and Two Content - Green",
+      "title": "Transparency answers two different questions",
+      "content": [
+        [{"text": "This forecast call", "bold": true}, {"text": "What was used, ignored, unsupported, incomplete, or blocked?"}],
+        [{"text": "Service capability", "bold": true}, {"text": "Which vaccines, Knowledge Bases, and conditions can the service generally support?"}]
+      ],
+      "speaker_notes": "Patient-specific response transparency and general capability discovery have different scopes and lifecycles.",
+      "sources": ["content/07-results-and-transparency.md", "content/08-capability-discovery.md"]
+    },
+    {
+      "layout": "Rapid - Title and Content - Blue",
+      "title": "Version 0.1.0 makes the unsettled work visible",
+      "content": [[
+        {"text": "Replace or confirm Schedule Authority terminology"},
+        {"text": "Settle Knowledge Base identity, versioning, and provenance"},
+        {"text": "Define minimum transparency and capability contracts"},
+        {"text": "Reconcile the FHIR binding with the Contextual Conditions model"},
+        {"text": "Choose the compatibility path from original ImmDS"}
+      ]],
+      "speaker_notes": "The goal is useful reaction and prioritization, not premature closure.",
+      "sources": ["content/90-working-decisions.md"]
+    },
+    {
+      "layout": "Rapid - Title and Content - Green",
+      "title": "Use the Topic Reference as the shared home for the next discussion",
+      "content": [[
+        {"text": "Correct the conceptual model"},
+        {"text": "React to the two diagrams"},
+        {"text": "Prioritize the open questions"},
+        {"text": "Feed accepted changes back into canonical Markdown"}
+      ]],
+      "speaker_notes": "Return to InteropHub topic 1 for meetings and participation; use the Topic Reference as the maintained content source.",
+      "sources": ["content/00-status-and-scope.md", "content/90-working-decisions.md"]
+    }
+  ]
+}
