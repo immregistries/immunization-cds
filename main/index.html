@@ -2494,6 +2494,11 @@ html {
   scroll-padding-top: 4.5rem;
 }
 
+/* AIRA Web buttons set display, which would override the hidden attribute. */
+.guide-layout [hidden] {
+  display: none !important;
+}
+
 .guide-page,
 .guide-context .aira-context-inner {
   width: min(100% - 2rem, 72rem);
@@ -2692,6 +2697,12 @@ html {
   position: relative;
 }
 
+.guide-anchor {
+  display: block;
+  position: relative;
+  scroll-margin-top: 4.5rem;
+}
+
 .guide-comment-button {
   position: absolute;
   top: 0;
@@ -2742,6 +2753,17 @@ html {
   line-height: 1.45;
 }
 
+.guide-comment--target {
+  outline: 3px solid var(--aira-blue);
+  outline-offset: 2px;
+}
+
+.guide-orphans {
+  margin-top: var(--aira-space-8);
+  padding-top: var(--aira-space-4);
+  border-top: 1px solid var(--aira-border-subtle);
+}
+
 .guide-comment__meta {
   display: flex;
   flex-wrap: wrap;
@@ -2787,6 +2809,64 @@ html {
   cursor: pointer;
 }
 
+.guide-comment__state {
+  margin: var(--aira-space-1) 0 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.guide-comment__disposition {
+  margin: var(--aira-space-1) 0;
+  padding: var(--aira-space-2);
+  border-left: 3px solid var(--aira-green);
+  background: var(--aira-surface-selected);
+}
+
+.guide-comment--closed {
+  border-color: var(--aira-border-strong);
+  border-left-color: var(--aira-text-secondary);
+  background: var(--aira-surface-muted);
+}
+
+.guide-confirmation,
+.guide-author-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--aira-space-2);
+  align-items: center;
+  margin-top: var(--aira-space-2);
+  padding: var(--aira-space-2);
+  border: 1px solid var(--aira-border);
+  border-radius: var(--aira-radius-control);
+  background: var(--aira-surface);
+}
+
+.guide-confirmation p {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.guide-author-form textarea {
+  flex-basis: 100%;
+}
+
+.guide-review-flagged {
+  outline: 3px solid var(--aira-yellow);
+  outline-offset: 3px;
+  background: var(--aira-warning-surface);
+}
+
+.guide-flag-control {
+  margin: 0 0 var(--aira-space-2) var(--aira-space-2);
+  font-size: 0.8rem;
+}
+
+.guide-review-flag-entry {
+  padding-left: var(--aira-space-2);
+  border-left: 3px solid var(--aira-yellow);
+}
+
 .guide-comment-form textarea {
   width: 100%;
   min-height: 5rem;
@@ -2795,6 +2875,16 @@ html {
 
 .guide-comment-form .guide-comment-actions {
   margin: 0;
+}
+
+.guide-reply {
+  margin: var(--aira-space-2) 0 0 var(--aira-space-4);
+  background: var(--aira-surface);
+}
+
+.guide-form-error {
+  color: var(--aira-danger, #a11);
+  font-weight: 600;
 }
 
 .guide-flash {
@@ -2881,31 +2971,32 @@ html {
           </div>
           <div class="aira-topic-actions guide-status">
             <span class="aira-tag aira-tag--warning guide-status-tag">DRAFT</span>
-            <span class="aira-meta">Version main (0616eec)</span>
+            <span class="aira-meta">Version main (eddeeea)</span>
           </div>
         </div>
       </header>
       <div class="aira-right-rail-layout guide-layout">
         <article class="aira-prose guide-content" id="guide-content">
+<div id="document-start" class="guide-anchor" data-guide-anchor="document-start"></div>
 <section id="status-and-scope" class="level2">
 <h2>Status and Scope</h2>
 <section id="status" class="level3">
 <h3>Status</h3>
-<p><strong>Version 0.1.0 — Draft Topic Reference for community discussion.</strong></p>
-<p>This document is an initial synthesis, not a standard, approved specification, clinical recommendation, HL7 ballot artifact, or final project decision. It is intentionally incomplete. Its purpose is to give participants something coherent and concrete to review, correct, and extend.</p>
+<p data-anchor="status" data-block-index="0"><strong>Version 0.1.0 — Draft Topic Reference for community discussion.</strong></p>
+<p data-anchor="status" data-block-index="1">This document is an initial synthesis, not a standard, approved specification, clinical recommendation, HL7 ballot artifact, or final project decision. It is intentionally incomplete. Its purpose is to give participants something coherent and concrete to review, correct, and extend.</p>
 </section>
 <section id="in-brief" class="level3">
 <h3>In brief</h3>
-<p>Immunization CDS (ImmDS + HALO) is a proposed machine-to-machine approach for requesting immunization clinical decision support evaluations and recommendations. A requesting system supplies an assessment date, patient information, immunization history, and optional Contextual Conditions. A CDS service applies an identifiable executable Knowledge Base and returns dose evaluations, patient-specific recommendations, and information about the data and rules used or not used.</p>
+<p data-anchor="in-brief" data-block-index="0">Immunization CDS (ImmDS + HALO) is a proposed machine-to-machine approach for requesting immunization clinical decision support evaluations and recommendations. A requesting system supplies an assessment date, patient information, immunization history, and optional Contextual Conditions. A CDS service applies an identifiable executable Knowledge Base and returns dose evaluations, patient-specific recommendations, and information about the data and rules used or not used.</p>
 </section>
 <section id="purpose" class="level3">
 <h3>Purpose</h3>
-<p>This Topic Reference brings the project’s conceptual architecture, working terminology, examples, implementation direction, and open questions into one maintained source. It is meant to support discussion in <a href="https://informatics.immregistries.org/hub/es/topic/1">InteropHub topic 1</a> and provide a conceptual foundation for technical products such as a FHIR implementation guide.</p>
+<p data-anchor="purpose" data-block-index="0">This Topic Reference brings the project’s conceptual architecture, working terminology, examples, implementation direction, and open questions into one maintained source. It is meant to support discussion in <a href="https://informatics.immregistries.org/hub/es/topic/1">InteropHub topic 1</a> and provide a conceptual foundation for technical products such as a FHIR implementation guide.</p>
 </section>
 <section id="scope" class="level3">
 <h3>Scope</h3>
-<p>The Topic Reference covers:</p>
-<ul>
+<p data-anchor="scope" data-block-index="0">The Topic Reference covers:</p>
+<ul data-anchor="scope" data-block-index="1">
 <li>the stateless forecast interaction and system boundary;</li>
 <li>inputs, including Contextual Conditions;</li>
 <li>executable Knowledge Bases and provenance of guidance;</li>
@@ -2914,13 +3005,13 @@ html {
 <li>capability discovery; and</li>
 <li>the relationship to the current FHIR working model and related projects.</li>
 </ul>
-<p>The Topic Reference does not define clinical policy, mandate an internal CDS rules engine, specify a user interface, or claim that the current FHIR design is final.</p>
+<p data-anchor="scope" data-block-index="2">The Topic Reference does not define clinical policy, mandate an internal CDS rules engine, specify a user interface, or claim that the current FHIR design is final.</p>
 </section>
 </section>
 <section id="related-work" class="level2">
 <h2>Related Work</h2>
-<p>This Topic Reference is the working document for <a href="https://informatics.immregistries.org/hub/es/topic/1">Immunization CDS (ImmDS + HALO), InteropHub topic 1</a>. InteropHub remains the community index for meetings, outcomes, relationships, and participation. This repository is intended to hold the maintained Topic Reference that those discussions review.</p>
-<div class="aira-table-wrap"><table class="aira-table">
+<p data-anchor="related-work" data-block-index="0">This Topic Reference is the working document for <a href="https://informatics.immregistries.org/hub/es/topic/1">Immunization CDS (ImmDS + HALO), InteropHub topic 1</a>. InteropHub remains the community index for meetings, outcomes, relationships, and participation. This repository is intended to hold the maintained Topic Reference that those discussions review.</p>
+<div class="aira-table-wrap" data-anchor="related-work" data-block-index="1"><table class="aira-table">
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -2966,10 +3057,10 @@ html {
 </section>
 <section id="problem-and-principles" class="level2">
 <h2>Problem and Working Principles</h2>
-<p>Immunization forecasting often depends on more than date of birth and immunization history. Pregnancy, immune status, prior disease, occupational exposure, travel, living circumstances, and maternal vaccination may change which guidance applies. Systems also need to know which executable rules were used and whether submitted information was understood.</p>
-<p>Traditional forecast exchanges can return an answer without enough detail to distinguish missing context, unsupported context, differing clinical guidance, or a particular implementation of that guidance. ImmDS + HALO explores a more explicit contract.</p>
-<p>The current working principles are:</p>
-<ul>
+<p data-anchor="problem-and-principles" data-block-index="0">Immunization forecasting often depends on more than date of birth and immunization history. Pregnancy, immune status, prior disease, occupational exposure, travel, living circumstances, and maternal vaccination may change which guidance applies. Systems also need to know which executable rules were used and whether submitted information was understood.</p>
+<p data-anchor="problem-and-principles" data-block-index="1">Traditional forecast exchanges can return an answer without enough detail to distinguish missing context, unsupported context, differing clinical guidance, or a particular implementation of that guidance. ImmDS + HALO explores a more explicit contract.</p>
+<p data-anchor="problem-and-principles" data-block-index="2">The current working principles are:</p>
+<ul data-anchor="problem-and-principles" data-block-index="3">
 <li>Forecasting is stateless: each request contains the information needed for that evaluation.</li>
 <li>The CDS service evaluates the supplied data rather than searching external patient records or remembering prior requests.</li>
 <li>Date of birth is expected to remain the only required patient fact beyond the assessment date; other patient context is optional.</li>
@@ -2980,12 +3071,12 @@ html {
 <li>General capability discovery is separate from the patient-specific forecast.</li>
 <li>The conceptual model is international first and may be constrained by later national or implementation-specific guides.</li>
 </ul>
-<p>These are working positions. Their precise technical representation remains open where identified later in this document.</p>
+<p data-anchor="problem-and-principles" data-block-index="4">These are working positions. Their precise technical representation remains open where identified later in this document.</p>
 </section>
 <section id="architecture" class="level2">
 <h2>Architecture</h2>
-<p>ImmDS + HALO is a machine-to-machine forecast interface. It can support an IIS, clinical application, workflow system, testing tool, or CDS Hooks integration, but it does not define the user experience of those systems.</p>
-<p>The conceptual flow is:</p>
+<p data-anchor="architecture" data-block-index="0">ImmDS + HALO is a machine-to-machine forecast interface. It can support an IIS, clinical application, workflow system, testing tool, or CDS Hooks integration, but it does not define the user experience of those systems.</p>
+<p data-anchor="architecture" data-block-index="1">The conceptual flow is:</p>
 <pre class="text"><code>Requesting system
   assessment date + patient + immunization history + optional context
                               |
@@ -2996,19 +3087,19 @@ CDS service applies one executable Knowledge Base
 evaluations + recommendations + transparency + provenance</code></pre>
 <section id="responsibilities" class="level3">
 <h3>Responsibilities</h3>
-<p>The requesting system assembles the patient facts, immunization history, and asserted Contextual Conditions needed for the call.</p>
-<p>The CDS service validates the request, applies one coherent Knowledge Base, and produces the requested evaluations and recommendations. The interaction does not require the service to inspect other patient records, maintain a session, or dynamically combine individual sources of guidance at runtime.</p>
-<p>The response identifies material limitations: for example, data that was not recognized or supported, context that was ignored, incomplete results, or an issue that prevented a reliable forecast.</p>
+<p data-anchor="responsibilities" data-block-index="0">The requesting system assembles the patient facts, immunization history, and asserted Contextual Conditions needed for the call.</p>
+<p data-anchor="responsibilities" data-block-index="1">The CDS service validates the request, applies one coherent Knowledge Base, and produces the requested evaluations and recommendations. The interaction does not require the service to inspect other patient records, maintain a session, or dynamically combine individual sources of guidance at runtime.</p>
+<p data-anchor="responsibilities" data-block-index="2">The response identifies material limitations: for example, data that was not recognized or supported, context that was ignored, incomplete results, or an issue that prevented a reliable forecast.</p>
 </section>
 <section id="guidance-and-executable-logic" class="level3">
 <h3>Guidance and executable logic</h3>
-<p>Organizations or expert bodies publish clinical guidance. Software implements guidance as executable rules. These are related but not identical artifacts. Section 6 distinguishes the publisher or source of guidance from the Knowledge Base actually executed by a CDS service.</p>
+<p data-anchor="guidance-and-executable-logic" data-block-index="0">Organizations or expert bodies publish clinical guidance. Software implements guidance as executable rules. These are related but not identical artifacts. Section 6 distinguishes the publisher or source of guidance from the Knowledge Base actually executed by a CDS service.</p>
 </section>
 </section>
 <section id="forecast-interaction" class="level2">
 <h2>Forecast Interaction</h2>
-<p>The conceptual request contains:</p>
-<div class="aira-table-wrap"><table class="aira-table">
+<p data-anchor="forecast-interaction" data-block-index="0">The conceptual request contains:</p>
+<div class="aira-table-wrap" data-anchor="forecast-interaction" data-block-index="1"><table class="aira-table">
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
@@ -3049,8 +3140,8 @@ evaluations + recommendations + transparency + provenance</code></pre>
 </tr>
 </tbody>
 </table></div>
-<p>The conceptual response contains:</p>
-<div class="aira-table-wrap"><table class="aira-table">
+<p data-anchor="forecast-interaction" data-block-index="2">The conceptual response contains:</p>
+<div class="aira-table-wrap" data-anchor="forecast-interaction" data-block-index="3"><table class="aira-table">
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -3088,37 +3179,37 @@ evaluations + recommendations + transparency + provenance</code></pre>
 </tr>
 </tbody>
 </table></div>
-<p>The interaction does not change server state. Every result applies to the submitted information and requested assessment date.</p>
+<p data-anchor="forecast-interaction" data-block-index="4">The interaction does not change server state. Every result applies to the submitted information and requested assessment date.</p>
 <!-- CONFIRM: The current FHIR draft makes assessment date and patient required, allows zero or more immunizations and conditions, and returns exactly one ImmunizationRecommendation resource. Those cardinalities remain technical design questions. -->
 </section>
 <section id="contextual-conditions" class="level2">
 <h2>Contextual Conditions</h2>
-<p>Contextual Conditions provide the forecast service with operational inputs that may change an evaluation or recommendation but are not adequately conveyed by demographics and immunization history alone. Examples include a supplied assertion that the patient is pregnant, has a relevant immune status, plans international travel, or that the birth mother received RSV vaccine during pregnancy.</p>
-<p>This project uses the concept defined by the separate <a href="https://github.com/immregistries/contextual-conditions">Contextual Conditions Topic Reference</a>. That Topic Reference owns the detailed definition, datatypes, relationship to clinical information, evaluation-time semantics, and representation principles.</p>
-<p>For ImmDS + HALO:</p>
-<ul>
+<p data-anchor="contextual-conditions" data-block-index="0">Contextual Conditions provide the forecast service with operational inputs that may change an evaluation or recommendation but are not adequately conveyed by demographics and immunization history alone. Examples include a supplied assertion that the patient is pregnant, has a relevant immune status, plans international travel, or that the birth mother received RSV vaccine during pregnancy.</p>
+<p data-anchor="contextual-conditions" data-block-index="1">This project uses the concept defined by the separate <a href="https://github.com/immregistries/contextual-conditions">Contextual Conditions Topic Reference</a>. That Topic Reference owns the detailed definition, datatypes, relationship to clinical information, evaluation-time semantics, and representation principles.</p>
+<p data-anchor="contextual-conditions" data-block-index="2">For ImmDS + HALO:</p>
+<ul data-anchor="contextual-conditions" data-block-index="3">
 <li>conditions are supplied by the requesting system;</li>
 <li>omission means unknown rather than No;</li>
 <li>the service reports whether submitted conditions were recognized and used;</li>
 <li>capability discovery can describe which conditions a service or Knowledge Base supports; and</li>
 <li>questionnaires may help collect assertions upstream but are not required by the forecast interaction.</li>
 </ul>
-<p>The earlier FHIR draft uses <code>Observation</code> for assertions and <code>ObservationDefinition</code> to describe supported or suggested conditions. These are current binding proposals rather than the definition of the concept.</p>
+<p data-anchor="contextual-conditions" data-block-index="4">The earlier FHIR draft uses <code>Observation</code> for assertions and <code>ObservationDefinition</code> to describe supported or suggested conditions. These are current binding proposals rather than the definition of the concept.</p>
 <!-- CONFIRM: The September FHIR draft says Observation.effective[x] may carry timing when it matters. The current Contextual Conditions working decision says a meaningful date is a separate date-valued condition and not an Observation date element. The FHIR binding must be reconciled before this detail is reused. -->
 </section>
 <section id="knowledge-bases-and-guidance" class="level2">
 <h2>Knowledge Bases and Guidance Provenance</h2>
-<p>The working model distinguishes clinical guidance from its executable implementation.</p>
+<p data-anchor="knowledge-bases-and-guidance" data-block-index="0">The working model distinguishes clinical guidance from its executable implementation.</p>
 <section id="source-of-guidance" class="level3">
 <h3>Source of guidance</h3>
-<p>An organization or expert body publishes immunization recommendations for clinical or public-health use. Earlier drafts call this body a <strong>Schedule Authority</strong>. That term is provisional and may be replaced because the role can publish guidance that is broader, narrower, or less formally versioned than a single schedule.</p>
+<p data-anchor="source-of-guidance" data-block-index="0">An organization or expert body publishes immunization recommendations for clinical or public-health use. Earlier drafts call this body a <strong>Schedule Authority</strong>. That term is provisional and may be replaced because the role can publish guidance that is broader, narrower, or less formally versioned than a single schedule.</p>
 </section>
 <section id="knowledge-base" class="level3">
 <h3>Knowledge Base</h3>
-<p>A <strong>Knowledge Base</strong> is an identifiable executable operationalization of guidance from one or more such bodies, possibly including jurisdictional or local adaptations. It is the coherent rule set a CDS service actually runs.</p>
-<p>A client may request one Knowledge Base from those offered by a service. The service applies one Knowledge Base to a forecast and reports the one actually used. If combinations of guidance are supported, the service defines them as coherent Knowledge Bases rather than allowing a requestor to mix individual guidance sources dynamically.</p>
-<p>This distinction answers two different questions:</p>
-<div class="aira-table-wrap"><table class="aira-table">
+<p data-anchor="knowledge-base" data-block-index="0">A <strong>Knowledge Base</strong> is an identifiable executable operationalization of guidance from one or more such bodies, possibly including jurisdictional or local adaptations. It is the coherent rule set a CDS service actually runs.</p>
+<p data-anchor="knowledge-base" data-block-index="1">A client may request one Knowledge Base from those offered by a service. The service applies one Knowledge Base to a forecast and reports the one actually used. If combinations of guidance are supported, the service defines them as coherent Knowledge Bases rather than allowing a requestor to mix individual guidance sources dynamically.</p>
+<p data-anchor="knowledge-base" data-block-index="2">This distinction answers two different questions:</p>
+<div class="aira-table-wrap" data-anchor="knowledge-base" data-block-index="3"><table class="aira-table">
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -3140,7 +3231,7 @@ evaluations + recommendations + transparency + provenance</code></pre>
 </tr>
 </tbody>
 </table></div>
-<p>A Knowledge Base may draw on multiple guidance sources, and different Knowledge Bases may operationalize the same published guidance differently. Provenance therefore needs to identify the executable artifact without implying that it is identical to the publisher or the publication.</p>
+<p data-anchor="knowledge-base" data-block-index="4">A Knowledge Base may draw on multiple guidance sources, and different Knowledge Bases may operationalize the same published guidance differently. Provenance therefore needs to identify the executable artifact without implying that it is identical to the publisher or the publication.</p>
 <!-- CONFIRM: Replace “Schedule Authority” after the community agrees on a term and map it to the earlier four-role governance vocabulary. -->
 <!-- CONFIRM: Decide the identifier, version, documentation, and provenance model for Knowledge Bases and guidance sources. -->
 </section>
@@ -3149,22 +3240,22 @@ evaluations + recommendations + transparency + provenance</code></pre>
 <h2>Results and Transparency</h2>
 <section id="dose-evaluations" class="level3">
 <h3>Dose evaluations</h3>
-<p>Dose evaluation results describe how the service treated supplied vaccination events. The working model needs to express dose validity, the reason for the status, whether a dose was valid but did not count toward a series, and the relevant provenance or warning information.</p>
+<p data-anchor="dose-evaluations" data-block-index="0">Dose evaluation results describe how the service treated supplied vaccination events. The working model needs to express dose validity, the reason for the status, whether a dose was valid but did not count toward a series, and the relevant provenance or warning information.</p>
 </section>
 <section id="recommendations" class="level3">
 <h3>Recommendations</h3>
-<p>Patient-specific recommendations need to keep several ideas distinct:</p>
-<ul>
+<p data-anchor="recommendations" data-block-index="0">Patient-specific recommendations need to keep several ideas distinct:</p>
+<ul data-anchor="recommendations" data-block-index="1">
 <li><strong>forecast status:</strong> where the patient stands relative to protection or a vaccination path;</li>
 <li><strong>forecast reason:</strong> why that patient-specific status applies; and</li>
 <li><strong>recommendation category:</strong> how the applicable clinical guidance classifies the recommendation, such as a routine or risk-based category.</li>
 </ul>
-<p>Conflating these ideas can make a conditional recommendation look like no recommendation, or make the reason for a patient-specific result look like a policy category.</p>
+<p data-anchor="recommendations" data-block-index="2">Conflating these ideas can make a conditional recommendation look like no recommendation, or make the reason for a patient-specific result look like a policy category.</p>
 </section>
 <section id="transparency-for-the-current-call" class="level3">
 <h3>Transparency for the current call</h3>
-<p>The response should disclose material facts about the current forecast, including:</p>
-<ul>
+<p data-anchor="transparency-for-the-current-call" data-block-index="0">The response should disclose material facts about the current forecast, including:</p>
+<ul data-anchor="transparency-for-the-current-call" data-block-index="1">
 <li>Contextual Conditions supplied and used;</li>
 <li>supplied conditions ignored, unsupported, or not understood;</li>
 <li>vaccine codes not recognized or recognized but not forecasted;</li>
@@ -3172,14 +3263,14 @@ evaluations + recommendations + transparency + provenance</code></pre>
 <li>the Knowledge Base used; and</li>
 <li>informational notes, warnings, partial results, or blocking errors.</li>
 </ul>
-<p>The current FHIR exploration uses <code>OperationOutcome</code> for messages and also proposes a response-level status. It remains open whether both are needed and how a client can reliably distinguish complete, partial, and blocked results.</p>
+<p data-anchor="transparency-for-the-current-call" data-block-index="2">The current FHIR exploration uses <code>OperationOutcome</code> for messages and also proposes a response-level status. It remains open whether both are needed and how a client can reliably distinguish complete, partial, and blocked results.</p>
 </section>
 </section>
 <section id="capability-discovery" class="level2">
 <h2>Capability Discovery</h2>
-<p>Patient-specific transparency answers what happened in one forecast call. Capability discovery answers what a service can generally do before a client sends patient data. Keeping these concerns separate avoids overloading the forecast response.</p>
-<p>A useful discovery mechanism may describe:</p>
-<ul>
+<p data-anchor="capability-discovery" data-block-index="0">Patient-specific transparency answers what happened in one forecast call. Capability discovery answers what a service can generally do before a client sends patient data. Keeping these concerns separate avoids overloading the forecast response.</p>
+<p data-anchor="capability-discovery" data-block-index="1">A useful discovery mechanism may describe:</p>
+<ul data-anchor="capability-discovery" data-block-index="2">
 <li>supported vaccines and target diseases;</li>
 <li>recognized vaccines that are not forecasted;</li>
 <li>available Knowledge Bases and versions;</li>
@@ -3189,14 +3280,14 @@ evaluations + recommendations + transparency + provenance</code></pre>
 <li>update cadence, documentation, provenance, and contact information; and</li>
 <li>supported operation versions and profiles.</li>
 </ul>
-<p>The September FHIR draft includes a basic <code>CapabilityStatement</code> and one <code>ObservationDefinition</code> example. Candidate FHIR approaches also include a dedicated operation, <code>ValueSet</code>, <code>ConceptMap</code>, <code>Library</code>, and <code>PlanDefinition</code>. No complete discovery contract has been selected.</p>
+<p data-anchor="capability-discovery" data-block-index="3">The September FHIR draft includes a basic <code>CapabilityStatement</code> and one <code>ObservationDefinition</code> example. Candidate FHIR approaches also include a dedicated operation, <code>ValueSet</code>, <code>ConceptMap</code>, <code>Library</code>, and <code>PlanDefinition</code>. No complete discovery contract has been selected.</p>
 <!-- CONFIRM: Define the smallest capability artifact needed for the first interoperable implementation rather than attempting to settle every discovery question at once. -->
 </section>
 <section id="fhir-working-model" class="level2">
 <h2>FHIR Working Model</h2>
-<p>The current technical draft is authored against FHIR R4 and explores a stateless operation named <code>$immds-halo-forecast</code>. It preserves the original ImmDS request/response shape while adding optional context, Knowledge Base selection, and response transparency.</p>
-<p>The draft currently maps:</p>
-<div class="aira-table-wrap"><table class="aira-table">
+<p data-anchor="fhir-working-model" data-block-index="0">The current technical draft is authored against FHIR R4 and explores a stateless operation named <code>$immds-halo-forecast</code>. It preserves the original ImmDS request/response shape while adding optional context, Knowledge Base selection, and response transparency.</p>
+<p data-anchor="fhir-working-model" data-block-index="1">The draft currently maps:</p>
+<div class="aira-table-wrap" data-anchor="fhir-working-model" data-block-index="2"><table class="aira-table">
 <thead>
 <tr class="header">
 <th>Concept</th>
@@ -3242,8 +3333,8 @@ evaluations + recommendations + transparency + provenance</code></pre>
 </tr>
 </tbody>
 </table></div>
-<p>Profiles, extensions, example instances, temporary code systems, and proposed parameters make the questions testable, but they are not approved conformance requirements. In particular, the project still needs to decide:</p>
-<ul>
+<p data-anchor="fhir-working-model" data-block-index="3">Profiles, extensions, example instances, temporary code systems, and proposed parameters make the questions testable, but they are not approved conformance requirements. In particular, the project still needs to decide:</p>
+<ul data-anchor="fhir-working-model" data-block-index="4">
 <li>whether to retain <code>$immds-forecast</code> or introduce a new operation name;</li>
 <li>whether to depend on the original ImmDS guide or define an international baseline;</li>
 <li>cardinalities and the shape of recommendation output;</li>
@@ -3254,41 +3345,41 @@ evaluations + recommendations + transparency + provenance</code></pre>
 <li>alignment with the separate Contextual Conditions concept; and</li>
 <li>implications of FHIR R6 while initial implementation work uses R4.</li>
 </ul>
-<p>The FHIR implementation guide should eventually become a traceable technical product of reviewed concepts in this repository, while retaining the precision and computable examples needed by implementers.</p>
+<p data-anchor="fhir-working-model" data-block-index="5">The FHIR implementation guide should eventually become a traceable technical product of reviewed concepts in this repository, while retaining the precision and computable examples needed by implementers.</p>
 </section>
 <section id="examples" class="level2">
 <h2>Discussion Examples</h2>
-<p>Examples are used to test the architecture and expose ambiguity. They are not clinical guidance.</p>
+<p data-anchor="examples" data-block-index="0">Examples are used to test the architecture and expose ambiguity. They are not clinical guidance.</p>
 <section id="baseline-forecast" class="level3">
 <h3>Baseline forecast</h3>
-<p>A client supplies an assessment date, patient date of birth, and immunization history with no Contextual Conditions. The service applies its default Knowledge Base and returns evaluations and recommendations. The result must not pretend that omitted optional conditions are false.</p>
+<p data-anchor="baseline-forecast" data-block-index="0">A client supplies an assessment date, patient date of birth, and immunization history with no Contextual Conditions. The service applies its default Knowledge Base and returns evaluations and recommendations. The result must not pretend that omitted optional conditions are false.</p>
 </section>
 <section id="supported-condition" class="level3">
 <h3>Supported condition</h3>
-<p>A client supplies a pregnancy assertion in addition to the baseline data. The selected Knowledge Base recognizes and uses the condition. The response shows that the assertion was used and identifies the Knowledge Base applied.</p>
+<p data-anchor="supported-condition" data-block-index="0">A client supplies a pregnancy assertion in addition to the baseline data. The selected Knowledge Base recognizes and uses the condition. The response shows that the assertion was used and identifies the Knowledge Base applied.</p>
 </section>
 <section id="unsupported-condition" class="level3">
 <h3>Unsupported condition</h3>
-<p>A client supplies an international-travel assertion that the selected Knowledge Base does not support. The response discloses that the condition was unsupported and makes the consequence for result completeness visible.</p>
+<p data-anchor="unsupported-condition" data-block-index="0">A client supplies an international-travel assertion that the selected Knowledge Base does not support. The response discloses that the condition was unsupported and makes the consequence for result completeness visible.</p>
 </section>
 <section id="knowledge-base-selection" class="level3">
 <h3>Knowledge Base selection</h3>
-<p>A service offers more than one coherent Knowledge Base. The client requests a known identifier and optional version. The response confirms the Knowledge Base actually executed or returns a clear error if the requested option is not available.</p>
+<p data-anchor="knowledge-base-selection" data-block-index="0">A service offers more than one coherent Knowledge Base. The client requests a known identifier and optional version. The response confirms the Knowledge Base actually executed or returns a clear error if the requested option is not available.</p>
 </section>
 <section id="multiple-sources-of-guidance" class="level3">
 <h3>Multiple sources of guidance</h3>
-<p>A Knowledge Base incorporates guidance from more than one expert body. The client still selects one executable Knowledge Base rather than assembling guidance sources at runtime. Results preserve useful provenance without confusing the rule implementation with the organizations that published the underlying guidance.</p>
+<p data-anchor="multiple-sources-of-guidance" data-block-index="0">A Knowledge Base incorporates guidance from more than one expert body. The client still selects one executable Knowledge Base rather than assembling guidance sources at runtime. Results preserve useful provenance without confusing the rule implementation with the organizations that published the underlying guidance.</p>
 </section>
 <section id="example-backlog" class="level3">
 <h3>Example backlog</h3>
-<p>Later versions need examples for contraindication, missing context, unknown codes, recognized-but-not-forecasted vaccines, partial results, a blocked forecast, recommendation categories, and guidance that differs by vaccine or jurisdiction.</p>
+<p data-anchor="example-backlog" data-block-index="0">Later versions need examples for contraindication, missing context, unknown codes, recognized-but-not-forecasted vaccines, partial results, a blocked forecast, recommendation categories, and guidance that differs by vaccine or jurisdiction.</p>
 </section>
 </section>
 <section id="adoption-and-boundaries" class="level2">
 <h2>Adoption and Boundaries</h2>
-<p>ImmDS + HALO should be usable incrementally. A basic service may support the baseline forecast interaction before it supports every Contextual Condition, Knowledge Base option, recommendation category, or discovery feature. Partial support must be declared rather than assumed.</p>
-<p>The project aims to standardize an interoperable exchange contract, not:</p>
-<ul>
+<p data-anchor="adoption-and-boundaries" data-block-index="0">ImmDS + HALO should be usable incrementally. A basic service may support the baseline forecast interaction before it supports every Contextual Condition, Knowledge Base option, recommendation category, or discovery feature. Partial support must be declared rather than assumed.</p>
+<p data-anchor="adoption-and-boundaries" data-block-index="1">The project aims to standardize an interoperable exchange contract, not:</p>
+<ul data-anchor="adoption-and-boundaries" data-block-index="2">
 <li>clinical policy or which recommendation should apply;</li>
 <li>the internal structure of a CDS engine or its rule authoring tools;</li>
 <li>a clinician-facing workflow or user interface;</li>
@@ -3298,15 +3389,15 @@ evaluations + recommendations + transparency + provenance</code></pre>
 <li>dynamic mixing of guidance sources in an individual request; or</li>
 <li>detailed behavior owned by CDS Hooks, HL7 v2, IVC, or another related effort.</li>
 </ul>
-<p>An international conceptual baseline may be constrained by national programs, jurisdictions, or implementation communities. Such constraints should identify their relationship to the baseline rather than silently redefining shared terms.</p>
-<p>Version 0.1.0 is successful if it gives implementers and subject-matter experts a shared map of the work, makes disagreements visible, and supports the next round of InteropHub discussion. It is not expected to settle every technical question.</p>
+<p data-anchor="adoption-and-boundaries" data-block-index="3">An international conceptual baseline may be constrained by national programs, jurisdictions, or implementation communities. Such constraints should identify their relationship to the baseline rather than silently redefining shared terms.</p>
+<p data-anchor="adoption-and-boundaries" data-block-index="4">Version 0.1.0 is successful if it gives implementers and subject-matter experts a shared map of the work, makes disagreements visible, and supports the next round of InteropHub discussion. It is not expected to settle every technical question.</p>
 </section>
 <section id="working-decisions" class="level2">
 <h2>Working Decisions and Open Questions</h2>
-<p>Working decisions are current positions for discussion, not final approval.</p>
+<p data-anchor="working-decisions" data-block-index="0">Working decisions are current positions for discussion, not final approval.</p>
 <section id="working-decisions-1" class="level3">
 <h3>Working decisions</h3>
-<div class="aira-table-wrap"><table class="aira-table">
+<div class="aira-table-wrap" data-anchor="working-decisions-1" data-block-index="0"><table class="aira-table">
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
@@ -3360,7 +3451,7 @@ evaluations + recommendations + transparency + provenance</code></pre>
 </section>
 <section id="open-questions" class="level3">
 <h3>Open questions</h3>
-<div class="aira-table-wrap"><table class="aira-table">
+<div class="aira-table-wrap" data-anchor="open-questions" data-block-index="0"><table class="aira-table">
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
@@ -3447,14 +3538,14 @@ evaluations + recommendations + transparency + provenance</code></pre>
           </section>
           <section class="aira-sidebar-section guide-comments-panel" id="guide-comments-panel" hidden>
             <h2 class="aira-sidebar-title">Comments <span class="aira-badge" id="guide-comment-count">0</span></h2>
-            <p class="aira-meta">Comments are saved only in this browser. Download them to share.</p>
-            <label class="aira-label" for="guide-commenter">Your name</label>
-            <input class="aira-input" id="guide-commenter" type="text" autocomplete="name">
+            <div id="guide-comments-status"><p class="aira-meta">Comments are saved only in this browser. Download them to share.</p></div>
+            <div id="guide-local-identity"><label class="aira-label" for="guide-commenter">Your name</label>
+            <input class="aira-input" id="guide-commenter" type="text" autocomplete="name"></div>
             <div class="guide-comment-actions">
               <button type="button" class="aira-button aira-button--secondary aira-button--small" id="guide-comments-toggle" aria-pressed="true">Hide comments</button>
-              <button type="button" class="aira-button aira-button--secondary aira-button--small" id="guide-comments-download">Download</button>
-              <label class="aira-button aira-button--secondary aira-button--small guide-file-button">Load<input type="file" id="guide-comments-load" accept="application/json,.json" multiple hidden></label>
-              <button type="button" class="aira-button aira-button--ghost aira-button--small" id="guide-comments-clear">Clear all</button>
+              <button type="button" class="aira-button aira-button--secondary aira-button--small guide-local-control" id="guide-comments-download">Download</button>
+              <label class="aira-button aira-button--secondary aira-button--small guide-file-button guide-local-control">Load<input type="file" id="guide-comments-load" accept="application/json,.json" multiple hidden></label>
+              <button type="button" class="aira-button aira-button--ghost aira-button--small guide-local-control" id="guide-comments-clear">Clear all</button>
             </div>
             <ol class="guide-comment-index" id="guide-comment-index"></ol>
           </section>
@@ -3469,10 +3560,10 @@ evaluations + recommendations + transparency + provenance</code></pre>
   </main>
   <footer class="aira-footer" aria-label="Document information">
     <p><a href="https://www.immregistries.org/">American Immunization Registry Association (AIRA)</a> supports collaboration, standards, and shared solutions that strengthen immunization information systems and improve the use of vaccination data to protect public health.</p>
-    <p>Immunization CDS (ImmDS + HALO) &middot; version main (0616eec) &middot; generated 2026-10-30 &middot; Content licensed CC BY 4.0</p>
+    <p>Immunization CDS (ImmDS + HALO) &middot; version main (eddeeea) &middot; generated 2026-10-31 &middot; Content licensed CC BY 4.0</p>
   </footer>
 </div>
-<script type="application/json" id="guide-data">{"id": "immunization-cds", "title": "Immunization CDS (ImmDS + HALO)", "version": "main (0616eec)", "built": "2026-10-30"}</script>
+<script type="application/json" id="guide-data">{"id": "immunization-cds", "title": "Immunization CDS (ImmDS + HALO)", "version": "main (eddeeea)", "built": "2026-10-31"}</script>
 <script>
 /* Content guide: section tracking and browser-only comments. */
 (function () {
@@ -3481,9 +3572,11 @@ evaluations + recommendations + transparency + provenance</code></pre>
   var data = JSON.parse(document.getElementById("guide-data").textContent);
   var content = document.getElementById("guide-content");
   var sectionLinks = Array.prototype.slice.call(
-    document.querySelectorAll(".guide-context .aira-context-nav a")
+    document.querySelectorAll(".guide-context .aira-context-nav a"),
   );
-  var sections = Array.prototype.slice.call(content.querySelectorAll("section.level2"));
+  var sections = Array.prototype.slice.call(
+    content.querySelectorAll("section.level2"),
+  );
   var subnav = document.getElementById("guide-subnav");
   var railTitle = document.getElementById("guide-rail-title");
   var context = document.querySelector(".guide-context");
@@ -3518,7 +3611,9 @@ evaluations + recommendations + transparency + provenance</code></pre>
   function renderSubnav(section) {
     subnav.textContent = "";
     railTitle.textContent = section ? headingText(section) : "On this page";
-    var subsections = section ? section.querySelectorAll(":scope > section.level3") : [];
+    var subsections = section
+      ? section.querySelectorAll(":scope > section.level3")
+      : [];
     if (!subsections.length) {
       var empty = document.createElement("li");
       empty.className = "guide-subnav-empty";
@@ -3555,7 +3650,7 @@ evaluations + recommendations + transparency + provenance</code></pre>
       return;
     }
     var subsections = Array.prototype.slice.call(
-      section.querySelectorAll(":scope > section.level3")
+      section.querySelectorAll(":scope > section.level3"),
     );
     var limit = offset();
     var sub = null;
@@ -3566,30 +3661,42 @@ evaluations + recommendations + transparency + provenance</code></pre>
     });
     if (sub !== currentSubsection) {
       currentSubsection = sub;
-      Array.prototype.forEach.call(subnav.querySelectorAll("a"), function (link) {
-        if (sub && link.getAttribute("href") === "#" + sub.id) {
-          link.setAttribute("aria-current", "true");
-        } else {
-          link.removeAttribute("aria-current");
-        }
-      });
+      Array.prototype.forEach.call(
+        subnav.querySelectorAll("a"),
+        function (link) {
+          if (sub && link.getAttribute("href") === "#" + sub.id) {
+            link.setAttribute("aria-current", "true");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        },
+      );
     }
   }
 
   var pending = false;
-  window.addEventListener("scroll", function () {
-    if (!pending) {
-      pending = true;
-      window.requestAnimationFrame(function () {
-        pending = false;
-        update();
-      });
-    }
-  }, { passive: true });
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!pending) {
+        pending = true;
+        window.requestAnimationFrame(function () {
+          pending = false;
+          update();
+        });
+      }
+    },
+    { passive: true },
+  );
   window.addEventListener("resize", update);
   update();
 
   // ---- Comments ----
+
+  if (data.comments && data.comments.mode === "interophub") {
+    startInteropHubComments();
+    return;
+  }
 
   var STORAGE_KEY = "content-guide-comments:" + data.id;
   var NAME_KEY = "content-guide-commenter";
@@ -3615,11 +3722,51 @@ evaluations + recommendations + transparency + provenance</code></pre>
   }
 
   var comments = [];
-  try {
-    comments = JSON.parse(load(STORAGE_KEY) || "[]");
-  } catch (error) {
-    comments = [];
-  }
+  var localSubscribers = [];
+  var localStore = {
+    load: function () {
+      try {
+        return JSON.parse(load(STORAGE_KEY) || "[]");
+      } catch (error) {
+        return [];
+      }
+    },
+    add: function (comment) {
+      comments.push(comment);
+      localStore.persist();
+      return comment;
+    },
+    reply: function (comment) {
+      return localStore.add(comment);
+    },
+    edit: function (comment, text) {
+      comment.text = text;
+      comment.updated = new Date().toISOString();
+      localStore.persist();
+      return comment;
+    },
+    withdraw: function (comment) {
+      comments = comments.filter(function (other) {
+        return other.id !== comment.id;
+      });
+      localStore.persist();
+    },
+    subscribe: function (listener) {
+      localSubscribers.push(listener);
+      return function () {
+        localSubscribers = localSubscribers.filter(function (item) {
+          return item !== listener;
+        });
+      };
+    },
+    persist: function () {
+      store(STORAGE_KEY, JSON.stringify(comments));
+      localSubscribers.forEach(function (listener) {
+        listener(comments);
+      });
+    },
+  };
+  comments = localStore.load();
 
   var panel = document.getElementById("guide-comments-panel");
   var nameInput = document.getElementById("guide-commenter");
@@ -3633,22 +3780,38 @@ evaluations + recommendations + transparency + provenance</code></pre>
   });
 
   function save() {
-    store(STORAGE_KEY, JSON.stringify(comments));
+    localStore.persist();
   }
 
   function normalize(text) {
     return (text || "").replace(/\s+/g, " ").trim();
   }
 
+  function blockSnippet(block) {
+    var copy = block.cloneNode(true);
+    Array.prototype.forEach.call(
+      copy.querySelectorAll(".guide-comment-button"),
+      function (button) {
+        button.remove();
+      },
+    );
+    return normalize(copy.textContent).slice(0, 120);
+  }
+
   function newId() {
     if (window.crypto && window.crypto.randomUUID) {
       return window.crypto.randomUUID();
     }
-    return "c-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+    return (
+      "c-" +
+      Date.now().toString(36) +
+      "-" +
+      Math.random().toString(36).slice(2, 10)
+    );
   }
 
-  // Commentable blocks: outermost paragraphs, list items, quotes, tables, code.
-  var BLOCK_SELECTOR = "p, li, blockquote, .aira-table-wrap, pre";
+  // Commentable blocks are annotated by the build with their anchor area.
+  var BLOCK_SELECTOR = "[data-anchor][data-block-index]";
   var blocks = Array.prototype.filter.call(
     content.querySelectorAll(BLOCK_SELECTOR),
     function (element) {
@@ -3660,17 +3823,13 @@ evaluations + recommendations + transparency + provenance</code></pre>
         parent = parent.parentElement;
       }
       return true;
-    }
+    },
   );
 
-  var counters = {};
   blocks.forEach(function (block) {
     var section = block.closest("section");
-    var sectionId = section ? section.id : "top";
-    counters[sectionId] = (counters[sectionId] || 0) + 1;
-    block.dataset.guideSection = sectionId;
-    block.dataset.guideIndex = String(counters[sectionId]);
-    block.dataset.guideText = normalize(block.textContent).slice(0, 160);
+    block.dataset.guideSection = section ? section.id : "top";
+    block.dataset.guideText = blockSnippet(block);
     block.classList.add("guide-block");
 
     var button = document.createElement("button");
@@ -3700,10 +3859,12 @@ evaluations + recommendations + transparency + provenance</code></pre>
     return normalize(selection.toString()).slice(0, 500);
   }
 
-  function findBlock(comment) {
+  function legacyBlock(comment) {
     var exact = blocks.filter(function (block) {
-      return block.dataset.guideSection === comment.sectionId &&
-        block.dataset.guideIndex === String(comment.blockIndex);
+      return (
+        block.dataset.guideSection === comment.sectionId &&
+        Number(block.dataset.blockIndex) + 1 === Number(comment.blockIndex)
+      );
     })[0];
     var snippet = normalize(comment.blockText).slice(0, 60);
     if (exact && exact.dataset.guideText.slice(0, 60) === snippet) {
@@ -3726,6 +3887,72 @@ evaluations + recommendations + transparency + provenance</code></pre>
     return null;
   }
 
+  function snippetSimilarity(left, right) {
+    left = normalize(left).toLowerCase();
+    right = normalize(right).toLowerCase();
+    if (left === right) {
+      return 1;
+    }
+    if (!left || !right) {
+      return 0;
+    }
+    var leftWords = left.split(/\s+/);
+    var rightWords = right.split(/\s+/);
+    var seen = {};
+    var shared = 0;
+    leftWords.forEach(function (word) {
+      seen[word] = true;
+    });
+    rightWords.forEach(function (word) {
+      if (seen[word]) {
+        shared += 1;
+        delete seen[word];
+      }
+    });
+    return shared / Math.max(leftWords.length, rightWords.length);
+  }
+
+  function anchorElement(name) {
+    return document.getElementById(name);
+  }
+
+  function areaStart(anchor) {
+    if (anchor.matches("section")) {
+      return (
+        anchor.querySelector(
+          ":scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6",
+        ) || anchor
+      );
+    }
+    return anchor;
+  }
+
+  function placement(comment) {
+    if (!comment.anchor) {
+      var legacy = legacyBlock(comment);
+      return legacy ? { block: legacy, target: legacy, orphaned: false } : null;
+    }
+    var anchor = anchorElement(comment.anchor);
+    if (!anchor) {
+      return null;
+    }
+    var areaBlocks = blocks.filter(function (block) {
+      return block.dataset.anchor === comment.anchor;
+    });
+    var matches = areaBlocks.filter(function (block) {
+      return snippetSimilarity(blockSnippet(block), comment.snippet) >= 0.75;
+    });
+    var preferred = matches.filter(function (block) {
+      return block.dataset.blockIndex === String(comment.blockIndex);
+    })[0];
+    var block = preferred || matches[0] || null;
+    return {
+      block: block,
+      target: block || areaStart(anchor),
+      orphaned: false,
+    };
+  }
+
   function threadFor(block) {
     var next = block.nextElementSibling;
     if (next && next.classList.contains("guide-thread")) {
@@ -3741,7 +3968,7 @@ evaluations + recommendations + transparency + provenance</code></pre>
     try {
       return new Date(iso).toLocaleString([], {
         dateStyle: "medium",
-        timeStyle: "short"
+        timeStyle: "short",
       });
     } catch (error) {
       return iso;
@@ -3759,7 +3986,8 @@ evaluations + recommendations + transparency + provenance</code></pre>
     author.className = "guide-comment__author";
     author.textContent = comment.author || "Anonymous";
     var when = document.createElement("span");
-    when.textContent = formatTime(comment.created) +
+    when.textContent =
+      formatTime(comment.created) +
       (comment.documentVersion && comment.documentVersion !== data.version
         ? " · on " + comment.documentVersion
         : "");
@@ -3769,7 +3997,8 @@ evaluations + recommendations + transparency + provenance</code></pre>
     edit.type = "button";
     edit.textContent = "Edit";
     edit.addEventListener("click", function () {
-      var block = findBlock(comment);
+      var placed = placement(comment);
+      var block = placed && placed.block;
       if (block) {
         openForm(block, comment.quote, comment);
       }
@@ -3778,10 +4007,7 @@ evaluations + recommendations + transparency + provenance</code></pre>
     remove.type = "button";
     remove.textContent = "Delete";
     remove.addEventListener("click", function () {
-      comments = comments.filter(function (other) {
-        return other.id !== comment.id;
-      });
-      save();
+      localStore.withdraw(comment);
       render();
     });
     tools.appendChild(edit);
@@ -3809,44 +4035,58 @@ evaluations + recommendations + transparency + provenance</code></pre>
       content.querySelectorAll(".guide-thread"),
       function (thread) {
         thread.remove();
-      }
+      },
     );
     index.textContent = "";
+    var oldOrphans = content.querySelector(".guide-orphans");
+    if (oldOrphans) {
+      oldOrphans.remove();
+    }
     comments.sort(function (a, b) {
       return (a.created || "").localeCompare(b.created || "");
     });
     var unplaced = [];
     comments.forEach(function (comment) {
-      var block = findBlock(comment);
-      if (block) {
-        threadFor(block).appendChild(commentElement(comment));
+      var placed = placement(comment);
+      var block = placed && placed.block;
+      if (placed) {
+        threadFor(placed.target).appendChild(commentElement(comment));
       } else {
         unplaced.push(comment);
       }
       var entry = document.createElement("li");
       var link = document.createElement("a");
-      link.href = block ? "#comment-" + comment.id : "#guide-comments-panel";
-      link.textContent = (comment.author || "Anonymous") + ": " +
+      link.href = "#comment-" + comment.id;
+      link.textContent =
+        (comment.author || "Anonymous") +
+        ": " +
         normalize(comment.text).slice(0, 60) +
         (normalize(comment.text).length > 60 ? "…" : "");
       entry.appendChild(link);
       var where = document.createElement("span");
       where.className = "aira-meta";
-      where.textContent = block
-        ? comment.sectionTitle || comment.sectionId
-        : "Not placed: the text it refers to has changed";
+      where.textContent = placed
+        ? comment.anchor || comment.sectionTitle || comment.sectionId
+        : "Orphaned comment";
       entry.appendChild(where);
       index.appendChild(entry);
     });
     countBadge.textContent = String(comments.length);
     if (unplaced.length) {
+      var orphanGroup = document.createElement("section");
+      orphanGroup.className = "guide-orphans";
+      var orphanHeading = document.createElement("h2");
+      orphanHeading.textContent = "Orphaned comments";
+      orphanGroup.appendChild(orphanHeading);
       unplaced.forEach(function (comment) {
         var holder = document.createElement("div");
         holder.className = "guide-thread";
         holder.appendChild(commentElement(comment));
-        index.appendChild(holder);
+        orphanGroup.appendChild(holder);
       });
+      content.appendChild(orphanGroup);
     }
+    followHash();
   }
 
   function closeForms() {
@@ -3854,7 +4094,7 @@ evaluations + recommendations + transparency + provenance</code></pre>
       content.querySelectorAll(".guide-comment-form"),
       function (form) {
         form.remove();
-      }
+      },
     );
   }
 
@@ -3906,24 +4146,24 @@ evaluations + recommendations + transparency + provenance</code></pre>
       var author = nameInput.value.trim();
       store(NAME_KEY, author);
       if (existing) {
-        existing.text = text;
-        existing.updated = new Date().toISOString();
+        localStore.edit(existing, text);
       } else {
-        comments.push({
+        localStore.add({
           id: newId(),
           documentId: data.id,
           documentVersion: data.version,
           sectionId: block.dataset.guideSection,
           sectionTitle: sectionTitle(block),
-          blockIndex: Number(block.dataset.guideIndex),
+          anchor: block.dataset.anchor,
+          blockIndex: Number(block.dataset.blockIndex),
+          snippet: blockSnippet(block),
           blockText: block.dataset.guideText,
           quote: quote || "",
           author: author,
           created: new Date().toISOString(),
-          text: text
+          text: text,
         });
       }
-      save();
       closeForms();
       render();
     });
@@ -3949,79 +4189,1304 @@ evaluations + recommendations + transparency + provenance</code></pre>
     toggle.textContent = hidden ? "Show comments" : "Hide comments";
   });
 
-  document.getElementById("guide-comments-download").addEventListener("click", function () {
-    var author = nameInput.value.trim() || "comments";
-    var payload = {
-      format: FORMAT,
-      formatVersion: 1,
-      documentId: data.id,
-      documentTitle: data.title,
-      documentVersion: data.version,
-      exported: new Date().toISOString(),
-      exportedBy: nameInput.value.trim(),
-      comments: comments
-    };
-    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-    var link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = data.id + "-comments-" +
-      author.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" +
-      new Date().toISOString().slice(0, 10) + ".json";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.setTimeout(function () {
-      URL.revokeObjectURL(link.href);
-    }, 1000);
-  });
-
-  document.getElementById("guide-comments-load").addEventListener("change", function (event) {
-    var files = Array.prototype.slice.call(event.target.files || []);
-    var known = {};
-    comments.forEach(function (comment) {
-      known[comment.id] = comment;
-    });
-    var remaining = files.length;
-    files.forEach(function (file) {
-      var reader = new FileReader();
-      reader.onload = function () {
-        try {
-          var payload = JSON.parse(reader.result);
-          if (payload.format === FORMAT && Array.isArray(payload.comments)) {
-            payload.comments.forEach(function (comment) {
-              if (comment && comment.id && comment.text) {
-                known[comment.id] = comment;
-              }
-            });
-          }
-        } catch (error) {
-          /* Ignore files that are not comment exports. */
-        }
-        remaining -= 1;
-        if (remaining === 0) {
-          comments = Object.keys(known).map(function (key) {
-            return known[key];
-          });
-          save();
-          render();
-        }
+  document
+    .getElementById("guide-comments-download")
+    .addEventListener("click", function () {
+      var author = nameInput.value.trim() || "comments";
+      var payload = {
+        format: FORMAT,
+        formatVersion: 1,
+        documentId: data.id,
+        documentTitle: data.title,
+        documentVersion: data.version,
+        exported: new Date().toISOString(),
+        exportedBy: nameInput.value.trim(),
+        comments: comments,
       };
-      reader.readAsText(file);
+      var blob = new Blob([JSON.stringify(payload, null, 2)], {
+        type: "application/json",
+      });
+      var link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download =
+        data.id +
+        "-comments-" +
+        author.toLowerCase().replace(/[^a-z0-9]+/g, "-") +
+        "-" +
+        new Date().toISOString().slice(0, 10) +
+        ".json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(function () {
+        URL.revokeObjectURL(link.href);
+      }, 1000);
     });
-    event.target.value = "";
-  });
 
-  document.getElementById("guide-comments-clear").addEventListener("click", function () {
-    if (comments.length && window.confirm(
-      "Remove all " + comments.length + " comments from this browser? Download them first if you need them."
-    )) {
-      comments = [];
-      save();
-      render();
+  document
+    .getElementById("guide-comments-load")
+    .addEventListener("change", function (event) {
+      var files = Array.prototype.slice.call(event.target.files || []);
+      var known = {};
+      comments.forEach(function (comment) {
+        known[comment.id] = comment;
+      });
+      var remaining = files.length;
+      files.forEach(function (file) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var payload = JSON.parse(reader.result);
+            if (payload.format === FORMAT && Array.isArray(payload.comments)) {
+              payload.comments.forEach(function (comment) {
+                if (comment && comment.id && comment.text) {
+                  known[comment.id] = comment;
+                }
+              });
+            }
+          } catch (error) {
+            /* Ignore files that are not comment exports. */
+          }
+          remaining -= 1;
+          if (remaining === 0) {
+            comments = Object.keys(known).map(function (key) {
+              return known[key];
+            });
+            save();
+            render();
+          }
+        };
+        reader.readAsText(file);
+      });
+      event.target.value = "";
+    });
+
+  document
+    .getElementById("guide-comments-clear")
+    .addEventListener("click", function () {
+      var control = this;
+      if (
+        !comments.length ||
+        (control.nextElementSibling &&
+          control.nextElementSibling.classList.contains("guide-confirmation"))
+      ) {
+        return;
+      }
+      var prompt = document.createElement("div");
+      prompt.className = "guide-confirmation";
+      prompt.textContent =
+        "Remove all " +
+        comments.length +
+        " comments from this browser? Download them first if you need them. ";
+      var remove = document.createElement("button");
+      remove.type = "button";
+      remove.textContent = "Clear all";
+      remove.addEventListener("click", function () {
+        comments = [];
+        save();
+        render();
+        prompt.remove();
+      });
+      prompt.appendChild(remove);
+      var cancel = document.createElement("button");
+      cancel.type = "button";
+      cancel.textContent = "Cancel";
+      cancel.addEventListener("click", function () {
+        prompt.remove();
+      });
+      prompt.appendChild(cancel);
+      control.insertAdjacentElement("afterend", prompt);
+    });
+
+  function followHash() {
+    Array.prototype.forEach.call(
+      content.querySelectorAll(".guide-comment--target"),
+      function (item) {
+        item.classList.remove("guide-comment--target");
+      },
+    );
+    var match = window.location.hash.match(/^#comment-(.+)$/);
+    if (!match) {
+      return;
     }
-  });
+    var comment = document.getElementById("comment-" + match[1]);
+    if (!comment) {
+      return;
+    }
+    document.body.classList.remove("guide-comments-hidden");
+    toggle.setAttribute("aria-pressed", "true");
+    toggle.textContent = "Hide comments";
+    comment.classList.add("guide-comment--target");
+    comment.scrollIntoView({ block: "center" });
+  }
+
+  window.addEventListener("hashchange", followHash);
 
   render();
+
+  /* Remote comments use the same placement model but keep all persistence and
+     change notifications behind this store-shaped client. */
+  function startInteropHubComments() {
+    var settings = data.comments;
+    var hub = settings.hub;
+    var documentKey = settings.document;
+    var tokenKey = "content-guide-token:" + hub + ":" + documentKey;
+    var authKey = "content-guide-signin:" + hub + ":" + documentKey;
+    var noticePrefix = "content-guide-comment-notice:" + hub + ":";
+    var panel = document.getElementById("guide-comments-panel");
+    var status = document.getElementById("guide-comments-status");
+    var count = document.getElementById("guide-comment-count");
+    var remoteIndex = document.getElementById("guide-comment-index");
+    var remoteToggle = document.getElementById("guide-comments-toggle");
+    var remoteBlocks = Array.prototype.slice.call(
+      content.querySelectorAll("[data-anchor][data-block-index]"),
+    );
+    var threads = [];
+    var reviewFlags = [];
+    var showClosed = false;
+    var documentInfo = null;
+    var serverTime = null;
+    var pollTimer = null;
+    var pollStep = 0;
+    var pollDelays = [30000, 60000, 600000, 1800000];
+    var auth = readJson(window.localStorage, tokenKey);
+
+    document.getElementById("guide-local-identity").hidden = true;
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".guide-local-control"),
+      function (item) {
+        item.hidden = true;
+      },
+    );
+    panel.hidden = false;
+
+    function normalizeRemote(value) {
+      return (value || "").replace(/\s+/g, " ").trim();
+    }
+
+    function readJson(storage, key) {
+      try {
+        return JSON.parse(storage.getItem(key) || "null");
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function writeJson(storage, key, value) {
+      try {
+        if (value === null) {
+          storage.removeItem(key);
+        } else {
+          storage.setItem(key, JSON.stringify(value));
+        }
+      } catch (error) {
+        /* Storage may be disabled; the page still works for this visit. */
+      }
+    }
+
+    function validAuth() {
+      if (auth && auth.accessToken && Date.parse(auth.expiresAt) > Date.now()) {
+        return auth;
+      }
+      auth = null;
+      writeJson(window.localStorage, tokenKey, null);
+      return null;
+    }
+
+    function errorMessage(error) {
+      return error && error.message
+        ? error.message
+        : "The comment service could not complete the request.";
+    }
+
+    function request(path, options) {
+      options = options || {};
+      var headers = { "Content-Type": "application/json" };
+      if (options.token !== false && validAuth()) {
+        headers.Authorization = "Bearer " + auth.accessToken;
+      }
+      return window
+        .fetch(hub + path, {
+          method: options.method || "GET",
+          headers: headers,
+          body:
+            options.body === undefined
+              ? undefined
+              : JSON.stringify(options.body),
+        })
+        .then(function (response) {
+          if (response.status === 401) {
+            auth = null;
+            writeJson(window.localStorage, tokenKey, null);
+            stopPolling();
+            threads = [];
+            renderRemote();
+            renderIdentity();
+            throw { handled: true, message: "Sign in to comment" };
+          }
+          if (response.status === 204) {
+            return null;
+          }
+          return response
+            .json()
+            .catch(function () {
+              return {};
+            })
+            .then(function (body) {
+              if (!response.ok) {
+                throw {
+                  status: response.status,
+                  message: body.message || "The request failed.",
+                  body: body,
+                };
+              }
+              return body;
+            });
+        });
+    }
+
+    var store = {
+      load: function () {
+        return request("/api/guide/" + encodeURIComponent(documentKey)).then(
+          function (info) {
+            documentInfo = info;
+            serverTime = info.serverTime;
+            if (!info.permissions.canView) {
+              threads = [];
+              return null;
+            }
+            return request(
+              "/api/guide/" +
+                encodeURIComponent(documentKey) +
+                "/comments" +
+                (showClosed ? "?state=all" : ""),
+            ).then(function (result) {
+              threads = result.comments || [];
+              reviewFlags = result.reviewFlags || [];
+              serverTime = result.serverTime;
+            });
+          },
+        );
+      },
+      add: function (block, text) {
+        return request(
+          "/api/guide/" + encodeURIComponent(documentKey) + "/comments",
+          {
+            method: "POST",
+            body: {
+              anchor: block.dataset.anchor,
+              blockIndex: Number(block.dataset.blockIndex),
+              snippet: remoteSnippet(block),
+              text: text,
+            },
+          },
+        );
+      },
+      reply: function (thread, text) {
+        return request(
+          "/api/guide/" + encodeURIComponent(documentKey) + "/comments",
+          {
+            method: "POST",
+            body: {
+              parentCommentId: thread.id,
+              text: text,
+            },
+          },
+        );
+      },
+      edit: function (item, text) {
+        return request("/api/guide/comments/" + item.id, {
+          method: "PATCH",
+          body: { text: text, expectedUpdatedAt: item.updatedAt },
+        });
+      },
+      withdraw: function (item) {
+        return request("/api/guide/comments/" + item.id + "/withdraw", {
+          method: "POST",
+          body: {},
+        });
+      },
+      patch: function (item, values) {
+        values.expectedUpdatedAt = item.updatedAt;
+        return request("/api/guide/comments/" + item.id, {
+          method: "PATCH",
+          body: values,
+        });
+      },
+      remove: function (item) {
+        return request("/api/guide/comments/" + item.id, { method: "DELETE" });
+      },
+      flag: function (anchor, note) {
+        return request(
+          "/api/guide/" + encodeURIComponent(documentKey) + "/review-flags",
+          { method: "POST", body: { anchor: anchor, note: note } },
+        );
+      },
+      clearFlag: function (flag) {
+        return request(
+          "/api/guide/" +
+            encodeURIComponent(documentKey) +
+            "/review-flags/" +
+            flag.id,
+          { method: "DELETE" },
+        );
+      },
+      subscribe: function () {
+        schedulePoll(0);
+        return stopPolling;
+      },
+    };
+
+    function remoteSnippet(block) {
+      var copy = block.cloneNode(true);
+      Array.prototype.forEach.call(
+        copy.querySelectorAll(".guide-comment-button,.guide-thread"),
+        function (node) {
+          node.remove();
+        },
+      );
+      return normalizeRemote(copy.textContent).slice(0, 120);
+    }
+
+    function remotePlacement(thread) {
+      var anchor = document.getElementById(thread.anchor);
+      if (!anchor) {
+        return null;
+      }
+      var candidates = remoteBlocks.filter(function (block) {
+        return block.dataset.anchor === thread.anchor;
+      });
+      var exact = candidates.filter(function (block) {
+        return Number(block.dataset.blockIndex) === Number(thread.blockIndex);
+      })[0];
+      var textMatch = candidates.filter(function (block) {
+        var snippet = normalizeRemote(thread.snippet).toLowerCase();
+        return (
+          snippet &&
+          remoteSnippet(block).toLowerCase().indexOf(snippet.slice(0, 50)) === 0
+        );
+      })[0];
+      return textMatch || exact || anchor;
+    }
+
+    function threadHolder(target) {
+      var next = target.nextElementSibling;
+      if (next && next.classList.contains("guide-thread")) {
+        return next;
+      }
+      var holder = document.createElement("div");
+      holder.className = "guide-thread";
+      target.insertAdjacentElement("afterend", holder);
+      return holder;
+    }
+
+    function person(user) {
+      if (!user) {
+        return "Unknown commenter";
+      }
+      return (
+        user.displayName + (user.organization ? ", " + user.organization : "")
+      );
+    }
+
+    function itemElement(item, parent) {
+      var element = document.createElement("article");
+      element.className = "guide-comment" + (parent ? " guide-reply" : "");
+      element.id = "comment-" + item.id;
+      var meta = document.createElement("div");
+      meta.className = "guide-comment__meta";
+      var author = document.createElement("span");
+      author.className = "guide-comment__author";
+      author.textContent = person(item.author);
+      meta.appendChild(author);
+      var when = document.createElement("time");
+      when.textContent =
+        new Date(item.createdAt).toLocaleString() +
+        (item.editedAt ? " · edited" : "");
+      meta.appendChild(when);
+      element.appendChild(meta);
+      var body = document.createElement("p");
+      body.className = "guide-comment__text";
+      body.textContent =
+        item.state === "WITHDRAWN" || item.withdrawn
+          ? "Withdrawn by the commenter."
+          : item.text;
+      element.appendChild(body);
+      if (!parent) {
+        var state = document.createElement("p");
+        state.className = "guide-comment__state";
+        state.textContent = "State: " + item.state.toLowerCase();
+        element.appendChild(state);
+        if (item.disposition) {
+          var disposition = document.createElement("p");
+          disposition.className = "guide-comment__disposition";
+          disposition.textContent =
+            item.disposition.label + ": " + item.changeNote;
+          element.appendChild(disposition);
+          var disposed = document.createElement("p");
+          disposed.className = "aira-meta";
+          disposed.textContent =
+            "Disposed by " +
+            person(item.disposedBy) +
+            " on " +
+            new Date(item.disposedAt).toLocaleString();
+          element.appendChild(disposed);
+        }
+        if (item.state === "CLOSED") {
+          element.classList.add("guide-comment--closed");
+        }
+      }
+      var permissions = item.permissions || {};
+      if (
+        permissions.canEdit ||
+        permissions.canWithdraw ||
+        permissions.canDelete ||
+        (!parent &&
+          (permissions.canReply ||
+            permissions.canDispose ||
+            permissions.canClose ||
+            permissions.canReattach))
+      ) {
+        var tools = document.createElement("div");
+        tools.className = "guide-comment__tools";
+        if (
+          permissions.canReply &&
+          !parent &&
+          documentInfo &&
+          documentInfo.isActive
+        ) {
+          addTool(tools, "Reply", function () {
+            openRemoteForm(
+              element,
+              "Reply",
+              function (text) {
+                return store.reply(item, text);
+              },
+              "",
+              true,
+            );
+          });
+        }
+        if (permissions.canEdit) {
+          addTool(tools, "Edit", function () {
+            openRemoteForm(
+              element,
+              "Save",
+              function (text) {
+                return store.edit(item, text);
+              },
+              item.text,
+              false,
+            );
+          });
+        }
+        if (permissions.canWithdraw) {
+          addTool(tools, "Withdraw", function () {
+            openConfirmation(
+              element,
+              "Withdraw this comment?",
+              "Withdraw",
+              function () {
+                return store.withdraw(item).then(acceptThread);
+              },
+            );
+          });
+        }
+        if (!parent && permissions.canDispose) {
+          addTool(
+            tools,
+            item.disposition ? "Change disposition" : "Dispose",
+            function () {
+              openDispositionForm(element, item);
+            },
+          );
+          if (item.disposition) {
+            addTool(tools, "Clear disposition", function () {
+              store
+                .patch(item, { dispositionCode: null })
+                .then(acceptThread)
+                .catch(showConflict);
+            });
+          }
+        }
+        if (!parent && permissions.canClose) {
+          addTool(
+            tools,
+            item.state === "CLOSED" ? "Reopen" : "Close",
+            function () {
+              store
+                .patch(item, {
+                  state: item.state === "CLOSED" ? "OPEN" : "CLOSED",
+                })
+                .then(acceptThread)
+                .catch(showConflict);
+            },
+          );
+        }
+        if (!parent && permissions.canReattach && !remotePlacement(item)) {
+          addTool(tools, "Re-attach", function () {
+            openReattachForm(element, item);
+          });
+        }
+        if (permissions.canDelete) {
+          addTool(tools, "Delete", function () {
+            openConfirmation(
+              element,
+              "Delete this for inappropriate content?",
+              "Delete",
+              function () {
+                return store.remove(item).then(function () {
+                  if (parent) {
+                    parent.replies = parent.replies.filter(function (reply) {
+                      return reply.id !== item.id;
+                    });
+                    acceptThread(parent);
+                  } else {
+                    threads = threads.filter(function (thread) {
+                      return thread.id !== item.id;
+                    });
+                    renderRemote();
+                  }
+                });
+              },
+            );
+          });
+        }
+        element.appendChild(tools);
+      }
+      if (!parent) {
+        (item.replies || []).forEach(function (reply) {
+          element.appendChild(itemElement(reply, item));
+        });
+      }
+      return element;
+    }
+
+    function addTool(holder, label, action) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.textContent = label;
+      button.addEventListener("click", action);
+      holder.appendChild(button);
+    }
+
+    function showConflict(error) {
+      if (error.status === 409 && error.body && error.body.current) {
+        acceptThread(error.body.current);
+        renderIdentity(
+          "Someone else changed this comment. The current version is shown.",
+        );
+      } else {
+        showStatusError(error);
+      }
+    }
+
+    function openConfirmation(target, message, label, operation) {
+      var old = target.querySelector(":scope > .guide-confirmation");
+      if (old) {
+        old.remove();
+      }
+      var prompt = document.createElement("div");
+      prompt.className = "guide-confirmation";
+      var text = document.createElement("p");
+      text.textContent = message;
+      prompt.appendChild(text);
+      var yes = document.createElement("button");
+      yes.type = "button";
+      yes.textContent = label;
+      yes.addEventListener("click", function () {
+        operation()
+          .then(function () {
+            prompt.remove();
+          })
+          .catch(showConflict);
+      });
+      prompt.appendChild(yes);
+      var cancel = document.createElement("button");
+      cancel.type = "button";
+      cancel.textContent = "Cancel";
+      cancel.addEventListener("click", function () {
+        prompt.remove();
+      });
+      prompt.appendChild(cancel);
+      target.appendChild(prompt);
+    }
+
+    function openDispositionForm(target, item) {
+      var form = document.createElement("form");
+      form.className = "guide-comment-form guide-author-form";
+      var select = document.createElement("select");
+      select.required = true;
+      (documentInfo.dispositions || []).forEach(function (choice) {
+        var option = document.createElement("option");
+        option.value = choice.code;
+        option.textContent = choice.label;
+        option.selected =
+          item.disposition && item.disposition.code === choice.code;
+        select.appendChild(option);
+      });
+      form.appendChild(select);
+      var note = document.createElement("textarea");
+      note.required = true;
+      note.maxLength = 500;
+      note.placeholder = "Change note (required)";
+      note.value = item.changeNote || "";
+      form.appendChild(note);
+      var save = document.createElement("button");
+      save.type = "submit";
+      save.textContent = "Save disposition";
+      form.appendChild(save);
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        store
+          .patch(item, {
+            dispositionCode: select.value,
+            changeNote: note.value.trim(),
+          })
+          .then(acceptThread)
+          .catch(showConflict);
+      });
+      target.appendChild(form);
+      note.focus();
+    }
+
+    function anchorChoices() {
+      var seen = {};
+      return remoteBlocks.filter(function (block) {
+        if (seen[block.dataset.anchor]) {
+          return false;
+        }
+        seen[block.dataset.anchor] = true;
+        return true;
+      });
+    }
+
+    function openReattachForm(target, item) {
+      var form = document.createElement("form");
+      form.className = "guide-comment-form guide-author-form";
+      var select = document.createElement("select");
+      anchorChoices().forEach(function (block) {
+        var option = document.createElement("option");
+        option.value = block.dataset.anchor;
+        var anchor = document.getElementById(block.dataset.anchor);
+        option.textContent =
+          (anchor && anchor.textContent.trim().slice(0, 80)) ||
+          block.dataset.anchor;
+        select.appendChild(option);
+      });
+      form.appendChild(select);
+      var save = document.createElement("button");
+      save.type = "submit";
+      save.textContent = "Save attachment";
+      form.appendChild(save);
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var block = remoteBlocks.filter(function (candidate) {
+          return candidate.dataset.anchor === select.value;
+        })[0];
+        store
+          .patch(item, {
+            anchor: select.value,
+            blockIndex: Number(block.dataset.blockIndex),
+            snippet: remoteSnippet(block),
+          })
+          .then(acceptThread)
+          .catch(showConflict);
+      });
+      target.appendChild(form);
+    }
+
+    function renderRemote() {
+      Array.prototype.forEach.call(
+        content.querySelectorAll(".guide-thread,.guide-orphans"),
+        function (node) {
+          node.remove();
+        },
+      );
+      remoteIndex.textContent = "";
+      var orphans = [];
+      threads = threads.filter(function (thread) {
+        return !thread.deleted;
+      });
+      threads.forEach(function (thread) {
+        if (thread.state === "CLOSED" && !showClosed) {
+          return;
+        }
+        var target = remotePlacement(thread);
+        if (target) {
+          threadHolder(target).appendChild(itemElement(thread, null));
+        } else {
+          orphans.push(thread);
+        }
+        var entry = document.createElement("li");
+        var link = document.createElement("a");
+        link.href = "#comment-" + thread.id;
+        link.textContent =
+          person(thread.author) +
+          ": " +
+          normalizeRemote(thread.text || "Withdrawn by the commenter.").slice(
+            0,
+            60,
+          );
+        entry.appendChild(link);
+        remoteIndex.appendChild(entry);
+      });
+      if (orphans.length) {
+        var group = document.createElement("section");
+        group.className = "guide-orphans";
+        var heading = document.createElement("h2");
+        heading.textContent = "Orphaned comments";
+        group.appendChild(heading);
+        orphans.forEach(function (thread) {
+          var holder = document.createElement("div");
+          holder.className = "guide-thread";
+          holder.appendChild(itemElement(thread, null));
+          group.appendChild(holder);
+        });
+        content.appendChild(group);
+      }
+      count.textContent = String(threads.length);
+      renderReviewFlags();
+      followRemoteHash();
+    }
+
+    function renderReviewFlags() {
+      remoteBlocks.forEach(function (block) {
+        block.classList.remove("guide-review-flagged");
+        var old = block.querySelector(":scope > .guide-flag-control");
+        if (old) {
+          old.remove();
+        }
+      });
+      reviewFlags.forEach(function (flag) {
+        remoteBlocks
+          .filter(function (block) {
+            return block.dataset.anchor === flag.anchor;
+          })
+          .forEach(function (block) {
+            block.classList.add("guide-review-flagged");
+            block.title = flag.note;
+          });
+        var entry = document.createElement("li");
+        entry.className = "guide-review-flag-entry";
+        var link = document.createElement("a");
+        link.href = "#" + flag.anchor;
+        link.textContent = "Flagged for review: " + flag.note;
+        entry.appendChild(link);
+        if (documentInfo && documentInfo.permissions.isAuthor) {
+          addTool(entry, "Clear", function () {
+            store
+              .clearFlag(flag)
+              .then(function () {
+                reviewFlags = reviewFlags.filter(function (current) {
+                  return current.id !== flag.id;
+                });
+                renderRemote();
+              })
+              .catch(showStatusError);
+          });
+        }
+        remoteIndex.appendChild(entry);
+      });
+      if (documentInfo && documentInfo.permissions.isAuthor) {
+        anchorChoices().forEach(function (block) {
+          var button = document.createElement("button");
+          button.type = "button";
+          button.className = "guide-flag-control";
+          button.textContent = reviewFlags.some(function (flag) {
+            return flag.anchor === block.dataset.anchor;
+          })
+            ? "Edit review flag"
+            : "Flag for review";
+          button.addEventListener("click", function () {
+            var existing = reviewFlags.filter(function (flag) {
+              return flag.anchor === block.dataset.anchor;
+            })[0];
+            openRemoteForm(
+              block,
+              "Save review flag",
+              function (note) {
+                return store
+                  .flag(block.dataset.anchor, note)
+                  .then(function (flag) {
+                    reviewFlags = reviewFlags.filter(function (current) {
+                      return current.anchor !== flag.anchor;
+                    });
+                    reviewFlags.push(flag);
+                    renderRemote();
+                    return null;
+                  });
+              },
+              existing ? existing.note : "",
+              false,
+            );
+          });
+          block.appendChild(button);
+        });
+      }
+    }
+
+    function renderIdentity(message) {
+      status.textContent = "";
+      remoteToggle.hidden = !validAuth();
+      if (message) {
+        var note = document.createElement("p");
+        note.className = "guide-form-error";
+        note.textContent = message;
+        status.appendChild(note);
+      }
+      if (!validAuth()) {
+        remoteBlocks.forEach(function (block) {
+          var button = block.querySelector(":scope > .guide-comment-button");
+          if (button) {
+            button.hidden = true;
+          }
+        });
+        var signIn = document.createElement("button");
+        signIn.type = "button";
+        signIn.className =
+          "aira-button aira-button--primary aira-button--small";
+        signIn.textContent = "Sign in to comment";
+        signIn.addEventListener("click", function () {
+          beginSignIn(false);
+        });
+        status.appendChild(signIn);
+        return;
+      }
+      remoteBlocks.forEach(function (block) {
+        var button = block.querySelector(":scope > .guide-comment-button");
+        if (button) {
+          button.hidden = !(
+            documentInfo &&
+            documentInfo.isActive &&
+            documentInfo.permissions.canComment
+          );
+        }
+      });
+      var identity = document.createElement("p");
+      identity.className = "aira-meta";
+      identity.textContent = "Signed in as " + person(auth.user);
+      status.appendChild(identity);
+      var actions = document.createElement("div");
+      actions.className = "guide-comment-actions";
+      var closedLabel = document.createElement("label");
+      var closedToggle = document.createElement("input");
+      closedToggle.type = "checkbox";
+      closedToggle.checked = showClosed;
+      closedToggle.addEventListener("change", function () {
+        showClosed = closedToggle.checked;
+        store
+          .load()
+          .then(function () {
+            renderRemote();
+            restartPolling();
+          })
+          .catch(showStatusError);
+      });
+      closedLabel.appendChild(closedToggle);
+      closedLabel.appendChild(document.createTextNode(" Show closed"));
+      actions.appendChild(closedLabel);
+      var signOut = document.createElement("button");
+      signOut.type = "button";
+      signOut.className =
+        "aira-button aira-button--secondary aira-button--small";
+      signOut.textContent = "Sign out";
+      signOut.addEventListener("click", function () {
+        revoke(false);
+      });
+      actions.appendChild(signOut);
+      var switchUser = document.createElement("button");
+      switchUser.type = "button";
+      switchUser.className =
+        "aira-button aira-button--ghost aira-button--small";
+      switchUser.textContent = "Not you?";
+      switchUser.addEventListener("click", function () {
+        revoke(true);
+      });
+      actions.appendChild(switchUser);
+      status.appendChild(actions);
+      if (documentInfo && !documentInfo.permissions.canView) {
+        var denied = document.createElement("p");
+        denied.textContent =
+          "Your account cannot see comments on this document.";
+        status.appendChild(denied);
+      }
+      if (documentInfo && !documentInfo.isActive) {
+        var inactive = document.createElement("p");
+        inactive.textContent = "Comments on this document are read-only.";
+        status.appendChild(inactive);
+      }
+    }
+
+    function beginSignIn(promptLogin) {
+      var chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
+      var bytes = new Uint8Array(64);
+      window.crypto.getRandomValues(bytes);
+      var verifier = Array.prototype.map
+        .call(bytes, function (value) {
+          return chars[value % chars.length];
+        })
+        .join("");
+      var stateBytes = new Uint8Array(24);
+      window.crypto.getRandomValues(stateBytes);
+      var state = base64url(stateBytes);
+      var returnTo = window.location.origin + window.location.pathname;
+      var returnLocation = new URL(window.location.href);
+      returnLocation.searchParams.delete("interophub");
+      writeJson(window.sessionStorage, authKey, {
+        codeVerifier: verifier,
+        state: state,
+        returnLocation: returnLocation.href,
+      });
+      window.crypto.subtle
+        .digest("SHA-256", new TextEncoder().encode(verifier))
+        .then(function (digest) {
+          var query = new URLSearchParams({
+            app_code: "topic-reference",
+            return_to: returnTo,
+            state: state,
+            code_challenge: base64url(new Uint8Array(digest)),
+            code_challenge_method: "S256",
+            response_mode: "fragment",
+            requested_url: returnTo,
+          });
+          if (promptLogin) {
+            query.set("prompt", "login");
+          }
+          window.top.location.href = hub + "/home?" + query.toString();
+        });
+    }
+
+    function base64url(bytes) {
+      var binary = "";
+      bytes.forEach(function (value) {
+        binary += String.fromCharCode(value);
+      });
+      return window
+        .btoa(binary)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+    }
+
+    function finishSignIn() {
+      var params = new URLSearchParams(window.location.hash.slice(1));
+      if (!params.has("code")) {
+        return Promise.resolve(false);
+      }
+      var pendingAuth = readJson(window.sessionStorage, authKey);
+      if (!pendingAuth || params.get("state") !== pendingAuth.state) {
+        writeJson(window.sessionStorage, authKey, null);
+        history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search,
+        );
+        renderIdentity("Sign-in did not complete. Try again.");
+        return Promise.resolve(true);
+      }
+      var returnTo = window.location.origin + window.location.pathname;
+      return request("/api/guide/token", {
+        token: false,
+        method: "POST",
+        body: {
+          code: params.get("code"),
+          codeVerifier: pendingAuth.codeVerifier,
+          returnTo: returnTo,
+        },
+      })
+        .then(function (result) {
+          auth = {
+            accessToken: result.accessToken,
+            expiresAt: result.expiresAt,
+            user: result.user,
+          };
+          writeJson(window.localStorage, tokenKey, auth);
+          writeJson(window.sessionStorage, authKey, null);
+          history.replaceState(null, "", pendingAuth.returnLocation);
+          return true;
+        })
+        .catch(function (error) {
+          writeJson(window.sessionStorage, authKey, null);
+          history.replaceState(
+            null,
+            "",
+            window.location.pathname + window.location.search,
+          );
+          renderIdentity(errorMessage(error));
+          return true;
+        });
+    }
+
+    function revoke(switchAccount) {
+      request("/api/guide/token", { method: "DELETE" })
+        .catch(function () {})
+        .then(function () {
+          auth = null;
+          writeJson(window.localStorage, tokenKey, null);
+          threads = [];
+          renderRemote();
+          renderIdentity();
+          if (switchAccount) {
+            beginSignIn(true);
+          }
+        });
+    }
+
+    function acknowledged() {
+      var key = noticePrefix + auth.user.userId;
+      if (window.localStorage.getItem(key)) {
+        return true;
+      }
+      return false;
+    }
+
+    function openRemoteForm(target, label, operation, initial, needsNotice) {
+      var old = target.querySelector(":scope > .guide-comment-form");
+      if (old) {
+        old.remove();
+      }
+      var form = document.createElement("form");
+      form.className = "guide-comment-form";
+      var textarea = document.createElement("textarea");
+      textarea.className = "aira-textarea";
+      textarea.required = true;
+      textarea.maxLength = 4000;
+      textarea.value = initial || "";
+      form.appendChild(textarea);
+      var notice = null;
+      if (needsNotice && !acknowledged()) {
+        var noticeLabel = document.createElement("label");
+        notice = document.createElement("input");
+        notice.type = "checkbox";
+        notice.required = true;
+        noticeLabel.appendChild(notice);
+        noticeLabel.appendChild(
+          document.createTextNode(
+            " Other signed-in users will see this comment with your name and organization.",
+          ),
+        );
+        form.appendChild(noticeLabel);
+      }
+      var error = document.createElement("p");
+      error.className = "guide-form-error";
+      form.appendChild(error);
+      var submit = document.createElement("button");
+      submit.type = "submit";
+      submit.className = "aira-button aira-button--primary aira-button--small";
+      submit.textContent = label;
+      form.appendChild(submit);
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var value = textarea.value.trim();
+        if (!value || (notice && !notice.checked)) {
+          return;
+        }
+        if (notice) {
+          try {
+            window.localStorage.setItem(noticePrefix + auth.user.userId, "yes");
+          } catch (storageError) {}
+        }
+        submit.disabled = true;
+        error.textContent = "";
+        operation(value)
+          .then(function (thread) {
+            if (thread) {
+              acceptThread(thread);
+            }
+            form.remove();
+          })
+          .catch(function (failure) {
+            submit.disabled = false;
+            error.textContent = errorMessage(failure);
+          });
+      });
+      target.appendChild(form);
+      textarea.focus();
+    }
+
+    function acceptThread(thread) {
+      var found = false;
+      threads = threads.map(function (current) {
+        if (current.id === thread.id) {
+          found = true;
+          return thread;
+        }
+        return current;
+      });
+      if (!found) {
+        threads.push(thread);
+      }
+      renderRemote();
+      restartPolling();
+    }
+
+    function showStatusError(error) {
+      if (!error.handled) {
+        renderIdentity(errorMessage(error));
+      }
+    }
+
+    function mergeChanges(changes) {
+      var changed = false;
+      (changes || []).forEach(function (incoming) {
+        var index = threads.findIndex(function (thread) {
+          return thread.id === incoming.id;
+        });
+        if (incoming.deleted) {
+          if (index >= 0) {
+            threads.splice(index, 1);
+            changed = true;
+          }
+          return;
+        }
+        if (index >= 0) {
+          threads[index] = incoming;
+        } else {
+          threads.push(incoming);
+        }
+        changed = true;
+      });
+      if (changed) {
+        renderRemote();
+      }
+      return changed;
+    }
+
+    function poll() {
+      if (
+        document.hidden ||
+        !validAuth() ||
+        !serverTime ||
+        !documentInfo ||
+        !documentInfo.permissions.canView
+      ) {
+        return;
+      }
+      request(
+        "/api/guide/" +
+          encodeURIComponent(documentKey) +
+          "/comments?since=" +
+          encodeURIComponent(serverTime),
+      )
+        .then(function (result) {
+          serverTime = result.serverTime;
+          reviewFlags = result.reviewFlags || [];
+          var changed = mergeChanges(result.comments);
+          renderRemote();
+          pollStep = changed
+            ? 0
+            : Math.min(pollStep + 1, pollDelays.length - 1);
+          schedulePoll(pollDelays[pollStep]);
+        })
+        .catch(function (error) {
+          if (!error.handled) {
+            schedulePoll(
+              pollDelays[Math.min(++pollStep, pollDelays.length - 1)],
+            );
+          }
+        });
+    }
+
+    function schedulePoll(delay) {
+      stopPolling();
+      if (!document.hidden) {
+        pollTimer = window.setTimeout(poll, delay === 0 ? 30000 : delay);
+      }
+    }
+    function stopPolling() {
+      if (pollTimer) {
+        window.clearTimeout(pollTimer);
+        pollTimer = null;
+      }
+    }
+    function restartPolling() {
+      pollStep = 0;
+      schedulePoll(30000);
+    }
+
+    function followRemoteHash() {
+      var match = window.location.hash.match(/^#comment-(\d+)$/);
+      if (!match) {
+        return;
+      }
+      var item = document.getElementById("comment-" + match[1]);
+      if (item) {
+        item.classList.add("guide-comment--target");
+        item.scrollIntoView({ block: "center" });
+      }
+    }
+
+    remoteBlocks.forEach(function (block) {
+      block.classList.add("guide-block");
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "guide-comment-button";
+      button.textContent = "\u{1F4AC}";
+      button.setAttribute("aria-label", "Comment on this paragraph");
+      button.addEventListener("click", function () {
+        if (
+          documentInfo &&
+          documentInfo.isActive &&
+          documentInfo.permissions.canComment
+        ) {
+          openRemoteForm(
+            block,
+            "Add comment",
+            function (text) {
+              return store.add(block, text);
+            },
+            "",
+            true,
+          );
+        }
+      });
+      block.appendChild(button);
+    });
+    remoteToggle.addEventListener("click", function () {
+      var hidden = document.body.classList.toggle("guide-comments-hidden");
+      remoteToggle.textContent = hidden ? "Show comments" : "Hide comments";
+      remoteToggle.setAttribute("aria-pressed", hidden ? "false" : "true");
+    });
+    window.addEventListener("hashchange", followRemoteHash);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        stopPolling();
+      } else {
+        pollStep = 0;
+        poll();
+      }
+    });
+
+    finishSignIn().then(function () {
+      var marker =
+        new URL(window.location.href).searchParams.get("interophub") ===
+        "signin";
+      if (marker) {
+        var clean = new URL(window.location.href);
+        clean.searchParams.delete("interophub");
+        history.replaceState(null, "", clean.href);
+        if (!validAuth()) {
+          beginSignIn(false);
+          return;
+        }
+      }
+      renderIdentity();
+      if (validAuth()) {
+        store
+          .load()
+          .then(function () {
+            renderIdentity();
+            renderRemote();
+            store.subscribe();
+          })
+          .catch(showStatusError);
+      } else {
+        renderRemote();
+      }
+    });
+  }
 })();
 
 </script>
