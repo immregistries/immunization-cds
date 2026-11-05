@@ -23,3 +23,5 @@ are assembled in the order listed in
 Version 0.1.0 was synthesized from sources listed in
 [sources/README.md](../sources/README.md). Its drafting gaps are recorded in
 [review/2026-10-29-v0.1-drafting-notes.md](../review/2026-10-29-v0.1-drafting-notes.md).
+
+| [infographic.yml](infographic.yml) | The primary infographic: the topic at a glance, each part referring to the section it summarizes |
