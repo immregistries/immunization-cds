@@ -12,5 +12,10 @@
     "evaluations-and-recommendations": "Results",
     "fhir-and-testing": "FHIR & Testing",
     "working-decisions": "Decisions"
+  },
+  "comments": {
+    "mode": "interophub",
+    "hub": "https://informatics.immregistries.org/hub",
+    "document": "immunization-cds"
   }
 }
