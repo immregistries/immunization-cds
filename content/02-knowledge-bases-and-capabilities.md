@@ -3,10 +3,9 @@
 ## Knowledge Bases {#knowledge-bases}
 
 Schedule Authorities publish guidance. CDS engines run Knowledge Bases that put
-that guidance into operation. Both terms are defined by
-[topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities)
-and summarized in [Terms](01-service-interaction.md#terms). This section covers
-how they appear in the interface.
+that guidance into operation. Both are defined in
+[Terms](01-service-interaction.md#terms). This section covers how they appear in
+the interface.
 
 ```{mermaid}
 flowchart LR
@@ -44,6 +43,17 @@ flowchart LR
   recommendations may come from different authorities. For example, influenza
   guidance from one authority and tuberculosis guidance from another, for the
   same patient. A result can name the authority that applies to it.
+
+<!-- anchor: roles -->
+
+**Roles.** This interface uses two roles, the Schedule Authority and the
+Knowledge Base. Publishing Contextual Condition code systems adds a third, the
+terminology steward, defined by
+[topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities)
+together with how these three replace the four roles of earlier sources
+([WD-11](90-working-decisions.md#working-decisions)). Whether "Schedule
+Authority" is the right name is open
+([OQ-1](90-working-decisions.md#open-questions)).
 
 <!-- anchor: authority-placement -->
 

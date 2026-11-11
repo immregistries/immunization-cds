@@ -58,6 +58,12 @@
   belongs to the `contextual-conditions` project (topic 7). Link to its
   definitions; do not restate them. This project owns the FHIR exchange of
   conditions and how support is reported.
+- This project defines Schedule Authority and Knowledge Base (WD-11), because
+  the interface uses them whether or not conditions are sent. Topic 7 links
+  here for them and keeps the terminology steward role.
+- How the Topic References are organized, including which topic defines a
+  term, is the author's decision, made before content goes to the community.
+  Do not raise it as a community question.
 - FHIR R6 is the target (WD-9). Do not add R4 compatibility requirements.
 - The FHIR IG working draft will become a product of this Topic Reference
   (WD-1). Until then, it is a source.

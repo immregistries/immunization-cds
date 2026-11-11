@@ -19,7 +19,7 @@ resolved it.
 | WD-8 | Scope follows the "Latest Proposed Language" on the HL7 Public Health Immunization Decision Support page. PSS-2764 is not being revised; this Topic Reference states the scope. | HL7 Public Health, 3 September 2026; project direction, November 2026 |
 | WD-9 | FHIR R6 is the target. There is no requirement for backward compatibility with ImmDS 1.0.0 on R4. An R4 back-port would be proposed later only if needed. Resolves OQ-4 and OQ-11. | Meetings of 3 and 17 September and 29 October 2026; project direction, November 2026 |
 | WD-10 | HALO is implemented as Contextual Conditions, defined by topic 7. This topic defines how conditions are exchanged in FHIR and how an engine reports support for them. | Topic 7 WD-5 and WD-6 |
-| WD-11 | Role names follow topic 7: Schedule Authority, terminology steward, and Knowledge Base. Resolves OQ-2. | Topic 7 WD-10 |
+| WD-11 | This topic defines the Schedule Authority and Knowledge Base, because the interface selects, applies, and reports them whether or not Contextual Conditions are sent. Topic 7 defines the terminology steward and maps the four roles of earlier sources to these three. Resolves OQ-2. | Project direction, November 2026; topic 7 WD-10 |
 | WD-12 | A date that matters to a condition is sent as its own date-valued condition, not in `Observation.effective[x]`. Resolves OQ-10. | Topic 7 WD-8 |
 | WD-13 | Results are organized by target disease. Target disease is always given and may repeat, one disease per repeat. "Vaccine group" is not used. The vaccine code is given only for a specific vaccine. | Meeting of 17 September 2026; FHIR-58655, FHIR-58952 |
 | WD-14 | Forecast status gets a standardized code set. Forecast reason stays more open and may carry several codes, such as a standard code with a legacy one. | Meeting of 3 September 2026 |
@@ -33,7 +33,7 @@ resolved it.
 
 | ID | Question | Context | Status |
 |---|---|---|---|
-| OQ-1 | Should "Schedule Authority" be renamed? | "Schedule" may be too narrow, and "authority" may suggest governance that does not exist. Topic 7 kept the name in its WD-10. | Referred to topic 7 |
+| OQ-1 | Should "Schedule Authority" be renamed? | "Schedule" may be too narrow, and "authority" may suggest governance that does not exist. The name is in use in topics 1 and 7. | Open |
 | OQ-2 | How do the role names map to the earlier four roles? | | Resolved by WD-11 |
 | OQ-3 | Should the operation keep the name `$immds-forecast` or use `$immds-halo-forecast`? | With no compatibility requirement (WD-9), the choice is about what the name signals. | Open |
 | OQ-4 | Does the guide depend on the ImmDS 1.0.0 R4 guide? | | Resolved by WD-9 |

@@ -133,7 +133,7 @@ revised. This Topic Reference is where the scope is stated in full
 | Work | Relationship |
 |---|---|
 | [ImmDS 1.0.0](https://hl7.org/fhir/us/immds/) | The published R4 interface this work extends. |
-| [CDS Contextual Conditions, topic 7](https://informatics.immregistries.org/hub/es/topic/7) ([Topic Reference](https://immregistries.github.io/contextual-conditions/latest/)) | Defines what a Contextual Condition is, and the Schedule Authority and Knowledge Base roles. This topic defines how conditions travel in the FHIR request and how support is reported; see [Contextual Conditions in the request](content/01-service-interaction.md#contextual-conditions). |
+| [CDS Contextual Conditions, topic 7](https://informatics.immregistries.org/hub/es/topic/7) ([Topic Reference](https://immregistries.github.io/contextual-conditions/latest/)) | Defines what a Contextual Condition is, how Schedule Authorities define conditions, and how condition code systems are published. This topic defines how conditions travel in the FHIR request and how support is reported; see [Contextual Conditions in the request](content/01-service-interaction.md#contextual-conditions). |
 | [HL7 v2 Contextual Conditions Exchange, topic 137](https://informatics.immregistries.org/hub/es/topic/137) | The HL7 v2 representation of Contextual Conditions. |
 | CDS Hooks | Calls decision support at points in an EHR workflow and turns results into clinician-facing cards. A CDS Hooks service can call an ImmDS + HALO engine rather than rebuild forecasting logic, and can gather patient information from other systems, which this interface leaves out. The two are complementary layers. |
 | CDC Clinical Decision Support for Immunization (CDSi) and other forecasting methods | CDSi and the methods behind other national and commercial engines are complementary. This interface is a common layer through which they can be reached; it does not replace them. |
@@ -185,8 +185,8 @@ definitions rather than repeating them.
 | **Forecast reason** | Why that status applies to this patient, such as a contraindication or a risk condition. More open than status, and may carry several codes. |
 | **Recommendation category** | How the Schedule Authority classifies the recommendation, such as routine, risk-based, shared clinical decision-making, or mandatory. It is not patient-specific. See [Recommendation category](content/03-evaluations-and-recommendations.md#recommendation-category). |
 | **Contextual Condition** | A coded, neutral fact about the patient's circumstances that may affect a recommendation. Defined by [topic 7](https://immregistries.github.io/contextual-conditions/latest/). HALO factors are Contextual Conditions. |
-| **Schedule Authority** | The organization or expert body that publishes immunization guidance. Defined by [topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities). |
-| **Knowledge Base** | An identifiable, executable rule set that puts into operation guidance from one or more Schedule Authorities. Defined by [topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities); its use in this interface is in [Knowledge Bases](content/02-knowledge-bases-and-capabilities.md#knowledge-bases). |
+| **Schedule Authority** | An organization or expert body that publishes immunization recommendations for clinical or public health use, such as a national advisory committee. It decides which factors affect its guidance and defines the Contextual Conditions its guidance needs, as described by [topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities). See [Knowledge Bases](content/02-knowledge-bases-and-capabilities.md#knowledge-bases). |
+| **Knowledge Base** | An identifiable, versioned, executable rule set that puts into operation guidance from one or more Schedule Authorities, possibly with jurisdictional or local adaptations. A CDS engine applies one Knowledge Base per request. See [Knowledge Bases](content/02-knowledge-bases-and-capabilities.md#knowledge-bases). |
 | **Support report** | The part of a response that says which submitted conditions and vaccine codes the engine used, ignored, did not support, or found invalid. |
 | **Capability discovery** | Finding out what an engine supports before sending patient data. See [Capability discovery](content/02-knowledge-bases-and-capabilities.md#capability-discovery). |
 
@@ -293,10 +293,9 @@ conditions, not questionnaire responses.
 ## Knowledge Bases {#knowledge-bases}
 
 Schedule Authorities publish guidance. CDS engines run Knowledge Bases that put
-that guidance into operation. Both terms are defined by
-[topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities)
-and summarized in [Terms](content/01-service-interaction.md#terms). This section covers
-how they appear in the interface.
+that guidance into operation. Both are defined in
+[Terms](content/01-service-interaction.md#terms). This section covers how they appear in
+the interface.
 
 ```mermaid
 flowchart LR
@@ -332,6 +331,15 @@ flowchart LR
   recommendations may come from different authorities. For example, influenza
   guidance from one authority and tuberculosis guidance from another, for the
   same patient. A result can name the authority that applies to it.
+
+**Roles.** This interface uses two roles, the Schedule Authority and the
+Knowledge Base. Publishing Contextual Condition code systems adds a third, the
+terminology steward, defined by
+[topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities)
+together with how these three replace the four roles of earlier sources
+([WD-11](content/90-working-decisions.md#working-decisions)). Whether "Schedule
+Authority" is the right name is open
+([OQ-1](content/90-working-decisions.md#open-questions)).
 
 Where the authority is recorded is under discussion
 ([OQ-6](content/90-working-decisions.md#open-questions)). FHIR currently allows at most
@@ -682,7 +690,7 @@ resolved it.
 | WD-8 | Scope follows the "Latest Proposed Language" on the HL7 Public Health Immunization Decision Support page. PSS-2764 is not being revised; this Topic Reference states the scope. | HL7 Public Health, 3 September 2026; project direction, November 2026 |
 | WD-9 | FHIR R6 is the target. There is no requirement for backward compatibility with ImmDS 1.0.0 on R4. An R4 back-port would be proposed later only if needed. Resolves OQ-4 and OQ-11. | Meetings of 3 and 17 September and 29 October 2026; project direction, November 2026 |
 | WD-10 | HALO is implemented as Contextual Conditions, defined by topic 7. This topic defines how conditions are exchanged in FHIR and how an engine reports support for them. | Topic 7 WD-5 and WD-6 |
-| WD-11 | Role names follow topic 7: Schedule Authority, terminology steward, and Knowledge Base. Resolves OQ-2. | Topic 7 WD-10 |
+| WD-11 | This topic defines the Schedule Authority and Knowledge Base, because the interface selects, applies, and reports them whether or not Contextual Conditions are sent. Topic 7 defines the terminology steward and maps the four roles of earlier sources to these three. Resolves OQ-2. | Project direction, November 2026; topic 7 WD-10 |
 | WD-12 | A date that matters to a condition is sent as its own date-valued condition, not in `Observation.effective[x]`. Resolves OQ-10. | Topic 7 WD-8 |
 | WD-13 | Results are organized by target disease. Target disease is always given and may repeat, one disease per repeat. "Vaccine group" is not used. The vaccine code is given only for a specific vaccine. | Meeting of 17 September 2026; FHIR-58655, FHIR-58952 |
 | WD-14 | Forecast status gets a standardized code set. Forecast reason stays more open and may carry several codes, such as a standard code with a legacy one. | Meeting of 3 September 2026 |
@@ -696,7 +704,7 @@ resolved it.
 
 | ID | Question | Context | Status |
 |---|---|---|---|
-| OQ-1 | Should "Schedule Authority" be renamed? | "Schedule" may be too narrow, and "authority" may suggest governance that does not exist. Topic 7 kept the name in its WD-10. | Referred to topic 7 |
+| OQ-1 | Should "Schedule Authority" be renamed? | "Schedule" may be too narrow, and "authority" may suggest governance that does not exist. The name is in use in topics 1 and 7. | Open |
 | OQ-2 | How do the role names map to the earlier four roles? | | Resolved by WD-11 |
 | OQ-3 | Should the operation keep the name `$immds-forecast` or use `$immds-halo-forecast`? | With no compatibility requirement (WD-9), the choice is about what the name signals. | Open |
 | OQ-4 | Does the guide depend on the ImmDS 1.0.0 R4 guide? | | Resolved by WD-9 |
