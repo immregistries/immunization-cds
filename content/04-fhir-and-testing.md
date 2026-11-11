@@ -6,7 +6,8 @@
 
 This work proposes an R6 solution ([WD-9](90-working-decisions.md#working-decisions)).
 No R4 implementation needs backward compatibility; the only known R4 work is a
-partial implementation by NIST that was never fully tested. If an R4 version is
+partial implementation by NIST, under the former NIST Health IT Program, that
+was never fully tested. If an R4 version is
 needed later, a back-port will be proposed then; the project does not expect
 one to be needed. Implementers working ahead of publication are targeting R6.
 
@@ -91,13 +92,32 @@ flowchart LR
 
 <!-- anchor: shared-testing -->
 
-- A common interface lets one testing platform, such as NIST FITS, test any
+- A common interface lets one testing platform, such as SITT FITS, test any
   conformant engine, and lets test case libraries be shared rather than
   rebuilt for each engine's interface.
 - Testing can be repeated whenever schedules, codes, or engines change.
 - The interface tests communication and results; it does not certify that an
   engine is clinically correct. Jurisdictions and programs decide what
   performance they require.
+
+### Testing platform: SITT FITS {#sitt-fits}
+
+The Forecasting and Immunization Test Suite (FITS) was built by the NIST
+Health IT Program. As that program ends, its conformance and testing tools are
+moving to outside organizations, mainly Prometheus Computing, LLC, so they stay
+maintained and publicly available. FITS is now part of the Standards &
+Interoperability Testing Tools (SITT) at [Valitheus](https://valitheus.com/),
+and runs at [tools.valitheus.com/fits](https://tools.valitheus.com/fits/#/home).
+
+- **Past work.** Earlier NIST work on FITS and the R4 ImmDS interface is
+  history. It informs this work but sets no compatibility requirement
+  ([WD-9](90-working-decisions.md#working-decisions)).
+- **Future work.** SITT FITS is a primary target for ImmDS + HALO support. It
+  is expected to be used to test how the new CDS engines support HALO, that
+  is, how they use Contextual Conditions and report the ones they do not
+  support ([WD-19](90-working-decisions.md#working-decisions)).
+
+<!-- CONFIRM: Check how SITT FITS plans to support the R6 interface and Contextual Conditions, and its timeline, with Prometheus Computing. -->
 
 <!-- anchor: test-case-format -->
 

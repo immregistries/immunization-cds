@@ -7,32 +7,15 @@ against one Knowledge Base and returns the results. Nothing is remembered
 between requests.
 
 ```{mermaid}
-flowchart LR
-  subgraph R["Requesting system or testing platform"]
-    direction TB
-    R1["Assessment date"]
-    R2["Patient: date of birth and other demographics"]
-    R3["Immunization history"]
-    R4["Contextual Conditions (optional)"]
-    R5["Requested Knowledge Base (optional)"]
-  end
-  subgraph E["CDS engine"]
-    direction TB
-    KB["Applies one Knowledge Base"]
-  end
-  subgraph O["Response"]
-    direction TB
-    O1["Dose evaluations"]
-    O2["Recommendations"]
-    O3["Knowledge Base used"]
-    O4["Support report: what was used, ignored, unsupported, or invalid"]
-    O5["Additional context suggested"]
-    O6["Messages: warnings, partial results, errors"]
-  end
+%%{init: {"flowchart": {"wrappingWidth": 400}}}%%
+flowchart TB
+  R["<b>Request</b><br/><br/>Assessment date<br/>Patient: date of birth and other demographics<br/>Immunization history<br/>Contextual Conditions (optional)<br/>Requested Knowledge Base (optional)"]
+  E["<b>CDS engine</b><br/><br/>Applies one Knowledge Base"]
+  O["<b>Response</b><br/><br/>Dose evaluations<br/>Recommendations<br/>Knowledge Base used<br/>Support report: conditions used, ignored, unsupported, or invalid<br/>Additional context suggested<br/>Messages: warnings, partial results, errors"]
   R -->|"one request"| E -->|"one response"| O
 ```
 
-*Figure 1. One stateless request and response. The engine sees only what the request contains.*
+*Figure 1. One stateless request and response, from a requesting system or testing platform. The engine sees only what the request contains.*
 
 ## Terms {#terms}
 

@@ -27,6 +27,7 @@ resolved it.
 | WD-16 | Testing platforms are first-class requesting systems. Testing and validation is one of the two primary use cases. | Scope statement |
 | WD-17 | Questionnaires are optional extras that an engine may publish. They are not part of the forecast request. | February 2026 narrative draft; meeting of 29 October 2026 |
 | WD-18 | CDS Hooks is complementary. Calling CDS from EHR workflow, and gathering patient data from other systems, are outside this interface. | 2025 CDS Hooks comparison; meeting of 29 October 2026 |
+| WD-19 | SITT FITS, formerly NIST FITS and now maintained by Prometheus Computing, is the primary target testing platform. It is expected to test how CDS engines support HALO through Contextual Conditions. Earlier NIST R4 work is treated as history. | Project direction, November 2026; NIST Health IT Program transition |
 
 ## Open questions {#open-questions}
 

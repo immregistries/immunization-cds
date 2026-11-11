@@ -11,6 +11,7 @@ Source documents are listed here, not copied into the repository. The content in
 | InteropHub topic 1 meeting notes: 3 Sep, 17 Sep, 1 Oct, 29 Oct 2026 | Finalized notes | Target disease, status and reason, season, series, doses remaining, rule documentation, authority, R6, CDS Hooks, Questionnaire, incubator (v0.2.0) |
 | HL7 Jira change requests FHIR-56989, 56990, 57247, 58655, 58952, 59485–59489 | Submitted, as of 10 November 2026 | Change requests table (v0.2.0) |
 | [CDS Contextual Conditions Topic Reference](https://immregistries.github.io/contextual-conditions/latest/) | Working draft, November 2026 | Definitions referred to, and the topic boundary |
+| [Valitheus](https://valitheus.com/) and the NIST Health IT Program legacy site notice; [SITT FITS](https://tools.valitheus.com/fits/#/home) | November 2026 | FITS transition to Prometheus Computing and SITT; testing platform target |
 | [ImmDS + HALO FHIR IG working draft](https://github.com/immregistries/immds-halo-fhir-ig-working-draft) | 3 September 2026 | Operation parameters, FHIR mapping, open issues |
 | *Immunization CDS: Update for Patient Care* (presentation) | 14 September 2026 | Framing, CDS Hooks layering, R6 target |
 | *ImmDS + HALO IG Narrative, First Pass Draft* | 12 February 2026 | Responsibilities, Knowledge Bases, recommendation category, international strategy, testing |
