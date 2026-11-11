@@ -138,7 +138,8 @@ revised. This Topic Reference is where the scope is stated in full
 | CDS Hooks | Calls decision support at points in an EHR workflow and turns results into clinician-facing cards. A CDS Hooks service can call an ImmDS + HALO engine rather than rebuild forecasting logic, and can gather patient information from other systems, which this interface leaves out. The two are complementary layers. |
 | CDC Clinical Decision Support for Immunization (CDSi) and other forecasting methods | CDSi and the methods behind other national and commercial engines are complementary. This interface is a common layer through which they can be reached; it does not replace them. |
 | [Vaccination CDS guide (EUVABECO)](https://build.fhir.org/ig/EUVABECO/VCDS/) | A European FHIR guide with similar functions, including a questionnaire for patient context. The two efforts should stay aligned ([OQ-18](content/90-working-decisions.md#open-questions)). |
-| NIST Forecasting Immunization Test Suite (FITS) and Step Into CDSi | Testing and demonstration platforms for the [testing use case](content/04-fhir-and-testing.md#testing). Step Into CDSi offers a demonstration engine and client that use the draft interface. |
+| [SITT Forecasting and Immunization Test Suite (FITS)](https://tools.valitheus.com/fits/#/home), formerly NIST FITS | The primary target testing platform for the [testing use case](content/04-fhir-and-testing.md#testing). It moved from NIST to Prometheus Computing, LLC, and is now part of the Standards & Interoperability Testing Tools (SITT) at [Valitheus](https://valitheus.com/). See [Testing platform: SITT FITS](content/04-fhir-and-testing.md#sitt-fits). |
+| Step Into CDSi | A demonstration engine and client that use the draft interface. |
 | Immunization Vocabularies Collaborative (IVC) | A possible publisher of code systems, such as forecast status values and Contextual Condition code systems. |
 | [ImmDS + HALO FHIR IG working draft](https://github.com/immregistries/immds-halo-fhir-ig-working-draft) | The September 2026 technical draft. It is to become a product of this Topic Reference ([WD-1](content/90-working-decisions.md#working-decisions)). |
 
@@ -153,32 +154,15 @@ against one Knowledge Base and returns the results. Nothing is remembered
 between requests.
 
 ```mermaid
-flowchart LR
-  subgraph R["Requesting system or testing platform"]
-    direction TB
-    R1["Assessment date"]
-    R2["Patient: date of birth and other demographics"]
-    R3["Immunization history"]
-    R4["Contextual Conditions (optional)"]
-    R5["Requested Knowledge Base (optional)"]
-  end
-  subgraph E["CDS engine"]
-    direction TB
-    KB["Applies one Knowledge Base"]
-  end
-  subgraph O["Response"]
-    direction TB
-    O1["Dose evaluations"]
-    O2["Recommendations"]
-    O3["Knowledge Base used"]
-    O4["Support report: what was used, ignored, unsupported, or invalid"]
-    O5["Additional context suggested"]
-    O6["Messages: warnings, partial results, errors"]
-  end
+%%{init: {"flowchart": {"wrappingWidth": 400}}}%%
+flowchart TB
+  R["<b>Request</b><br/><br/>Assessment date<br/>Patient: date of birth and other demographics<br/>Immunization history<br/>Contextual Conditions (optional)<br/>Requested Knowledge Base (optional)"]
+  E["<b>CDS engine</b><br/><br/>Applies one Knowledge Base"]
+  O["<b>Response</b><br/><br/>Dose evaluations<br/>Recommendations<br/>Knowledge Base used<br/>Support report: conditions used, ignored, unsupported, or invalid<br/>Additional context suggested<br/>Messages: warnings, partial results, errors"]
   R -->|"one request"| E -->|"one response"| O
 ```
 
-*Figure 1. One stateless request and response. The engine sees only what the request contains.*
+*Figure 1. One stateless request and response, from a requesting system or testing platform. The engine sees only what the request contains.*
 
 ## Terms {#terms}
 
@@ -542,7 +526,8 @@ blocked one is open ([OQ-7](content/90-working-decisions.md#open-questions)).
 
 This work proposes an R6 solution ([WD-9](content/90-working-decisions.md#working-decisions)).
 No R4 implementation needs backward compatibility; the only known R4 work is a
-partial implementation by NIST that was never fully tested. If an R4 version is
+partial implementation by NIST, under the former NIST Health IT Program, that
+was never fully tested. If an R4 version is
 needed later, a back-port will be proposed then; the project does not expect
 one to be needed. Implementers working ahead of publication are targeting R6.
 
@@ -621,13 +606,32 @@ flowchart LR
 
 *Figure 4. The same interface that serves care also lets one testing platform test any engine.*
 
-- A common interface lets one testing platform, such as NIST FITS, test any
+- A common interface lets one testing platform, such as SITT FITS, test any
   conformant engine, and lets test case libraries be shared rather than
   rebuilt for each engine's interface.
 - Testing can be repeated whenever schedules, codes, or engines change.
 - The interface tests communication and results; it does not certify that an
   engine is clinically correct. Jurisdictions and programs decide what
   performance they require.
+
+### Testing platform: SITT FITS {#sitt-fits}
+
+The Forecasting and Immunization Test Suite (FITS) was built by the NIST
+Health IT Program. As that program ends, its conformance and testing tools are
+moving to outside organizations, mainly Prometheus Computing, LLC, so they stay
+maintained and publicly available. FITS is now part of the Standards &
+Interoperability Testing Tools (SITT) at [Valitheus](https://valitheus.com/),
+and runs at [tools.valitheus.com/fits](https://tools.valitheus.com/fits/#/home).
+
+- **Past work.** Earlier NIST work on FITS and the R4 ImmDS interface is
+  history. It informs this work but sets no compatibility requirement
+  ([WD-9](content/90-working-decisions.md#working-decisions)).
+- **Future work.** SITT FITS is a primary target for ImmDS + HALO support. It
+  is expected to be used to test how the new CDS engines support HALO, that
+  is, how they use Contextual Conditions and report the ones they do not
+  support ([WD-19](content/90-working-decisions.md#working-decisions)).
+
+<!-- CONFIRM: Check how SITT FITS plans to support the R6 interface and Contextual Conditions, and its timeline, with Prometheus Computing. -->
 
 Test cases take a lot of work to write, so a standard way to export and import
 them between tools would help. Most existing test cases use relative dates,
@@ -686,6 +690,7 @@ resolved it.
 | WD-16 | Testing platforms are first-class requesting systems. Testing and validation is one of the two primary use cases. | Scope statement |
 | WD-17 | Questionnaires are optional extras that an engine may publish. They are not part of the forecast request. | February 2026 narrative draft; meeting of 29 October 2026 |
 | WD-18 | CDS Hooks is complementary. Calling CDS from EHR workflow, and gathering patient data from other systems, are outside this interface. | 2025 CDS Hooks comparison; meeting of 29 October 2026 |
+| WD-19 | SITT FITS, formerly NIST FITS and now maintained by Prometheus Computing, is the primary target testing platform. It is expected to test how CDS engines support HALO through Contextual Conditions. Earlier NIST R4 work is treated as history. | Project direction, November 2026; NIST Health IT Program transition |
 
 ## Open questions {#open-questions}
 
