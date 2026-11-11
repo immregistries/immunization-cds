@@ -87,6 +87,37 @@ A LOINC observation for *Immunization Recommendation Category* has been
 proposed for HL7 v2 messaging. How to represent it in FHIR is open
 ([OQ-9](90-working-decisions.md#open-questions)).
 
+## More than one recommendation for a target disease {#multiple-recommendations}
+
+The discussion so far assumes one recommendation per target disease. An
+engine may return more than one, and each case raises its own design
+questions.
+
+**Different dates by vaccine product or series pathway.** The next dose may be
+due on different dates depending on the product used or the series pathway
+followed. For example, a patient may be recommended for COVID-19 vaccination
+with the next dose in 4 weeks if one product is used and in 8 weeks if another
+is used. This applies to COVID-19 and meningococcal B (MenB) vaccines, and
+possibly others. The requesting system needs to know which dates go with which
+product or pathway. These could be separate recommendations, each with a
+vaccine code or series, or one recommendation with several date sets
+([OQ-20](90-working-decisions.md#open-questions)).
+
+**Different recommendation categories.** An engine may return several
+recommendations for one target disease, each with a different recommendation
+category and possibly different dates. For a 6-month-old, an engine such as
+ICE could return two MMR recommendations: a risk-based one that applies now if
+certain risk factors are present, and a routine one due at 12 months. Both can
+be useful together. Here the recommendation category is what tells the two
+apart, which strains the point above that category is optional
+([OQ-21](90-working-decisions.md#open-questions)).
+
+In both cases, a requesting system that expects one recommendation per target
+disease may show only one, or treat them as conflicting. The response needs to
+make clear how the recommendations relate to each other.
+
+<!-- CONFIRM: Raised in community comments, November 2026; not yet discussed by the group. Confirm that MenB and COVID-19 are the right examples to name. -->
+
 ## Series, season, and doses remaining {#series-and-season}
 
 <!-- anchor: series -->

@@ -486,6 +486,37 @@ A LOINC observation for *Immunization Recommendation Category* has been
 proposed for HL7 v2 messaging. How to represent it in FHIR is open
 ([OQ-9](content/90-working-decisions.md#open-questions)).
 
+## More than one recommendation for a target disease {#multiple-recommendations}
+
+The discussion so far assumes one recommendation per target disease. An
+engine may return more than one, and each case raises its own design
+questions.
+
+**Different dates by vaccine product or series pathway.** The next dose may be
+due on different dates depending on the product used or the series pathway
+followed. For example, a patient may be recommended for COVID-19 vaccination
+with the next dose in 4 weeks if one product is used and in 8 weeks if another
+is used. This applies to COVID-19 and meningococcal B (MenB) vaccines, and
+possibly others. The requesting system needs to know which dates go with which
+product or pathway. These could be separate recommendations, each with a
+vaccine code or series, or one recommendation with several date sets
+([OQ-20](content/90-working-decisions.md#open-questions)).
+
+**Different recommendation categories.** An engine may return several
+recommendations for one target disease, each with a different recommendation
+category and possibly different dates. For a 6-month-old, an engine such as
+ICE could return two MMR recommendations: a risk-based one that applies now if
+certain risk factors are present, and a routine one due at 12 months. Both can
+be useful together. Here the recommendation category is what tells the two
+apart, which strains the point above that category is optional
+([OQ-21](content/90-working-decisions.md#open-questions)).
+
+In both cases, a requesting system that expects one recommendation per target
+disease may show only one, or treat them as conflicting. The response needs to
+make clear how the recommendations relate to each other.
+
+<!-- CONFIRM: Raised in community comments, November 2026; not yet discussed by the group. Confirm that MenB and COVID-19 are the right examples to name. -->
+
 ## Series, season, and doses remaining {#series-and-season}
 
 **Series.** Knowing which series an engine selected helps trace both
@@ -618,6 +649,8 @@ flowchart LR
   conformant engine, and lets test case libraries be shared rather than
   rebuilt for each engine's interface.
 - Testing can be repeated whenever schedules, codes, or engines change.
+- Expected results may need to allow more than one recommendation per target
+  disease (see [More than one recommendation for a target disease](content/03-evaluations-and-recommendations.md#multiple-recommendations)).
 - The interface tests communication and results; it does not certify that an
   engine is clinically correct. Jurisdictions and programs decide what
   performance they require.
@@ -663,6 +696,8 @@ These scenarios test the design. They are not clinical guidance.
 | Target disease not handled, such as rabies | Reported as not handled, not as a patient status |
 | Contraindication | Status and the specific reason |
 | Seasonal vaccine | The season the recommendation is for |
+| Dates differ by product: COVID-19, next dose at 4 or 8 weeks | Which dates apply to which product ([OQ-20](content/90-working-decisions.md#open-questions)) |
+| Risk-based and routine recommendations for MMR at 6 months | Both recommendations, each with its category, without appearing to conflict ([OQ-21](content/90-working-decisions.md#open-questions)) |
 
 Examples still needed include unknown vaccine codes, partial and blocked
 results, recommendation categories, and guidance that differs by jurisdiction.
@@ -723,3 +758,5 @@ resolved it.
 | OQ-17 | Should there be a standard format for exchanging test cases between testing tools, and how are relative dates represented? | Notes on the HL7 Public Health Immunization Decision Support page. | Open |
 | OQ-18 | How should this work align with the European Vaccination CDS guide (EUVABECO)? | Similar functions, including a questionnaire for patient context. | Open |
 | OQ-19 | How should vaccine codes be reported as recognized, not evaluated, or unknown, in discovery and in each response? | Proposed in the 2025 difference summary and the capability concept. | Open |
+| OQ-20 | When the dates differ by vaccine product or series pathway, does the engine return separate recommendations or one recommendation with several date sets? How are product, pathway, and dates linked? | COVID-19 and MenB examples. Relates to WD-13 (vaccine code only for a specific vaccine) and to series (FHIR-59486). Raised in community comments, November 2026. | Open |
+| OQ-21 | When several recommendations for one target disease differ by recommendation category, how does the requesting system tell them apart? Must the category be present in that case? | MMR example for a 6-month-old: a conditional risk-based recommendation and a future routine one. Relates to OQ-9. Raised in community comments, November 2026. | Open |

@@ -96,6 +96,8 @@ flowchart LR
   conformant engine, and lets test case libraries be shared rather than
   rebuilt for each engine's interface.
 - Testing can be repeated whenever schedules, codes, or engines change.
+- Expected results may need to allow more than one recommendation per target
+  disease (see [More than one recommendation for a target disease](03-evaluations-and-recommendations.md#multiple-recommendations)).
 - The interface tests communication and results; it does not certify that an
   engine is clinically correct. Jurisdictions and programs decide what
   performance they require.
@@ -143,6 +145,8 @@ These scenarios test the design. They are not clinical guidance.
 | Target disease not handled, such as rabies | Reported as not handled, not as a patient status |
 | Contraindication | Status and the specific reason |
 | Seasonal vaccine | The season the recommendation is for |
+| Dates differ by product: COVID-19, next dose at 4 or 8 weeks | Which dates apply to which product ([OQ-20](90-working-decisions.md#open-questions)) |
+| Risk-based and routine recommendations for MMR at 6 months | Both recommendations, each with its category, without appearing to conflict ([OQ-21](90-working-decisions.md#open-questions)) |
 
 Examples still needed include unknown vaccine codes, partial and blocked
 results, recommendation categories, and guidance that differs by jurisdiction.
