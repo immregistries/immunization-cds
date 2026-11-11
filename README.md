@@ -62,17 +62,9 @@ Reference. The separate
 (topic 7) defines Contextual Conditions; this one covers how they are exchanged
 and how engines report support for them.
 
-Presentation requirements and the initial review deck source are under
-`products/presentation/`. To prepare the pinned shared PowerPoint generator and
-build the editable deck:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\setup-presentation.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\build-presentation.ps1
-```
-
-The generated deck is a review aid, not a release or a parallel source of
-project knowledge.
+Presentations are planned when a specific need arises, as products under
+`products/`, using the shared template's presentation option. A deck is a
+review aid, not a release or a parallel source of project knowledge.
 
 ## Licensing
 

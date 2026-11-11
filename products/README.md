@@ -7,7 +7,5 @@ parallel source of substantive project knowledge.
 Current planned products:
 
 - `web-guide/`: the published Topic Reference for InteropHub topic 1.
-- `presentation/`: short review deck and diagram for community discussion;
-  generation awaits the shared PowerPoint template capability.
 
 | [infographic/](infographic/brief.yml) | The primary infographic, the topic at a glance, built from [content/infographic.yml](../content/infographic.yml) with the core document |

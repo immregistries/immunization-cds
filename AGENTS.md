@@ -74,9 +74,10 @@
 - `process/` is the `immregistries/content-publishing-templates` Git submodule.
 - Do not edit or copy files under `process/`. Adopt template changes by moving
   the submodule pointer, rebuilding, reviewing output, and committing later.
-- Presentation support is evolving in the template project. Keep presentation
-  requirements in `products/presentation/brief.yml`; do not invent a local
-  generator or duplicate shared templates.
+- Presentations are created only when the author identifies a need. Plan each
+  one as its own product under `products/` with a brief, using the shared
+  presentation tools; do not invent a local generator or duplicate shared
+  templates.
 
 ## Validation
 
