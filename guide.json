@@ -7,17 +7,10 @@
   "license": "Content licensed CC BY 4.0",
   "navLabels": {
     "status-and-scope": "Scope",
-    "related-work": "Related Work",
-    "problem-and-principles": "Problem",
-    "architecture": "Architecture",
-    "forecast-interaction": "Forecast",
-    "contextual-conditions": "Context",
-    "knowledge-bases-and-guidance": "Knowledge Bases",
-    "results-and-transparency": "Results",
-    "capability-discovery": "Capabilities",
-    "fhir-working-model": "FHIR Model",
-    "examples": "Examples",
-    "adoption-and-boundaries": "Boundaries",
+    "service-interaction": "Interaction",
+    "knowledge-bases-and-capabilities": "Knowledge Bases",
+    "evaluations-and-recommendations": "Results",
+    "fhir-and-testing": "FHIR & Testing",
     "working-decisions": "Decisions"
   }
 }

@@ -5,10 +5,17 @@ This repository is the Topic Reference for
 It brings the conceptual architecture, terminology, examples, open questions,
 and implementation direction into one source-controlled document.
 
-Version 0.1.0 is an initial working synthesis. It is not a standard, an HL7
-ballot artifact, clinical guidance, or a final design. It starts from the
-existing ImmDS + HALO FHIR implementation-guide draft and related project
-material so the community has something concrete to review and improve.
+Immunization CDS (ImmDS + HALO) defines one common service interface for
+immunization clinical decision support engines. It standardizes the exchange
+between systems that request immunization guidance and the engines that
+provide it, not the clinical logic. It is an HL7 project; its scope follows the
+language on the HL7 Public Health
+[Immunization Decision Support](https://confluence.hl7.org/spaces/PHWG/pages/230556918/Immunization+Decision+Support)
+page.
+
+Version 0.2.0 is a working preview for community reaction. It is not a
+standard, a ballot artifact, clinical guidance, or a final design. Corrections
+are welcome.
 
 ## Read and edit
 
@@ -48,12 +55,12 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\validate.ps1
 
 ## Related products
 
-The existing FHIR implementation guide is a detailed technical working draft.
-It remains a related implementation artifact while this repository develops
-the complete discussion-oriented Topic Reference. The separate Contextual
-Conditions Topic Reference owns that concept in detail; this one explains how
-ImmDS + HALO uses
-it and links to the related work.
+The [FHIR IG working draft](https://github.com/immregistries/immds-halo-fhir-ig-working-draft)
+is the September 2026 technical draft; it is to become a product of this Topic
+Reference. The separate
+[Contextual Conditions Topic Reference](https://immregistries.github.io/contextual-conditions/latest/)
+(topic 7) defines Contextual Conditions; this one covers how they are exchanged
+and how engines report support for them.
 
 Presentation requirements and the initial review deck source are under
 `products/presentation/`. To prepare the pinned shared PowerPoint generator and

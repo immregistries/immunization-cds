@@ -1,32 +1,53 @@
-# Working Decisions and Open Questions
+# Appendix: Working Decisions and Open Questions
 
-Working decisions are current positions for discussion, not final approval.
+A working decision is the current position for discussion, not a final or
+approved decision. Each one records where it came from, so it can be
+revisited. IDs are kept stable. A resolved question stays listed with what
+resolved it.
 
-## Working decisions
+## Working decisions {#decisions}
 
 | ID | Working decision | Basis |
 |---|---|---|
-| WD-1 | The project maintains one complete conceptual Topic Reference, with detailed FHIR conformance as a related technical product. | The community needs a reviewable document broader than the current FHIR publication format. |
-| WD-2 | The forecast interaction is stateless and evaluates the data supplied in the current request. | Repeated across the narrative draft and FHIR IG. |
-| WD-3 | Omission of a Contextual Condition means unknown, not No. | Shared with the Contextual Conditions project. |
-| WD-4 | The requesting system asserts Contextual Conditions; the forecast operation does not infer them from arbitrary clinical records. | Establishes a bounded machine-to-machine contract. |
-| WD-5 | One coherent Knowledge Base is applied to a forecast and the response identifies the one used. | Separates executable behavior from underlying guidance. |
-| WD-6 | General capability discovery is separate from patient-specific response transparency. | The two answer different questions and have different lifecycles. |
-| WD-7 | Version 0.1.0 carries unresolved design choices explicitly rather than waiting for a complete specification. | This release is a discussion baseline. |
+| WD-1 | This Topic Reference is the single maintained source for the topic. The ImmDS + HALO FHIR IG working draft will become one of its products. | Project direction, November 2026 |
+| WD-2 | The interaction is stateless. The engine evaluates only what the current request contains. | ImmDS 1.0.0; scope statement |
+| WD-3 | Leaving out a Contextual Condition means unknown, not No, as defined by topic 7. | Topic 7 |
+| WD-4 | The requesting system asserts Contextual Conditions. The engine does not retrieve, infer, or interpret them from medical records. | Scope statement; February 2026 narrative draft |
+| WD-5 | One whole Knowledge Base is applied per request, and the response names it. Combinations of authorities are published by the engine as their own Knowledge Bases. | February 2026 narrative draft; topic 7 |
+| WD-6 | Capability discovery is separate from the per-request support report. | Capability and transparency concept, 2025 |
+| WD-7 | Releases carry unresolved design choices openly rather than wait for a complete specification. The community corrects the content. | Project direction, November 2026 |
+| WD-8 | Scope follows the "Latest Proposed Language" on the HL7 Public Health Immunization Decision Support page. PSS-2764 is not being revised; this Topic Reference states the scope. | HL7 Public Health, 3 September 2026; project direction, November 2026 |
+| WD-9 | FHIR R6 is the target. There is no requirement for backward compatibility with ImmDS 1.0.0 on R4. An R4 back-port would be proposed later only if needed. Resolves OQ-4 and OQ-11. | Meetings of 3 and 17 September and 29 October 2026; project direction, November 2026 |
+| WD-10 | HALO is implemented as Contextual Conditions, defined by topic 7. This topic defines how conditions are exchanged in FHIR and how an engine reports support for them. | Topic 7 WD-5 and WD-6 |
+| WD-11 | Role names follow topic 7: Schedule Authority, terminology steward, and Knowledge Base. Resolves OQ-2. | Topic 7 WD-10 |
+| WD-12 | A date that matters to a condition is sent as its own date-valued condition, not in `Observation.effective[x]`. Resolves OQ-10. | Topic 7 WD-8 |
+| WD-13 | Results are organized by target disease. Target disease is always given and may repeat, one disease per repeat. "Vaccine group" is not used. The vaccine code is given only for a specific vaccine. | Meeting of 17 September 2026; FHIR-58655, FHIR-58952 |
+| WD-14 | Forecast status gets a standardized code set. Forecast reason stays more open and may carry several codes, such as a standard code with a legacy one. | Meeting of 3 September 2026 |
+| WD-15 | Needs met today with extensions are proposed as changes to the base FHIR resources. | Meeting of 3 September 2026; change requests listed in the FHIR chapter |
+| WD-16 | Testing platforms are first-class requesting systems. Testing and validation is one of the two primary use cases. | Scope statement |
+| WD-17 | Questionnaires are optional extras that an engine may publish. They are not part of the forecast request. | February 2026 narrative draft; meeting of 29 October 2026 |
+| WD-18 | CDS Hooks is complementary. Calling CDS from EHR workflow, and gathering patient data from other systems, are outside this interface. | 2025 CDS Hooks comparison; meeting of 29 October 2026 |
 
-## Open questions
+## Open questions {#open-questions}
 
-| ID | Question | Current context |
-|---|---|---|
-| OQ-1 | What term should replace “Schedule Authority”? | The role publishes clinical guidance, but “schedule” may be too narrow and “authority” may imply governance that does not exist. |
-| OQ-2 | How does the current role vocabulary map to earlier Code System, Publishing, Namespace, and CDS Authority roles? | The Contextual Conditions project records the same unresolved vocabulary issue. |
-| OQ-3 | Should the FHIR operation remain `$immds-forecast` or become `$immds-halo-forecast`? | Compatibility and signaling a broader model pull in different directions. |
-| OQ-4 | Does the technical guide depend on the original ImmDS IG or define a clean international baseline? | The September FHIR draft treats the original as a compatibility baseline. |
-| OQ-5 | How are Knowledge Bases identified, versioned, discovered, requested, and echoed in a response? | Current parameters and identifiers are placeholders for review. |
-| OQ-6 | Where and at what granularity is guidance provenance attached? | A result may need the Knowledge Base, documentation, and one or more sources of guidance. |
-| OQ-7 | What is the minimum useful transparency contract? | Used, ignored, unsupported, unrecognized, partial, and blocked states need precise semantics. |
-| OQ-8 | How should capability discovery be represented? | Several FHIR resources or a dedicated operation are candidates. |
-| OQ-9 | How should recommendation category be represented and governed? | It must remain distinct from forecast status and reason. |
-| OQ-10 | How should the FHIR binding align with the current Contextual Conditions date rule? | The older draft permits `Observation.effective[x]`; the Contextual Conditions Topic Reference models a meaningful date as a separate condition. |
-| OQ-11 | Which parts of FHIR R6 should influence an R4 first implementation? | The project needs a deliberate compatibility path. |
-| OQ-12 | What examples are required before broad implementation review? | The current examples cover only a small portion of the proposed behavior. |
+| ID | Question | Context | Status |
+|---|---|---|---|
+| OQ-1 | Should "Schedule Authority" be renamed? | "Schedule" may be too narrow, and "authority" may suggest governance that does not exist. Topic 7 kept the name in its WD-10. | Referred to topic 7 |
+| OQ-2 | How do the role names map to the earlier four roles? | | Resolved by WD-11 |
+| OQ-3 | Should the operation keep the name `$immds-forecast` or use `$immds-halo-forecast`? | With no compatibility requirement (WD-9), the choice is about what the name signals. | Open |
+| OQ-4 | Does the guide depend on the ImmDS 1.0.0 R4 guide? | | Resolved by WD-9 |
+| OQ-5 | How are Knowledge Bases identified, versioned, discovered, requested, and named in the response? | Identifiers are local to each engine. Parameters are placeholders. | Open |
+| OQ-6 | Where is the authority recorded: on the Knowledge Base, on each recommendation, or both? As an organization or as a code? | FHIR-56989, FHIR-56990, FHIR-57247. Concern about confusing readers with the same information in several places. Raised 29 October 2026. | Open |
+| OQ-7 | What is the minimum support report, and how does a requesting system tell complete, partial, and blocked results apart? | `OperationOutcome` alone, or with a response-level status. Draft list of message types. | Open |
+| OQ-8 | How is capability discovery delivered? | A dedicated operation, or published artifacts with an index. | Open |
+| OQ-9 | How is recommendation category represented in FHIR, and who governs its values? | A LOINC concept has been proposed for HL7 v2. | Open |
+| OQ-10 | How does the FHIR binding handle condition dates? | | Resolved by WD-12 |
+| OQ-11 | Which FHIR version? | | Resolved by WD-9 |
+| OQ-12 | Which examples are needed before broad implementation review? | See the example list in the FHIR chapter. | Open |
+| OQ-13 | How does a recommendation point to the rule behind it? | A URL, or a reference to a `PlanDefinition`, `Library`, or `DeviceDefinition`. Raised 17 September and 1 October 2026. | Open |
+| OQ-14 | What are the standard forecast status values, and where are they published? | "Conditional" and "Not available" are in use but not in the LOINC list. "Not available" may belong in capability discovery instead. Values could be hosted at hl7.org. | Open |
+| OQ-15 | How are seasons identified, so that a season on an evaluation or recommendation is unambiguous? | Raised 17 September 2026; FHIR-59487, FHIR-59488. A group may be convened on seasons. | Open |
+| OQ-16 | Should implementers stay conformant with the current R6 incubator, or build to where the change requests are heading? Can the change requests be fast-tracked? | Raised 1 October 2026. | Open |
+| OQ-17 | Should there be a standard format for exchanging test cases between testing tools, and how are relative dates represented? | Notes on the HL7 Public Health Immunization Decision Support page. | Open |
+| OQ-18 | How should this work align with the European Vaccination CDS guide (EUVABECO)? | Similar functions, including a questionnaire for patient context. | Open |
+| OQ-19 | How should vaccine codes be reported as recognized, not evaluated, or unknown, in discovery and in each response? | Proposed in the 2025 difference summary and the capability concept. | Open |

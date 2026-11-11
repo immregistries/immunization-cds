@@ -14,475 +14,699 @@ The authoritative source is in content/. Regenerate this reading copy with:
 
 ---
 
-# Status and Scope
+# Scope and Use Cases
 
 ## Status
 
-**Version 0.1.0 — Draft Topic Reference for community discussion.**
+**Version 0.2.0: working preview for community reaction.**
 
-This document is an initial synthesis, not a standard, approved specification,
-clinical recommendation, HL7 ballot artifact, or final project decision. It is
-intentionally incomplete. Its purpose is to give participants something
-coherent and concrete to review, correct, and extend.
+This is a working draft, not a standard, approved specification, ballot
+artifact, or clinical guidance. It gathers in one place what the Immunization
+CDS (ImmDS + HALO) work has proposed and discussed so far, so the community can
+correct it. It is unfinished. Disagreements and open questions are left visible
+on purpose, in [Working Decisions](content/90-working-decisions.md#working-decisions).
+
+Corrections are welcome as comments on the published page, as GitHub issues,
+or in the
+[topic 1 meetings](https://informatics.immregistries.org/hub/es/topic/1).
 
 ## In brief
 
-Immunization CDS (ImmDS + HALO) is a proposed machine-to-machine approach for
-requesting immunization clinical decision support evaluations and
-recommendations. A requesting system supplies an assessment date, patient
-information, immunization history, and optional Contextual Conditions. A CDS
-service applies an identifiable executable Knowledge Base and returns dose
-evaluations, patient-specific recommendations, and information about the data
-and rules used or not used.
+Immunization clinical decision support (CDS) engines evaluate a patient's
+immunization history and recommend the vaccinations due now or later. Many
+engines run as independent services that receive patient information and
+return evaluations and recommendations. They perform similar functions but use
+different proprietary interfaces. That raises integration costs, makes it hard
+to switch engines, and makes testing and validation harder.
 
-## Purpose
+Immunization CDS (ImmDS + HALO) defines **one common service interface for
+immunization CDS engines**. It standardizes the exchange between a system that
+requests immunization guidance and the engine that provides it. It does
+**not** standardize clinical decision logic, vaccination schedules, or
+forecasting methods.
 
-This Topic Reference brings the project's conceptual architecture, working terminology,
-examples, implementation direction, and open questions into one maintained
-source. It is meant to support discussion in
-[InteropHub topic 1](https://informatics.immregistries.org/hub/es/topic/1) and
-provide a conceptual foundation for technical products such as a FHIR
-implementation guide.
+The name joins the original Immunization Decision Support Forecast (ImmDS)
+interface with HALO, short for **H**ealth, **A**ge, **L**ifestyle,
+**O**ccupation, and other factors. HALO is implemented as
+[Contextual Conditions](https://immregistries.github.io/contextual-conditions/latest/),
+the subject of [topic 7](https://informatics.immregistries.org/hub/es/topic/7):
+neutral, coded facts about a patient's circumstances that the requesting system
+supplies and the engine may use.
 
-## Scope
+## Use cases {#use-cases}
 
-The Topic Reference covers:
+The interface serves two primary use cases.
 
-- the stateless forecast interaction and system boundary;
-- inputs, including Contextual Conditions;
-- executable Knowledge Bases and provenance of guidance;
-- dose evaluations, recommendations, and recommendation meaning;
-- transparency about limitations and handling of submitted information;
-- capability discovery; and
-- the relationship to the current FHIR working model and related projects.
+1. **Access to CDS from any provider.** An immunization information system
+   (IIS), electronic health record (EHR), pharmacy system, public health
+   application, or any other health information system calls immunization CDS
+   services from different vendors and organizations through one common
+   integration. It can change or add engines without building a new interface.
 
-The Topic Reference does not define clinical policy, mandate an internal CDS rules
-engine, specify a user interface, or claim that the current FHIR design is
-final.
+2. **Testing and validation.** A testing platform sends published test cases
+   to a CDS engine through the same interface and compares the results with the
+   expected outcomes. See [Testing and validation](content/04-fhir-and-testing.md#testing).
 
----
+## What is in scope {#in-scope}
 
-# Related Work
+- The stateless request and response between a requesting system and a CDS
+  engine: assessment date, patient, immunization history, and Contextual
+  Conditions in; dose evaluations and recommendations out.
+- **Communicating Contextual Conditions** in the request, and how an engine
+  **indicates support** for them, both in advance and in each response.
+- Identifying the [Knowledge Base](content/02-knowledge-bases-and-capabilities.md#knowledge-bases)
+  an engine applied, and the guidance behind each recommendation.
+- How evaluations and recommendations are expressed: target disease, forecast
+  status and reason, recommendation category, series, season, and similar
+  elements.
+- Capability discovery: what an engine supports before any patient data is
+  sent.
+- A FHIR R6 representation, with the changes to FHIR resources it needs, plus
+  examples, terminology guidance, and support for testing.
 
-This Topic Reference is the working document for
-[Immunization CDS (ImmDS + HALO), InteropHub topic 1](https://informatics.immregistries.org/hub/es/topic/1).
-InteropHub remains the community index for meetings, outcomes, relationships,
-and participation. This repository is intended to hold the maintained Topic Reference
-that those discussions review.
+## What is out of scope {#out-of-scope}
+
+- Clinical decision logic, vaccination schedules, forecasting methods, and how
+  an engine computes its results.
+- How Contextual Conditions are collected, inferred, maintained, or governed,
+  and how an engine uses them. What a Contextual Condition *is* belongs to
+  [topic 7](https://informatics.immregistries.org/hub/es/topic/7).
+- Engines retrieving data from other systems, interpreting medical records, or
+  inferring missing information.
+- Clinician workflow, user interface, and presentation of results. This
+  includes calling CDS at points in an EHR workflow, which is the role of CDS
+  Hooks (see [Related work](#related-work)).
+- Persisting patient data in the engine between requests.
+- Who may send or receive this information, and how it is used, disclosed, or
+  protected.
+
+## International by design {#international}
+
+Early work came from the United States immunization community. Collaboration
+with international participants has shown that the concepts do not depend on
+any one country, schedule, or terminology system. The interface therefore
+supports jurisdiction-specific policies, schedules, and coding systems without
+requiring a particular forecasting method. National or system-level guides may
+later constrain it, for example by requiring certain code systems or Contextual
+Conditions.
+
+## Basis and history {#basis}
+
+This work builds on the published
+[ImmDS 1.0.0 Implementation Guide](https://hl7.org/fhir/us/immds/) (STU1,
+FHIR R4, US Realm). It keeps that guide's stateless request-and-response model,
+built on the `$immds-forecast` operation, and extends what the request and
+response can carry. It targets FHIR R6 and does not need to remain
+wire-compatible with the R4 guide ([WD-9](content/90-working-decisions.md#working-decisions)).
+
+The scope above follows the "Latest Proposed Language" on the HL7 Public Health
+Work Group's
+[Immunization Decision Support](https://confluence.hl7.org/spaces/PHWG/pages/230556918/Immunization+Decision+Support)
+page. HL7 Public Health, the sponsoring work group, judged that the expanded
+scope fits within the existing project scope statement,
+[PSS-2764](https://jira.hl7.org/browse/PSS-2764), so the PSS is not being
+revised. This Topic Reference is where the scope is stated in full
+([WD-8](content/90-working-decisions.md#working-decisions)).
+
+## Related work {#related-work}
 
 | Work | Relationship |
 |---|---|
-| Original ImmDS implementation guide | Compatibility baseline for the forecast interaction. The project must decide which parts remain compatible and which require a revised international model. |
-| ImmDS + HALO FHIR implementation-guide draft | Current concrete technical exploration of an operation, profiles, extensions, terminology, capability statements, and examples. It is a source and downstream technical product, not yet the authority for the whole Topic Reference. |
-| [CDS Contextual Conditions, topic 7](https://informatics.immregistries.org/hub/es/topic/7) | Defines Contextual Conditions independently of a specific transport. This project consumes that concept and should not reproduce its detailed specification. |
-| [HL7 v2 Contextual Conditions Exchange, topic 137](https://informatics.immregistries.org/hub/es/topic/137) | Develops the HL7 v2 representation of the same contextual input concept. |
-| CDS Hooks | A possible workflow integration that can invoke or present CDS results. ImmDS + HALO defines a forecast interaction and is not itself CDS Hooks. |
-| Step Into CDSi | Demonstration and testing environment that can expose proposed behavior and make implementation questions concrete. |
-| Immunization Vocabularies Collaborative | Possible publication and coordination mechanism for externally governed terminology. It does not own clinical guidance or executable forecast logic merely by publishing codes. |
-
-<!-- CONFIRM: Add canonical public links for the original ImmDS guide and current FHIR implementation-guide working location once their publication status is settled. -->
-
----
-
-# Problem and Working Principles
-
-Immunization forecasting often depends on more than date of birth and
-immunization history. Pregnancy, immune status, prior disease, occupational
-exposure, travel, living circumstances, and maternal vaccination may change
-which guidance applies. Systems also need to know which executable rules were
-used and whether submitted information was understood.
-
-Traditional forecast exchanges can return an answer without enough detail to
-distinguish missing context, unsupported context, differing clinical guidance,
-or a particular implementation of that guidance. ImmDS + HALO explores a more
-explicit contract.
-
-The current working principles are:
-
-- Forecasting is stateless: each request contains the information needed for
-  that evaluation.
-- The CDS service evaluates the supplied data rather than searching external
-  patient records or remembering prior requests.
-- Date of birth is expected to remain the only required patient fact beyond the
-  assessment date; other patient context is optional.
-- Omission of a Contextual Condition means unknown, not No.
-- The requesting system asserts Contextual Conditions; the CDS service does
-  not infer them from arbitrary clinical data as part of the forecast call.
-- One coherent executable Knowledge Base is applied to a request.
-- The response makes important limitations visible.
-- General capability discovery is separate from the patient-specific forecast.
-- The conceptual model is international first and may be constrained by later
-  national or implementation-specific guides.
-
-These are working positions. Their precise technical representation remains
-open where identified later in this document.
+| [ImmDS 1.0.0](https://hl7.org/fhir/us/immds/) | The published R4 interface this work extends. |
+| [CDS Contextual Conditions, topic 7](https://informatics.immregistries.org/hub/es/topic/7) ([Topic Reference](https://immregistries.github.io/contextual-conditions/latest/)) | Defines what a Contextual Condition is, and the Schedule Authority and Knowledge Base roles. This topic defines how conditions travel in the FHIR request and how support is reported; see [Contextual Conditions in the request](content/01-service-interaction.md#contextual-conditions). |
+| [HL7 v2 Contextual Conditions Exchange, topic 137](https://informatics.immregistries.org/hub/es/topic/137) | The HL7 v2 representation of Contextual Conditions. |
+| CDS Hooks | Calls decision support at points in an EHR workflow and turns results into clinician-facing cards. A CDS Hooks service can call an ImmDS + HALO engine rather than rebuild forecasting logic, and can gather patient information from other systems, which this interface leaves out. The two are complementary layers. |
+| CDC Clinical Decision Support for Immunization (CDSi) and other forecasting methods | CDSi and the methods behind other national and commercial engines are complementary. This interface is a common layer through which they can be reached; it does not replace them. |
+| [Vaccination CDS guide (EUVABECO)](https://build.fhir.org/ig/EUVABECO/VCDS/) | A European FHIR guide with similar functions, including a questionnaire for patient context. The two efforts should stay aligned ([OQ-18](content/90-working-decisions.md#open-questions)). |
+| NIST Forecasting Immunization Test Suite (FITS) and Step Into CDSi | Testing and demonstration platforms for the [testing use case](content/04-fhir-and-testing.md#testing). Step Into CDSi offers a demonstration engine and client that use the draft interface. |
+| Immunization Vocabularies Collaborative (IVC) | A possible publisher of code systems, such as forecast status values and Contextual Condition code systems. |
+| [ImmDS + HALO FHIR IG working draft](https://github.com/immregistries/immds-halo-fhir-ig-working-draft) | The September 2026 technical draft. It is to become a product of this Topic Reference ([WD-1](content/90-working-decisions.md#working-decisions)). |
 
 ---
 
-# Architecture
+# Service Interaction
 
-ImmDS + HALO is a machine-to-machine forecast interface. It can support an IIS,
-clinical application, workflow system, testing tool, or CDS Hooks integration,
-but it does not define the user experience of those systems.
+## The interaction at a glance
 
-The conceptual flow is:
+A requesting system sends one stateless request. The CDS engine evaluates it
+against one Knowledge Base and returns the results. Nothing is remembered
+between requests.
 
-```text
-Requesting system
-  assessment date + patient + immunization history + optional context
-                              |
-                              v
-CDS service applies one executable Knowledge Base
-                              |
-                              v
-evaluations + recommendations + transparency + provenance
+```mermaid
+flowchart LR
+  subgraph R["Requesting system or testing platform"]
+    direction TB
+    R1["Assessment date"]
+    R2["Patient: date of birth and other demographics"]
+    R3["Immunization history"]
+    R4["Contextual Conditions (optional)"]
+    R5["Requested Knowledge Base (optional)"]
+  end
+  subgraph E["CDS engine"]
+    direction TB
+    KB["Applies one Knowledge Base"]
+  end
+  subgraph O["Response"]
+    direction TB
+    O1["Dose evaluations"]
+    O2["Recommendations"]
+    O3["Knowledge Base used"]
+    O4["Support report: what was used, ignored, unsupported, or invalid"]
+    O5["Additional context suggested"]
+    O6["Messages: warnings, partial results, errors"]
+  end
+  R -->|"one request"| E -->|"one response"| O
 ```
 
-## Responsibilities
+*Figure 1. One stateless request and response. The engine sees only what the request contains.*
 
-The requesting system assembles the patient facts, immunization history, and
-asserted Contextual Conditions needed for the call.
+## Terms {#terms}
 
-The CDS service validates the request, applies one coherent Knowledge Base, and
-produces the requested evaluations and recommendations. The interaction does
-not require the service to inspect other patient records, maintain a session,
-or dynamically combine individual sources of guidance at runtime.
+Each term is defined once here and linked from elsewhere. Terms owned by
+[topic 7](https://informatics.immregistries.org/hub/es/topic/7) link to its
+definitions rather than repeating them.
 
-The response identifies material limitations: for example, data that was not
-recognized or supported, context that was ignored, incomplete results, or an
-issue that prevented a reliable forecast.
+| Term | Working definition |
+|---|---|
+| **Requesting system** | The system that assembles the patient information and asks for evaluations and recommendations: an IIS, EHR, pharmacy system, public health application, CDS Hooks service, or testing platform. |
+| **CDS engine** | The service that evaluates the request against a Knowledge Base and returns evaluations and recommendations. Also called a forecaster. |
+| **Testing platform** | A requesting system that sends test cases and compares the engine's results with expected outcomes. |
+| **Assessment date** | The date for which the evaluation and forecast are calculated. It is normally today, and may be another date for testing or review. Contextual Conditions are asserted as applying on this date. |
+| **Immunization history** | The vaccination events supplied in the request, as recorded. |
+| **Evaluated history** | The immunization history after the engine has judged each dose against the guidance, expressed as dose evaluations. |
+| **Dose evaluation** | The engine's judgment of one supplied dose for one target disease: for example valid, not valid, or valid but not counted toward the series, with a reason. |
+| **Recommendation** | The engine's patient-specific forecast for one target disease, or for one vaccine where a specific vaccine is recommended: status, reason, dates, and related details. |
+| **Target disease** | The disease a dose or recommendation protects against. It is the organizing key of a recommendation, replacing the undefined idea of a "vaccine group" ([WD-13](content/90-working-decisions.md#working-decisions)). |
+| **Forecast status** | Where the patient stands for a target disease, such as due, overdue, complete, or not recommended. Proposed as a standardized code set ([WD-14](content/90-working-decisions.md#working-decisions)). |
+| **Forecast reason** | Why that status applies to this patient, such as a contraindication or a risk condition. More open than status, and may carry several codes. |
+| **Recommendation category** | How the Schedule Authority classifies the recommendation, such as routine, risk-based, shared clinical decision-making, or mandatory. It is not patient-specific. See [Recommendation category](content/03-evaluations-and-recommendations.md#recommendation-category). |
+| **Contextual Condition** | A coded, neutral fact about the patient's circumstances that may affect a recommendation. Defined by [topic 7](https://immregistries.github.io/contextual-conditions/latest/). HALO factors are Contextual Conditions. |
+| **Schedule Authority** | The organization or expert body that publishes immunization guidance. Defined by [topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities). |
+| **Knowledge Base** | An identifiable, executable rule set that puts into operation guidance from one or more Schedule Authorities. Defined by [topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities); its use in this interface is in [Knowledge Bases](content/02-knowledge-bases-and-capabilities.md#knowledge-bases). |
+| **Support report** | The part of a response that says which submitted conditions and vaccine codes the engine used, ignored, did not support, or found invalid. |
+| **Capability discovery** | Finding out what an engine supports before sending patient data. See [Capability discovery](content/02-knowledge-bases-and-capabilities.md#capability-discovery). |
 
-## Guidance and executable logic
+<!-- CONFIRM: These definitions are first drafts for the 12 November 2026 discussion. Expect them to change. -->
 
-Organizations or expert bodies publish clinical guidance. Software implements
-guidance as executable rules. These are related but not identical artifacts.
-Section 6 distinguishes the publisher or source of guidance from the Knowledge
-Base actually executed by a CDS service.
+## Responsibilities {#responsibilities}
 
----
+**The requesting system** supplies the best patient information it has:
+demographics, immunization history, and any known Contextual Conditions. It
+decides how that information is gathered. It is responsible for reading the
+support report and accounting for anything the engine did not consider.
 
-# Forecast Interaction
+**The CDS engine** produces results only from the request. It does not
+retrieve data from other systems, interpret medical records, infer missing
+information, or keep patient data between requests. It reports what it did
+and did not consider, because safety comes from making limits visible, not
+from assuming the engine handles everything.
 
-The conceptual request contains:
+**Clinicians and programs** remain responsible for decisions. The results are
+machine-readable data for downstream systems, not text meant to be shown
+directly to a clinician.
 
-| Input | Purpose | Current status |
+## Request {#request}
+
+| Input | Purpose | Status |
 |---|---|---|
-| Assessment date | Date for which the forecast is calculated | Required |
-| Patient | Identifies the patient and supplies demographics, with date of birth expected to be the minimum required fact | Required |
-| Immunization history | Administered and historical vaccination events | Optional collection; may be empty |
-| Contextual Conditions | Assertions needed by forecast logic beyond demographics and immunization history | Optional collection |
-| Requested Knowledge Base and version | Selects one executable rule set offered by the service | Proposed optional input |
+| Assessment date | The date the forecast is calculated for | Required |
+| Patient | Date of birth is the minimum; other demographics are optional | Required |
+| Immunizations | The immunization history | Zero or more |
+| Contextual Conditions | Asserted facts beyond demographics and history | Zero or more |
+| Knowledge Base and version | Selects one Knowledge Base the engine offers | Optional; the engine's default if absent |
 
-The conceptual response contains:
+## Response {#response}
 
 | Output | Purpose |
 |---|---|
-| Dose evaluations | Assessment of supplied immunization events |
-| Recommendations | Patient-specific forecast results |
-| Knowledge Base used | Identifies the executable rules actually applied |
-| Context handling | Discloses submitted conditions that were used, ignored, unsupported, or not understood |
-| Additional context suggested | Identifies information that could improve the forecast if available |
-| Warnings or errors | Explains informational, partial, or blocked results |
+| Dose evaluations | One per supplied dose and target disease |
+| Recommendations | The patient-specific forecast |
+| Knowledge Base used | The rule set actually applied |
+| Support report | Submitted conditions and vaccine codes used, ignored, unsupported, or invalid |
+| Additional context suggested | Conditions the engine could use if they were supplied |
+| Messages | Informational notes, warnings, partial results, and blocking errors |
 
-The interaction does not change server state. Every result applies to the
-submitted information and requested assessment date.
+Results are temporary. They apply to the request that produced them and are
+replaced by the next evaluation, not updated in place. A requesting system may
+keep them for its own audit or legal reasons, which is outside this interface.
 
-<!-- CONFIRM: The current FHIR draft makes assessment date and patient required, allows zero or more immunizations and conditions, and returns exactly one ImmunizationRecommendation resource. Those cardinalities remain technical design questions. -->
+## Contextual Conditions in the request {#contextual-conditions}
 
----
+What a Contextual Condition is, including datatypes, the meaning of absence,
+evaluation dates, and who defines conditions, belongs to
+[topic 7](https://immregistries.github.io/contextual-conditions/latest/).
+That topic leaves three things to this interface. This section covers them.
 
-# Contextual Conditions
+```mermaid
+flowchart TB
+  subgraph T7["Topic 7: CDS Contextual Conditions"]
+    direction TB
+    A["What a condition means, its datatype, and who defines it"]
+    B["Absence is unknown, never No"]
+    C["A meaningful date is its own condition"]
+  end
+  subgraph T1["Topic 1: this interface"]
+    direction TB
+    D["How conditions travel in the FHIR request"]
+    E["How an engine declares which conditions it supports"]
+    F["How a response reports used, ignored, unsupported, and invalid conditions"]
+  end
+  T7 -->|"concept used by"| T1
+```
 
-Contextual Conditions provide the forecast service with operational inputs that
-may change an evaluation or recommendation but are not adequately conveyed by
-demographics and immunization history alone. Examples include a supplied
-assertion that the patient is pregnant, has a relevant immune status, plans
-international travel, or that the birth mother received RSV vaccine during
-pregnancy.
+*Figure 2. Topic 7 owns the concept. This topic owns how it is exchanged and how support is reported.*
 
-This project uses the concept defined by the separate
-[Contextual Conditions Topic Reference](https://github.com/immregistries/contextual-conditions).
-That Topic Reference owns the detailed definition, datatypes, relationship to clinical
-information, evaluation-time semantics, and representation principles.
+1. **How conditions travel.** Each asserted condition is sent as a coded fact
+   with a value. The condition is identified by its Schedule Authority's code
+   system. Only asserted conditions are sent. The FHIR representation is in
+   [FHIR model](content/04-fhir-and-testing.md#fhir-model).
+2. **How support is declared.** See
+   [Capability discovery](content/02-knowledge-bases-and-capabilities.md#capability-discovery).
+3. **How support is reported.** Each response says, for every submitted
+   condition, whether the selected Knowledge Base used it, ignored it, does not
+   support it, or found it invalid. "Unsupported" does not mean wrong. It means
+   the engine could not act on it and the requesting system must consider it
+   another way. These states are defined in topic 7's
+   [distinct input states](https://immregistries.github.io/contextual-conditions/latest/#distinct-input-states).
 
-For ImmDS + HALO:
+An engine may also return **additional context suggested**: conditions it
+could use if they were supplied. A broad condition such as "planning
+international travel" may lead an engine to suggest more specific ones, such
+as destination or departure date. The requesting system chooses whether to
+gather them and resubmit. The engine does not know or care which pattern the
+caller follows; each request stands alone.
 
-- conditions are supplied by the requesting system;
-- omission means unknown rather than No;
-- the service reports whether submitted conditions were recognized and used;
-- capability discovery can describe which conditions a service or Knowledge
-  Base supports; and
-- questionnaires may help collect assertions upstream but are not required by
-  the forecast interaction.
-
-The earlier FHIR draft uses `Observation` for assertions and
-`ObservationDefinition` to describe supported or suggested conditions. These
-are current binding proposals rather than the definition of the concept.
-
-<!-- CONFIRM: The September FHIR draft says Observation.effective[x] may carry timing when it matters. The current Contextual Conditions working decision says a meaningful date is a separate date-valued condition and not an Observation date element. The FHIR binding must be reconciled before this detail is reused. -->
-
----
-
-# Knowledge Bases and Guidance Provenance
-
-The working model distinguishes clinical guidance from its executable
-implementation.
-
-## Source of guidance
-
-An organization or expert body publishes immunization recommendations for
-clinical or public-health use. Earlier drafts call this body a **Schedule
-Authority**. That term is provisional and may be replaced because the role can
-publish guidance that is broader, narrower, or less formally versioned than a
-single schedule.
-
-## Knowledge Base
-
-A **Knowledge Base** is an identifiable executable operationalization of
-guidance from one or more such bodies, possibly including jurisdictional or
-local adaptations. It is the coherent rule set a CDS service actually runs.
-
-A client may request one Knowledge Base from those offered by a service. The
-service applies one Knowledge Base to a forecast and reports the one actually
-used. If combinations of guidance are supported, the service defines them as
-coherent Knowledge Bases rather than allowing a requestor to mix individual
-guidance sources dynamically.
-
-This distinction answers two different questions:
-
-| Question | Concept |
-|---|---|
-| Whose clinical guidance or intent is relevant? | Guidance source / provisional “Schedule Authority” role |
-| Which executable rules did the service run? | Knowledge Base |
-
-A Knowledge Base may draw on multiple guidance sources, and different
-Knowledge Bases may operationalize the same published guidance differently.
-Provenance therefore needs to identify the executable artifact without implying
-that it is identical to the publisher or the publication.
-
-<!-- CONFIRM: Replace “Schedule Authority” after the community agrees on a term and map it to the earlier four-role governance vocabulary. -->
-<!-- CONFIRM: Decide the identifier, version, documentation, and provenance model for Knowledge Bases and guidance sources. -->
+**Questionnaires are optional extras.** An engine may publish a FHIR
+`Questionnaire` whose answers map directly to the Contextual Conditions it
+supports, so that requesting systems can reuse the questions to collect
+information from patients or clinicians. The forecast request itself carries
+conditions, not questionnaire responses.
 
 ---
 
-# Results and Transparency
+# Knowledge Bases and Capabilities
 
-## Dose evaluations
+## Knowledge Bases {#knowledge-bases}
 
-Dose evaluation results describe how the service treated supplied vaccination
-events. The working model needs to express dose validity, the reason for the
-status, whether a dose was valid but did not count toward a series, and the
-relevant provenance or warning information.
+Schedule Authorities publish guidance. CDS engines run Knowledge Bases that put
+that guidance into operation. Both terms are defined by
+[topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities)
+and summarized in [Terms](content/01-service-interaction.md#terms). This section covers
+how they appear in the interface.
 
-## Recommendations
+```mermaid
+flowchart LR
+  SA1["Schedule Authority A<br/>e.g., a national advisory committee"]
+  SA2["Schedule Authority B<br/>e.g., a travel medicine body"]
+  SA3["Local or jurisdictional adaptation"]
+  subgraph ENG["CDS engine"]
+    direction TB
+    KB1["Knowledge Base 1<br/>guidance from A"]
+    KB2["Knowledge Base 2<br/>guidance from A and B, plus local adaptation"]
+  end
+  SA1 -->|"published guidance"| KB1
+  SA1 --> KB2
+  SA2 --> KB2
+  SA3 --> KB2
+  REQ["Request<br/>selects Knowledge Base 2"] --> KB2
+  KB2 --> RES["Response<br/>Knowledge Base used: 2<br/>each recommendation names<br/>the authority behind it"]
+```
 
-Patient-specific recommendations need to keep several ideas distinct:
+*Figure 3. A Knowledge Base may combine guidance from several Schedule Authorities. A request selects one whole Knowledge Base; it never mixes authorities itself.*
 
-- **forecast status:** where the patient stands relative to protection or a
-  vaccination path;
-- **forecast reason:** why that patient-specific status applies; and
-- **recommendation category:** how the applicable clinical guidance classifies
-  the recommendation, such as a routine or risk-based category.
+<!-- CONFIRM: Figure 3 is the first version of the Knowledge Base graphic requested at the 29 October 2026 meeting. It needs review. -->
 
-Conflating these ideas can make a conditional recommendation look like no
-recommendation, or make the reason for a patient-specific result look like a
-policy category.
+- **One Knowledge Base per request.** A request may name a Knowledge Base, and
+  a version, from those the engine offers. The engine applies that one
+  Knowledge Base, or its default, and says which one it used.
+- **No mixing at request time.** If guidance from several authorities must be
+  combined, the engine publishes that combination as its own Knowledge Base.
+  The requesting system cannot assemble authorities in a request.
+- **Locally defined identifiers.** Each engine names its own Knowledge Bases.
+  There is no global registry.
+- **Authority behind each result.** Within one Knowledge Base, different
+  recommendations may come from different authorities. For example, influenza
+  guidance from one authority and tuberculosis guidance from another, for the
+  same patient. A result can name the authority that applies to it.
 
-## Transparency for the current call
+Where the authority is recorded is under discussion
+([OQ-6](content/90-working-decisions.md#open-questions)). FHIR currently allows at most
+one `authority` on `ImmunizationEvaluation` and on `ImmunizationRecommendation`,
+at the resource level, as a reference to an organization. Change requests
+propose allowing several, moving the recommendation's authority down to each
+recommendation, and possibly allowing a code rather than an organization
+reference (see [FHIR change requests](content/04-fhir-and-testing.md#change-requests)).
+Discussion so far has raised two concerns: whether authority is an attribute of
+the Knowledge Base, of each recommendation, or both, and whether recording it
+in several places will confuse readers.
 
-The response should disclose material facts about the current forecast,
-including:
+## Documentation of the rule behind a result {#rule-documentation}
 
-- Contextual Conditions supplied and used;
-- supplied conditions ignored, unsupported, or not understood;
-- vaccine codes not recognized or recognized but not forecasted;
-- additional context that could improve the result;
+Implementers asked for a way to point from a recommendation to the rule that
+produced it: the specific decision support logic for that target disease. At
+least one engine already returns a URL for this. Useful content could include
+a link, a version, and a date. It complements, but differs from:
+
+- the recommendation's description, which carries clinical information for the
+  user; and
+- the Knowledge Base used, which identifies the rule set as a whole.
+
+Candidate FHIR approaches include an element or extension on the
+recommendation that references a `PlanDefinition`, `Library`, or
+`DeviceDefinition`, or simply carries a URL. Whether to expose rule URLs is
+each engine's choice; the interface only needs a place to put them
+([OQ-13](content/90-working-decisions.md#open-questions)).
+
+## Capability discovery {#capability-discovery}
+
+A response's support report says what happened in one request. Capability
+discovery says what an engine can do in general, before any patient data is
+sent. Keeping them apart stops the forecast response from becoming overloaded
+([WD-6](content/90-working-decisions.md#working-decisions)).
+
+Discovery may describe:
+
+- the Knowledge Bases offered, with versions, the Schedule Authorities they
+  draw on, effective dates, and documentation;
+- the target diseases each Knowledge Base forecasts, and the vaccines that
+  count toward each;
+- vaccine codes recognized, with a status for each: recognized but not a valid
+  vaccine (such as a historical code), recognized but not evaluated, or
+  evaluated and used in recommendations;
+- concepts the engine does not handle at all, such as an engine that does not
+  forecast rabies vaccine;
+- Contextual Conditions recognized, with a status for each: ignored, used only
+  to suggest missing context, or affecting results; and
+- any `Questionnaire` resources the engine publishes for collecting
+  conditions.
+
+Two delivery patterns have been discussed: a dedicated operation that returns
+everything in one bundle, and artifacts published at stable addresses
+(`CapabilityStatement`, `ValueSet`, `ConceptMap`, `ObservationDefinition`) with
+a light index. The September FHIR draft has only a basic `CapabilityStatement`
+and one `ObservationDefinition` example. No design has been chosen
+([OQ-8](content/90-working-decisions.md#open-questions)).
+
+---
+
+# Evaluations and Recommendations
+
+This chapter covers what the results say. The terms are defined in
+[Terms](content/01-service-interaction.md#terms); the FHIR elements that carry them
+are in [FHIR model](content/04-fhir-and-testing.md#fhir-model).
+
+## Tiers of standardization {#tiers}
+
+Not every element needs the same level of agreement. Discussion so far
+suggests two tiers:
+
+| Tier | Elements | Approach |
+|---|---|---|
+| Standardized | Target disease, forecast status, dose validity | A shared code set, ideally published at hl7.org, so any requesting system can act on the value without knowing the engine |
+| Published by the authority or engine | Forecast reason, series, season, recommendation category, dose number | Codes defined by the Schedule Authority or engine and published so they can be looked up. FHIR allows a standard code and a local code side by side in one element |
+
+<!-- CONFIRM: The tier assignment of each element is a working proposal from the 17 September 2026 meeting. -->
+
+## Organized by target disease {#target-disease}
+
+Recommendations and evaluations are organized by **target disease**.
+Discussion on 17 September 2026 concluded:
+
+- Target disease is always given on a recommendation, and there may be more
+  than one. A measles, mumps, and rubella recommendation lists three target
+  diseases, as three separate repeats, not three codes inside one concept.
+- "Vaccine group" is not a defined concept and should not be used. Not
+  otherwise specified (NOS) vaccine codes, such as the CVX "unspecified
+  formulation" codes, should not stand in for a disease.
+- The vaccine code is given only when a specific vaccine is recommended. The
+  current FHIR definition of `ImmunizationRecommendation.recommendation.vaccineCode`
+  mixes these ideas and needs correcting.
+- The evaluation side needs the same structure: an evaluation may count toward
+  more than one target disease.
+
+At least one engine is changing its target disease output to a list in its
+next release.
+
+## Forecast status and reason {#status-and-reason}
+
+**Forecast status** says where the patient stands. **Forecast reason** says
+why. Keeping them apart lets status be standardized while reasons stay open.
+
+Points from discussion so far:
+
+- Today's status values are a temporary code set. A standard set is needed,
+  with an example binding in the guide.
+- Engines differ. One engine uses **Conditional** to tell the user to consider
+  the patient's circumstances; that value is not in the current LOINC list.
+  CDSi has no "conditional": it uses *complete* (no dates), *not recommended*
+  (for example, between seasons), and *not complete* for everything with a
+  date, with a risk-based recommendation category where relevant.
+- **Not available** has been used to mean the engine does not forecast this
+  target disease at all. That is arguably a capability, not a patient status
+  ([OQ-14](content/90-working-decisions.md#open-questions)).
+- A contraindication should be traceable to its reason, for example
+  "contraindicated", with the reason "allergy to neomycin".
+- Long-standing reason code sets exist. Mapping them is a wider conversation.
+  FHIR's ability to send several codes lets an engine send a standard code with
+  its legacy one.
+- There is concern about mixing the strength of a recommendation with what is
+  recommended.
+
+## Recommendation category {#recommendation-category}
+
+Schedule Authorities increasingly classify recommendations: routine,
+risk-based, shared clinical decision-making, catch-up, mandatory by law, or
+recommended but not mandatory. Without a way to send this classification,
+systems may drop or downgrade recommendations that are valid but look
+"optional".
+
+- The category is assigned by the Schedule Authority and passed on by the
+  engine unchanged. The interface does not interpret it or attach workflow to
+  it.
+- It is optional. Without it, the timing, validity, and status of a
+  recommendation mean the same.
+- It is distinct from forecast status (when), forecast reason (why for this
+  patient), and the authority (who).
+- Each authority defines its own categories. There is no international value
+  set, and categories may not map across authorities.
+
+A LOINC observation for *Immunization Recommendation Category* has been
+proposed for HL7 v2 messaging. How to represent it in FHIR is open
+([OQ-9](content/90-working-decisions.md#open-questions)).
+
+## Series, season, and doses remaining {#series-and-season}
+
+**Series.** Knowing which series an engine selected helps trace both
+evaluations and recommendations. FHIR carries series as a string; change
+requests propose a coded concept.
+
+**Season.** For seasonal vaccines, a requesting system needs to know which
+season a dose was evaluated in and which season a recommendation is for. At
+least one engine sends this in extensions today. Change requests propose adding
+season to both resources. How seasons are named is open
+([OQ-15](content/90-working-decisions.md#open-questions)).
+
+**Doses remaining.** Users asked for the number of doses left in the series. A
+new element has been proposed.
+
+## Support report and messages {#support-report}
+
+Each response says what the engine did and did not consider:
+
+- Contextual Conditions used, ignored, unsupported, or invalid (see
+  [Contextual Conditions in the request](content/01-service-interaction.md#contextual-conditions));
+- vaccine codes not recognized, or recognized but not evaluated;
+- additional context suggested;
 - the Knowledge Base used; and
-- informational notes, warnings, partial results, or blocking errors.
+- informational notes, warnings, partial results, or errors that blocked the
+  forecast.
 
-The current FHIR exploration uses `OperationOutcome` for messages and also
-proposes a response-level status. It remains open whether both are needed and
-how a client can reliably distinguish complete, partial, and blocked results.
+The September FHIR draft returns these as separate output parameters and uses
+`OperationOutcome` for messages. A draft list of message types includes:
 
----
+- unknown condition code;
+- unsupported condition code;
+- unknown or incompatible Knowledge Base;
+- unsupported version;
+- conflicting conditions; and
+- insufficient information.
 
-# Capability Discovery
-
-Patient-specific transparency answers what happened in one forecast call.
-Capability discovery answers what a service can generally do before a client
-sends patient data. Keeping these concerns separate avoids overloading the
-forecast response.
-
-A useful discovery mechanism may describe:
-
-- supported vaccines and target diseases;
-- recognized vaccines that are not forecasted;
-- available Knowledge Bases and versions;
-- relevant guidance sources;
-- supported Contextual Conditions;
-- which conditions affect recommendations and which only identify missing
-  context;
-- update cadence, documentation, provenance, and contact information; and
-- supported operation versions and profiles.
-
-The September FHIR draft includes a basic `CapabilityStatement` and one
-`ObservationDefinition` example. Candidate FHIR approaches also include a
-dedicated operation, `ValueSet`, `ConceptMap`, `Library`, and `PlanDefinition`.
-No complete discovery contract has been selected.
-
-<!-- CONFIRM: Define the smallest capability artifact needed for the first interoperable implementation rather than attempting to settle every discovery question at once. -->
+How a requesting system can reliably tell a complete result from a partial or
+blocked one is open ([OQ-7](content/90-working-decisions.md#open-questions)).
 
 ---
 
-# FHIR Working Model
+# FHIR Model and Testing
 
-The current technical draft is authored against FHIR R4 and explores a
-stateless operation named `$immds-halo-forecast`. It preserves the original
-ImmDS request/response shape while adding optional context, Knowledge Base
-selection, and response transparency.
+## FHIR R6 is the target {#fhir-version}
 
-The draft currently maps:
+This work proposes an R6 solution ([WD-9](content/90-working-decisions.md#working-decisions)).
+No R4 implementation needs backward compatibility; the only known R4 work is a
+partial implementation by NIST that was never fully tested. If an R4 version is
+needed later, a back-port will be proposed then; the project does not expect
+one to be needed. Implementers working ahead of publication are targeting R6.
 
-| Concept | FHIR exploration |
+## FHIR model {#fhir-model}
+
+The interaction is a FHIR operation that takes the request as input parameters
+and returns the response as output parameters. It does not change server
+state.
+
+| Concept | FHIR resource | Notes |
+|---|---|---|
+| Forecast interaction | `OperationDefinition` | ImmDS 1.0.0 used `$immds-forecast`; the September draft uses `$immds-halo-forecast` ([OQ-3](content/90-working-decisions.md#open-questions)) |
+| Patient | `Patient` | Date of birth is the minimum |
+| Immunization history | `Immunization` | |
+| Contextual Condition | `Observation` | Code from the Schedule Authority's code system, value in `value[x]`. A meaningful date is a separate condition, not `effective[x]` ([WD-12](content/90-working-decisions.md#working-decisions)) |
+| Supported or suggested condition | `ObservationDefinition` | |
+| Optional question set | `Questionnaire` | Answers map directly to conditions |
+| Dose evaluation | `ImmunizationEvaluation` | |
+| Recommendation | `ImmunizationRecommendation` | The September draft keeps one resource with many recommendation entries, as in ImmDS 1.0.0 |
+| Messages | `OperationOutcome` | |
+| Service declaration | `CapabilityStatement` | See [Capability discovery](content/02-knowledge-bases-and-capabilities.md#capability-discovery) |
+| Rule documentation | `PlanDefinition`, `Library`, or `DeviceDefinition` | Candidates only; see [rule documentation](content/02-knowledge-bases-and-capabilities.md#rule-documentation) |
+
+The operation's parameters in the September draft are:
+
+- **In:** `assessmentDate`, `patient`, `immunization`, `contextualCondition`,
+  `knowledgeBase`, and `knowledgeBaseVersion`.
+- **Out:** `evaluation`, `recommendation`, `operationOutcome`,
+  `knowledgeBaseUsed`, `contextualConditionUsed`, `contextualConditionIgnored`,
+  `contextualConditionUnsupported`, and `additionalContextSuggested`.
+
+## Changing the resources rather than extending them {#change-requests}
+
+Several needs are met today with extensions. The working direction is to move
+them into the base resources through FHIR change requests, rather than keep
+permanent extensions ([WD-15](content/90-working-decisions.md#working-decisions)).
+`ImmunizationEvaluation` and `ImmunizationRecommendation` are not normative, so
+they can still change.
+
+| Change request | Summary | Status (10 Nov 2026) |
+|---|---|---|
+| [FHIR-56989](https://jira.hl7.org/browse/FHIR-56989) | `ImmunizationEvaluation.authority`: allow more than one | Submitted |
+| [FHIR-56990](https://jira.hl7.org/browse/FHIR-56990) | `ImmunizationRecommendation.authority`: allow more than one | Submitted |
+| [FHIR-57247](https://jira.hl7.org/browse/FHIR-57247) | Move `ImmunizationRecommendation.authority` under the recommendation element | Submitted |
+| [FHIR-58655](https://jira.hl7.org/browse/FHIR-58655) | `ImmunizationRecommendation` vaccine code has a mixed definition | Submitted |
+| [FHIR-58952](https://jira.hl7.org/browse/FHIR-58952) | Allow several target diseases in `ImmunizationEvaluation` | Submitted |
+| [FHIR-59485](https://jira.hl7.org/browse/FHIR-59485) | `ImmunizationEvaluation.series`: string to CodeableConcept | Submitted |
+| [FHIR-59486](https://jira.hl7.org/browse/FHIR-59486) | `ImmunizationRecommendation` series: string to CodeableConcept | Submitted |
+| [FHIR-59487](https://jira.hl7.org/browse/FHIR-59487) | `ImmunizationEvaluation`: add season | Submitted |
+| [FHIR-59488](https://jira.hl7.org/browse/FHIR-59488) | `ImmunizationRecommendation`: add season | Submitted |
+| [FHIR-59489](https://jira.hl7.org/browse/FHIR-59489) | `ImmunizationRecommendation`: add doses remaining in the series | Submitted |
+
+<!-- CONFIRM: Add any other open change requests the group is tracking, such as the rest of the seven tickets discussed on 1 October 2026, and the forecast status code set. -->
+
+These resources are being developed in an R6 incubator. Implementers have to
+decide whether to stay conformant with the current incubator or build to where
+the change requests are heading. At least one implementer prefers to build as
+close to the expected final form as possible, so as not to split its interface
+twice ([OQ-16](content/90-working-decisions.md#open-questions)).
+
+## Testing and validation {#testing}
+
+Testing is the second use case in [Use cases](content/00-status-and-scope.md#use-cases).
+Labeling a result with its authority shows where the guidance came from, but
+not whether the engine applied it correctly. Only systematic, repeated testing
+shows that.
+
+```mermaid
+flowchart LR
+  TC["Published test case<br/>assessment date, patient, history,<br/>Contextual Conditions, expected results"]
+  TP["Testing platform"]
+  ENG["CDS engine under test"]
+  CMP["Compare actual with expected"]
+  TC --> TP -->|"standard request"| ENG -->|"standard response"| TP --> CMP
+```
+
+*Figure 4. The same interface that serves care also lets one testing platform test any engine.*
+
+- A common interface lets one testing platform, such as NIST FITS, test any
+  conformant engine, and lets test case libraries be shared rather than
+  rebuilt for each engine's interface.
+- Testing can be repeated whenever schedules, codes, or engines change.
+- The interface tests communication and results; it does not certify that an
+  engine is clinically correct. Jurisdictions and programs decide what
+  performance they require.
+
+Test cases take a lot of work to write, so a standard way to export and import
+them between tools would help. Most existing test cases use relative dates,
+such as "two months after birth", rather than fixed dates. FHIR resources
+expect fixed dates, so a test case format may need extensions or a separate
+structure ([OQ-17](content/90-working-decisions.md#open-questions)).
+
+## Discussion examples {#examples}
+
+These scenarios test the design. They are not clinical guidance.
+
+| Scenario | What the response must show |
 |---|---|
-| Forecast interaction | `OperationDefinition` on a system endpoint |
-| Patient | `Patient` |
-| Immunization history | `Immunization` |
-| Contextual Condition assertion | Profiled `Observation` |
-| Supported or suggested condition | `ObservationDefinition` |
-| Dose evaluation | `ImmunizationEvaluation` |
-| Recommendation | `ImmunizationRecommendation` |
-| Warnings and errors | `OperationOutcome` |
-| Service declaration | `CapabilityStatement` |
+| Baseline: date of birth and history, no conditions | Results from the default Knowledge Base. Conditions that were not sent are unknown, not No |
+| Supported condition: pregnancy asserted | The condition is reported as used. The Knowledge Base used is named |
+| Unsupported condition: international travel asserted | The condition is reported as unsupported, and the effect on completeness is visible |
+| Broad condition leads to suggestions | Additional context suggested, such as destination and departure date |
+| Knowledge Base selected by identifier and version | The Knowledge Base actually used, or a clear error |
+| Two authorities for one patient: influenza from one, tuberculosis from another | Each recommendation names its authority within one Knowledge Base |
+| Combination vaccine: measles, mumps, and rubella | One recommendation with three target diseases |
+| Target disease not handled, such as rabies | Reported as not handled, not as a patient status |
+| Contraindication | Status and the specific reason |
+| Seasonal vaccine | The season the recommendation is for |
 
-Profiles, extensions, example instances, temporary code systems, and proposed
-parameters make the questions testable, but they are not approved conformance
-requirements. In particular, the project still needs to decide:
-
-- whether to retain `$immds-forecast` or introduce a new operation name;
-- whether to depend on the original ImmDS guide or define an international
-  baseline;
-- cardinalities and the shape of recommendation output;
-- provenance placement on evaluations and recommendations;
-- representation of recommendation category;
-- capability discovery;
-- complete, partial, and blocked response semantics;
-- alignment with the separate Contextual Conditions concept; and
-- implications of FHIR R6 while initial implementation work uses R4.
-
-The FHIR implementation guide should eventually become a traceable technical
-product of reviewed concepts in this repository, while retaining the precision
-and computable examples needed by implementers.
+Examples still needed include unknown vaccine codes, partial and blocked
+results, recommendation categories, and guidance that differs by jurisdiction.
 
 ---
 
-# Discussion Examples
+# Appendix: Working Decisions and Open Questions
 
-Examples are used to test the architecture and expose ambiguity. They are not
-clinical guidance.
+A working decision is the current position for discussion, not a final or
+approved decision. Each one records where it came from, so it can be
+revisited. IDs are kept stable. A resolved question stays listed with what
+resolved it.
 
-## Baseline forecast
-
-A client supplies an assessment date, patient date of birth, and immunization
-history with no Contextual Conditions. The service applies its default
-Knowledge Base and returns evaluations and recommendations. The result must not
-pretend that omitted optional conditions are false.
-
-## Supported condition
-
-A client supplies a pregnancy assertion in addition to the baseline data. The
-selected Knowledge Base recognizes and uses the condition. The response shows
-that the assertion was used and identifies the Knowledge Base applied.
-
-## Unsupported condition
-
-A client supplies an international-travel assertion that the selected
-Knowledge Base does not support. The response discloses that the condition was
-unsupported and makes the consequence for result completeness visible.
-
-## Knowledge Base selection
-
-A service offers more than one coherent Knowledge Base. The client requests a
-known identifier and optional version. The response confirms the Knowledge Base
-actually executed or returns a clear error if the requested option is not
-available.
-
-## Multiple sources of guidance
-
-A Knowledge Base incorporates guidance from more than one expert body. The
-client still selects one executable Knowledge Base rather than assembling
-guidance sources at runtime. Results preserve useful provenance without
-confusing the rule implementation with the organizations that published the
-underlying guidance.
-
-## Example backlog
-
-Later versions need examples for contraindication, missing context, unknown
-codes, recognized-but-not-forecasted vaccines, partial results, a blocked
-forecast, recommendation categories, and guidance that differs by vaccine or
-jurisdiction.
-
----
-
-# Adoption and Boundaries
-
-ImmDS + HALO should be usable incrementally. A basic service may support the
-baseline forecast interaction before it supports every Contextual Condition,
-Knowledge Base option, recommendation category, or discovery feature. Partial
-support must be declared rather than assumed.
-
-The project aims to standardize an interoperable exchange contract, not:
-
-- clinical policy or which recommendation should apply;
-- the internal structure of a CDS engine or its rule authoring tools;
-- a clinician-facing workflow or user interface;
-- persistence of patient state by the forecast service;
-- inference of Contextual Conditions from arbitrary clinical records;
-- one universal list of conditions or one universal Knowledge Base;
-- dynamic mixing of guidance sources in an individual request; or
-- detailed behavior owned by CDS Hooks, HL7 v2, IVC, or another related effort.
-
-An international conceptual baseline may be constrained by national programs,
-jurisdictions, or implementation communities. Such constraints should identify
-their relationship to the baseline rather than silently redefining shared
-terms.
-
-Version 0.1.0 is successful if it gives implementers and subject-matter experts
-a shared map of the work, makes disagreements visible, and supports the next
-round of InteropHub discussion. It is not expected to settle every technical
-question.
-
----
-
-# Working Decisions and Open Questions
-
-Working decisions are current positions for discussion, not final approval.
-
-## Working decisions
+## Working decisions {#decisions}
 
 | ID | Working decision | Basis |
 |---|---|---|
-| WD-1 | The project maintains one complete conceptual Topic Reference, with detailed FHIR conformance as a related technical product. | The community needs a reviewable document broader than the current FHIR publication format. |
-| WD-2 | The forecast interaction is stateless and evaluates the data supplied in the current request. | Repeated across the narrative draft and FHIR IG. |
-| WD-3 | Omission of a Contextual Condition means unknown, not No. | Shared with the Contextual Conditions project. |
-| WD-4 | The requesting system asserts Contextual Conditions; the forecast operation does not infer them from arbitrary clinical records. | Establishes a bounded machine-to-machine contract. |
-| WD-5 | One coherent Knowledge Base is applied to a forecast and the response identifies the one used. | Separates executable behavior from underlying guidance. |
-| WD-6 | General capability discovery is separate from patient-specific response transparency. | The two answer different questions and have different lifecycles. |
-| WD-7 | Version 0.1.0 carries unresolved design choices explicitly rather than waiting for a complete specification. | This release is a discussion baseline. |
+| WD-1 | This Topic Reference is the single maintained source for the topic. The ImmDS + HALO FHIR IG working draft will become one of its products. | Project direction, November 2026 |
+| WD-2 | The interaction is stateless. The engine evaluates only what the current request contains. | ImmDS 1.0.0; scope statement |
+| WD-3 | Leaving out a Contextual Condition means unknown, not No, as defined by topic 7. | Topic 7 |
+| WD-4 | The requesting system asserts Contextual Conditions. The engine does not retrieve, infer, or interpret them from medical records. | Scope statement; February 2026 narrative draft |
+| WD-5 | One whole Knowledge Base is applied per request, and the response names it. Combinations of authorities are published by the engine as their own Knowledge Bases. | February 2026 narrative draft; topic 7 |
+| WD-6 | Capability discovery is separate from the per-request support report. | Capability and transparency concept, 2025 |
+| WD-7 | Releases carry unresolved design choices openly rather than wait for a complete specification. The community corrects the content. | Project direction, November 2026 |
+| WD-8 | Scope follows the "Latest Proposed Language" on the HL7 Public Health Immunization Decision Support page. PSS-2764 is not being revised; this Topic Reference states the scope. | HL7 Public Health, 3 September 2026; project direction, November 2026 |
+| WD-9 | FHIR R6 is the target. There is no requirement for backward compatibility with ImmDS 1.0.0 on R4. An R4 back-port would be proposed later only if needed. Resolves OQ-4 and OQ-11. | Meetings of 3 and 17 September and 29 October 2026; project direction, November 2026 |
+| WD-10 | HALO is implemented as Contextual Conditions, defined by topic 7. This topic defines how conditions are exchanged in FHIR and how an engine reports support for them. | Topic 7 WD-5 and WD-6 |
+| WD-11 | Role names follow topic 7: Schedule Authority, terminology steward, and Knowledge Base. Resolves OQ-2. | Topic 7 WD-10 |
+| WD-12 | A date that matters to a condition is sent as its own date-valued condition, not in `Observation.effective[x]`. Resolves OQ-10. | Topic 7 WD-8 |
+| WD-13 | Results are organized by target disease. Target disease is always given and may repeat, one disease per repeat. "Vaccine group" is not used. The vaccine code is given only for a specific vaccine. | Meeting of 17 September 2026; FHIR-58655, FHIR-58952 |
+| WD-14 | Forecast status gets a standardized code set. Forecast reason stays more open and may carry several codes, such as a standard code with a legacy one. | Meeting of 3 September 2026 |
+| WD-15 | Needs met today with extensions are proposed as changes to the base FHIR resources. | Meeting of 3 September 2026; change requests listed in the FHIR chapter |
+| WD-16 | Testing platforms are first-class requesting systems. Testing and validation is one of the two primary use cases. | Scope statement |
+| WD-17 | Questionnaires are optional extras that an engine may publish. They are not part of the forecast request. | February 2026 narrative draft; meeting of 29 October 2026 |
+| WD-18 | CDS Hooks is complementary. Calling CDS from EHR workflow, and gathering patient data from other systems, are outside this interface. | 2025 CDS Hooks comparison; meeting of 29 October 2026 |
 
-## Open questions
+## Open questions {#open-questions}
 
-| ID | Question | Current context |
-|---|---|---|
-| OQ-1 | What term should replace “Schedule Authority”? | The role publishes clinical guidance, but “schedule” may be too narrow and “authority” may imply governance that does not exist. |
-| OQ-2 | How does the current role vocabulary map to earlier Code System, Publishing, Namespace, and CDS Authority roles? | The Contextual Conditions project records the same unresolved vocabulary issue. |
-| OQ-3 | Should the FHIR operation remain `$immds-forecast` or become `$immds-halo-forecast`? | Compatibility and signaling a broader model pull in different directions. |
-| OQ-4 | Does the technical guide depend on the original ImmDS IG or define a clean international baseline? | The September FHIR draft treats the original as a compatibility baseline. |
-| OQ-5 | How are Knowledge Bases identified, versioned, discovered, requested, and echoed in a response? | Current parameters and identifiers are placeholders for review. |
-| OQ-6 | Where and at what granularity is guidance provenance attached? | A result may need the Knowledge Base, documentation, and one or more sources of guidance. |
-| OQ-7 | What is the minimum useful transparency contract? | Used, ignored, unsupported, unrecognized, partial, and blocked states need precise semantics. |
-| OQ-8 | How should capability discovery be represented? | Several FHIR resources or a dedicated operation are candidates. |
-| OQ-9 | How should recommendation category be represented and governed? | It must remain distinct from forecast status and reason. |
-| OQ-10 | How should the FHIR binding align with the current Contextual Conditions date rule? | The older draft permits `Observation.effective[x]`; the Contextual Conditions Topic Reference models a meaningful date as a separate condition. |
-| OQ-11 | Which parts of FHIR R6 should influence an R4 first implementation? | The project needs a deliberate compatibility path. |
-| OQ-12 | What examples are required before broad implementation review? | The current examples cover only a small portion of the proposed behavior. |
+| ID | Question | Context | Status |
+|---|---|---|---|
+| OQ-1 | Should "Schedule Authority" be renamed? | "Schedule" may be too narrow, and "authority" may suggest governance that does not exist. Topic 7 kept the name in its WD-10. | Referred to topic 7 |
+| OQ-2 | How do the role names map to the earlier four roles? | | Resolved by WD-11 |
+| OQ-3 | Should the operation keep the name `$immds-forecast` or use `$immds-halo-forecast`? | With no compatibility requirement (WD-9), the choice is about what the name signals. | Open |
+| OQ-4 | Does the guide depend on the ImmDS 1.0.0 R4 guide? | | Resolved by WD-9 |
+| OQ-5 | How are Knowledge Bases identified, versioned, discovered, requested, and named in the response? | Identifiers are local to each engine. Parameters are placeholders. | Open |
+| OQ-6 | Where is the authority recorded: on the Knowledge Base, on each recommendation, or both? As an organization or as a code? | FHIR-56989, FHIR-56990, FHIR-57247. Concern about confusing readers with the same information in several places. Raised 29 October 2026. | Open |
+| OQ-7 | What is the minimum support report, and how does a requesting system tell complete, partial, and blocked results apart? | `OperationOutcome` alone, or with a response-level status. Draft list of message types. | Open |
+| OQ-8 | How is capability discovery delivered? | A dedicated operation, or published artifacts with an index. | Open |
+| OQ-9 | How is recommendation category represented in FHIR, and who governs its values? | A LOINC concept has been proposed for HL7 v2. | Open |
+| OQ-10 | How does the FHIR binding handle condition dates? | | Resolved by WD-12 |
+| OQ-11 | Which FHIR version? | | Resolved by WD-9 |
+| OQ-12 | Which examples are needed before broad implementation review? | See the example list in the FHIR chapter. | Open |
+| OQ-13 | How does a recommendation point to the rule behind it? | A URL, or a reference to a `PlanDefinition`, `Library`, or `DeviceDefinition`. Raised 17 September and 1 October 2026. | Open |
+| OQ-14 | What are the standard forecast status values, and where are they published? | "Conditional" and "Not available" are in use but not in the LOINC list. "Not available" may belong in capability discovery instead. Values could be hosted at hl7.org. | Open |
+| OQ-15 | How are seasons identified, so that a season on an evaluation or recommendation is unambiguous? | Raised 17 September 2026; FHIR-59487, FHIR-59488. A group may be convened on seasons. | Open |
+| OQ-16 | Should implementers stay conformant with the current R6 incubator, or build to where the change requests are heading? Can the change requests be fast-tracked? | Raised 1 October 2026. | Open |
+| OQ-17 | Should there be a standard format for exchanging test cases between testing tools, and how are relative dates represented? | Notes on the HL7 Public Health Immunization Decision Support page. | Open |
+| OQ-18 | How should this work align with the European Vaccination CDS guide (EUVABECO)? | Similar functions, including a questionnaire for patient context. | Open |
+| OQ-19 | How should vaccine codes be reported as recognized, not evaluated, or unknown, in discovery and in each response? | Proposed in the 2025 difference summary and the capability concept. | Open |

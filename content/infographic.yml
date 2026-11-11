@@ -3,40 +3,46 @@
 # Canonical source, reviewed like the Markdown in content/. Each label condenses
 # a section of the core document and names it with ref, a heading ID or anchor
 # in content/. Add no claim, number, commitment, or change in certainty that the
-# referenced section does not state. Replace each CONFIRM text as the sections
-# are written. build.ps1 draws the image and places it in the guide and the Word
-# document. Each idea may name an icon from process/templates/infographic/icons/.
+# referenced section does not state. build.ps1 draws the image and places it in
+# the guide and the Word document. Each idea may name an icon from
+# process/templates/infographic/icons/.
 # See "Primary infographic" in process/guidance/TopicReference.md.
 layout: topic-at-a-glance
 arrangement: set
 title: "Immunization CDS (ImmDS + HALO)"
 purpose:
-  text: "CONFIRM: State in one sentence what this topic is for."
+  text: "One common service interface for immunization CDS engines: standardizes the exchange, not the clinical logic."
   ref: status-and-scope
 ideas:
   - id: idea-1
-    label: "Problem and Working Principles"
-    text: "CONFIRM: Condense the section it names in a sentence."
-    ref: problem-and-principles
+    label: "Two use cases"
+    text: "Reach any engine through one integration; test any engine with published cases."
+    ref: use-cases
+    icon: target
   - id: idea-2
-    label: "Architecture"
-    text: "CONFIRM: Condense the section it names in a sentence."
-    ref: architecture
+    label: "Stateless exchange"
+    text: "The engine uses only what the request supplies."
+    ref: service-interaction
+    icon: workflow
   - id: idea-3
-    label: "Forecast Interaction"
-    text: "CONFIRM: Condense the section it names in a sentence."
-    ref: forecast-interaction
-  - id: idea-4
     label: "Contextual Conditions"
-    text: "CONFIRM: Condense the section it names in a sentence."
+    text: "HALO as Contextual Conditions (topic 7); support is reported."
     ref: contextual-conditions
+    icon: layers
+  - id: idea-4
+    label: "Knowledge Bases"
+    text: "One per request, named in the response."
+    ref: knowledge-bases
+    icon: database
   - id: idea-5
-    label: "Knowledge Bases and Guidance Provenance"
-    text: "CONFIRM: Condense the section it names in a sentence."
-    ref: knowledge-bases-and-guidance
+    label: "Results by target disease"
+    text: "Status, reason, and category kept apart."
+    ref: evaluations-and-recommendations
+    icon: list-checks
   - id: idea-6
-    label: "Results and Transparency"
-    text: "CONFIRM: Condense the section it names in a sentence."
-    ref: results-and-transparency
-alt: "CONFIRM: Describe the figure in one or two sentences for readers who cannot see it."
+    label: "FHIR R6 and testing"
+    text: "An R6 operation, with changes proposed to the FHIR resources."
+    ref: fhir-and-testing
+    icon: clipboard-check
+alt: "Immunization CDS (ImmDS + HALO) at a glance: a common service interface for immunization CDS engines, with six ideas: two use cases, a stateless request and response, Contextual Conditions, Knowledge Bases, results by target disease, and FHIR R6 with testing."
 topic_link: true

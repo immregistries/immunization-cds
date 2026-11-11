@@ -16,12 +16,14 @@
 
 ## Public working repository
 
-- This repository is intended to be public. Treat every tracked file as public.
-- Do not add internal plans, funding or partner proposals, contact information,
-  email, recordings, unpublished partner data, credentials, private URLs, or
-  personal metadata from Office files.
-- Private source material is review input only. Adjudicate public-safe substance
-  into canonical Markdown rather than copying private files here.
+- This repository is public, and the work is an open HL7 project. Treat every
+  tracked file as public; that is intended. Visibility is how the community
+  corrects the content.
+- Products, engines, and organizations taking part in the HL7 work (for
+  example ICE, Step Into CDSi, CDC CDSi, EUVABECO) may be named where it helps
+  the technical content. Leave individual attendees' names out of the content.
+- Do not add credentials, private URLs, recordings, or personal metadata from
+  Office files. Source documents are listed in `sources/README.md`, not copied.
 
 ## Authority
 
@@ -49,12 +51,16 @@
 
 ## Project boundaries
 
-- This project owns the overall ImmDS + HALO conceptual Topic Reference and its
-  relationship to implementable interfaces.
-- Detailed Contextual Conditions semantics belong in the separate
-  `contextual-conditions` project. Link to it and keep shared concepts aligned.
-- Detailed FHIR conformance artifacts remain in the FHIR implementation guide
-  until the community decides otherwise. This Topic Reference may explain their intent.
+- Scope follows the "Latest Proposed Language" on the HL7 Public Health
+  Immunization Decision Support Confluence page (WD-8). PSS-2764 is not being
+  revised.
+- HALO is implemented as Contextual Conditions. What a Contextual Condition is
+  belongs to the `contextual-conditions` project (topic 7). Link to its
+  definitions; do not restate them. This project owns the FHIR exchange of
+  conditions and how support is reported.
+- FHIR R6 is the target (WD-9). Do not add R4 compatibility requirements.
+- The FHIR IG working draft will become a product of this Topic Reference
+  (WD-1). Until then, it is a source.
 - Do not create clinical policy or silently settle open FHIR design questions.
 
 ## Shared templates

@@ -20,6 +20,8 @@ Current review records:
 
 - [2026-10-29-v0.1-drafting-notes.md](2026-10-29-v0.1-drafting-notes.md):
   where the version 0.1 text came from and the choices made in drafting it.
+- [2026-11-10-v0.2-rebaseline.md](2026-11-10-v0.2-rebaseline.md):
+  what version 0.2.0 changed, and what it left for later.
 
 When a review input is resolved, note the outcome: accepted into `content/`,
 recorded as a working decision, kept as an open question, or declined with a
