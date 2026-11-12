@@ -13,7 +13,7 @@ language on the HL7 Public Health
 [Immunization Decision Support](https://confluence.hl7.org/spaces/PHWG/pages/230556918/Immunization+Decision+Support)
 page.
 
-Version 0.2.0 is a working preview for community reaction. It is not a
+Version 0.3.0 is a working preview for community reaction. It is not a
 standard, a ballot artifact, clinical guidance, or a final design. Corrections
 are welcome.
 

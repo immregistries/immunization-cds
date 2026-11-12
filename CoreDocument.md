@@ -18,7 +18,7 @@ The authoritative source is in content/. Regenerate this reading copy with:
 
 ## Status
 
-**Version 0.2.0: working preview for community reaction.**
+**Version 0.3.0: working preview for community reaction.**
 
 This is a working draft, not a standard, approved specification, ballot
 artifact, or clinical guidance. It gathers in one place what the Immunization
