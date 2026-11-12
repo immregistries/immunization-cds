@@ -25,7 +25,7 @@ to switch engines, and makes testing and validation harder.
 
 Immunization CDS (ImmDS + HALO) defines **one common service interface for
 immunization CDS engines**. It standardizes the exchange between a system that
-requests immunization guidance and the engine that provides it. It does
+requests immunization decision support and the engine that provides it. It does
 **not** standardize clinical decision logic, vaccination schedules, or
 forecasting methods.
 
@@ -67,8 +67,9 @@ The interface serves two primary use cases.
 - How evaluations and recommendations are expressed: target disease, forecast
   status and reason, recommendation category, series, season, and similar
   elements.
-- Capability discovery: what an engine supports before any patient data is
-  sent.
+- Identifying the CDS engine itself, separately from its Knowledge Base, and
+  capability discovery: asking an engine what it supports before any patient
+  data is sent.
 - A FHIR R6 representation, with the changes to FHIR resources it needs, plus
   examples, terminology guidance, and support for testing.
 
@@ -107,7 +108,7 @@ This work builds on the published
 FHIR R4, US Realm). It keeps that guide's stateless request-and-response model,
 built on the `$immds-forecast` operation, and extends what the request and
 response can carry. It targets FHIR R6 and does not need to remain
-wire-compatible with the R4 guide ([WD-9](90-working-decisions.md#working-decisions)).
+wire-compatible with the R4 guide ([WD-9](90-working-decisions.md#wd-9)).
 
 <!-- anchor: scope-statement -->
 
@@ -118,7 +119,7 @@ page. HL7 Public Health, the sponsoring work group, judged that the expanded
 scope fits within the existing project scope statement,
 [PSS-2764](https://jira.hl7.org/browse/PSS-2764), so the PSS is not being
 revised. This Topic Reference is where the scope is stated in full
-([WD-8](90-working-decisions.md#working-decisions)).
+([WD-8](90-working-decisions.md#wd-8)).
 
 ## Related work {#related-work}
 
@@ -129,8 +130,8 @@ revised. This Topic Reference is where the scope is stated in full
 | [HL7 v2 Contextual Conditions Exchange, topic 137](https://informatics.immregistries.org/hub/es/topic/137) | The HL7 v2 representation of Contextual Conditions. |
 | CDS Hooks | Calls decision support at points in an EHR workflow and turns results into clinician-facing cards. A CDS Hooks service can call an ImmDS + HALO engine rather than rebuild forecasting logic, and can gather patient information from other systems, which this interface leaves out. The two are complementary layers. |
 | CDC Clinical Decision Support for Immunization (CDSi) and other forecasting methods | CDSi and the methods behind other national and commercial engines are complementary. This interface is a common layer through which they can be reached; it does not replace them. |
-| [Vaccination CDS guide (EUVABECO)](https://build.fhir.org/ig/EUVABECO/VCDS/) | A European FHIR guide with similar functions, including a questionnaire for patient context. The two efforts should stay aligned ([OQ-18](90-working-decisions.md#open-questions)). |
+| [Vaccination CDS guide (EUVABECO)](https://build.fhir.org/ig/EUVABECO/VCDS/) | A European FHIR guide with similar functions, including a questionnaire for patient context. The two efforts should stay aligned ([OQ-18](90-working-decisions.md#oq-18)). |
 | [SITT Forecasting and Immunization Test Suite (FITS)](https://tools.valitheus.com/fits/#/home), formerly NIST FITS | The primary target testing platform for the [testing use case](04-fhir-and-testing.md#testing). It moved from NIST to Prometheus Computing, LLC, and is now part of the Standards & Interoperability Testing Tools (SITT) at [Valitheus](https://valitheus.com/). See [Testing platform: SITT FITS](04-fhir-and-testing.md#sitt-fits). |
 | Step Into CDSi | A demonstration engine and client that use the draft interface. |
 | Immunization Vocabularies Collaborative (IVC) | A possible publisher of code systems, such as forecast status values and Contextual Condition code systems. |
-| [ImmDS + HALO FHIR IG working draft](https://github.com/immregistries/immds-halo-fhir-ig-working-draft) | The September 2026 technical draft. It is to become a product of this Topic Reference ([WD-1](90-working-decisions.md#working-decisions)). |
+| [ImmDS + HALO FHIR IG working draft](https://github.com/immregistries/immds-halo-fhir-ig-working-draft) | The September 2026 technical draft. It is to become a product of this Topic Reference ([WD-1](90-working-decisions.md#wd-1)). |

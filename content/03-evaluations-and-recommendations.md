@@ -56,7 +56,7 @@ Points from discussion so far:
   date, with a risk-based recommendation category where relevant.
 - **Not available** has been used to mean the engine does not forecast this
   target disease at all. That is arguably a capability, not a patient status
-  ([OQ-14](90-working-decisions.md#open-questions)).
+  ([OQ-14](90-working-decisions.md#oq-14)).
 - A contraindication should be traceable to its reason, for example
   "contraindicated", with the reason "allergy to neomycin".
 - Long-standing reason code sets exist. Mapping them is a wider conversation.
@@ -85,7 +85,7 @@ systems may drop or downgrade recommendations that are valid but look
 
 A LOINC observation for *Immunization Recommendation Category* has been
 proposed for HL7 v2 messaging. How to represent it in FHIR is open
-([OQ-9](90-working-decisions.md#open-questions)).
+([OQ-9](90-working-decisions.md#oq-9)).
 
 ## More than one recommendation for a target disease {#multiple-recommendations}
 
@@ -101,7 +101,7 @@ is used. This applies to COVID-19 and meningococcal B (MenB) vaccines, and
 possibly others. The requesting system needs to know which dates go with which
 product or pathway. These could be separate recommendations, each with a
 vaccine code or series, or one recommendation with several date sets
-([OQ-20](90-working-decisions.md#open-questions)).
+([OQ-20](90-working-decisions.md#oq-20)).
 
 **Different recommendation categories.** An engine may return several
 recommendations for one target disease, each with a different recommendation
@@ -110,7 +110,7 @@ ICE could return two MMR recommendations: a risk-based one that applies now if
 certain risk factors are present, and a routine one due at 12 months. Both can
 be useful together. Here the recommendation category is what tells the two
 apart, which strains the point above that category is optional
-([OQ-21](90-working-decisions.md#open-questions)).
+([OQ-21](90-working-decisions.md#oq-21)).
 
 In both cases, a requesting system that expects one recommendation per target
 disease may show only one, or treat them as conflicting. The response needs to
@@ -128,11 +128,13 @@ requests propose a coded concept.
 
 <!-- anchor: season -->
 
-**Season.** For seasonal vaccines, a requesting system needs to know which
-season a dose was evaluated in and which season a recommendation is for. At
+**Season.** For seasonal vaccines, a requesting system may want to know which
+season a dose was evaluated in and which season a recommendation is for. This
+is supporting context that helps clinicians and patients understand a
+recommendation, not something a decision depends on. At
 least one engine sends this in extensions today. Change requests propose adding
 season to both resources. How seasons are named is open
-([OQ-15](90-working-decisions.md#open-questions)).
+([OQ-15](90-working-decisions.md#oq-15)).
 
 <!-- anchor: doses-remaining -->
 
@@ -162,4 +164,9 @@ The September FHIR draft returns these as separate output parameters and uses
 - insufficient information.
 
 How a requesting system can reliably tell a complete result from a partial or
-blocked one is open ([OQ-7](90-working-decisions.md#open-questions)).
+blocked one is open ([OQ-7](90-working-decisions.md#oq-7)). So is
+the expected format of the support report
+([OQ-25](90-working-decisions.md#oq-25)). When a submitted condition
+is used or influences a forecast, it might also be returned with the
+recommendation for that target disease, not only in the support report
+([OQ-24](90-working-decisions.md#oq-24)).

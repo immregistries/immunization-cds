@@ -26,22 +26,22 @@ definitions rather than repeating them.
 | Term | Working definition |
 |---|---|
 | **Requesting system** | The system that assembles the patient information and asks for evaluations and recommendations: an IIS, EHR, pharmacy system, public health application, CDS Hooks service, or testing platform. |
-| **CDS engine** | The service that evaluates the request against a Knowledge Base and returns evaluations and recommendations. Also called a forecaster. |
+| **CDS engine** | The service that evaluates the request against a Knowledge Base and returns evaluations and recommendations. Also called a forecaster. It is identified separately from the Knowledge Base and the Schedule Authority. See [Engine identity](02-knowledge-bases-and-capabilities.md#engine-identity). |
 | **Testing platform** | A requesting system that sends test cases and compares the engine's results with expected outcomes. |
 | **Assessment date** | The date for which the evaluation and forecast are calculated. It is normally today, and may be another date for testing or review. Contextual Conditions are asserted as applying on this date. |
 | **Immunization history** | The vaccination events supplied in the request, as recorded. |
 | **Evaluated history** | The immunization history after the engine has judged each dose against the guidance, expressed as dose evaluations. |
 | **Dose evaluation** | The engine's judgment of one supplied dose for one target disease: for example valid, not valid, or valid but not counted toward the series, with a reason. |
 | **Recommendation** | The engine's patient-specific forecast for one target disease, or for one vaccine where a specific vaccine is recommended: status, reason, dates, and related details. |
-| **Target disease** | The disease a dose or recommendation protects against. It is the organizing key of a recommendation, replacing the undefined idea of a "vaccine group" ([WD-13](90-working-decisions.md#working-decisions)). |
-| **Forecast status** | Where the patient stands for a target disease, such as due, overdue, complete, or not recommended. Proposed as a standardized code set ([WD-14](90-working-decisions.md#working-decisions)). |
+| **Target disease** | The disease a dose or recommendation protects against. It is the organizing key of a recommendation, replacing the undefined idea of a "vaccine group" ([WD-13](90-working-decisions.md#wd-13)). |
+| **Forecast status** | Where the patient stands for a target disease, such as due, overdue, complete, or not recommended. Proposed as a standardized code set ([WD-14](90-working-decisions.md#wd-14)). |
 | **Forecast reason** | Why that status applies to this patient, such as a contraindication or a risk condition. More open than status, and may carry several codes. |
 | **Recommendation category** | How the Schedule Authority classifies the recommendation, such as routine, risk-based, shared clinical decision-making, or mandatory. It is not patient-specific. See [Recommendation category](03-evaluations-and-recommendations.md#recommendation-category). |
 | **Contextual Condition** | A coded, neutral fact about the patient's circumstances that may affect a recommendation. Defined by [topic 7](https://immregistries.github.io/contextual-conditions/latest/). HALO factors are Contextual Conditions. |
 | **Schedule Authority** | An organization or expert body that publishes immunization recommendations for clinical or public health use, such as a national advisory committee. It decides which factors affect its guidance and defines the Contextual Conditions its guidance needs, as described by [topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities). See [Knowledge Bases](02-knowledge-bases-and-capabilities.md#knowledge-bases). |
 | **Knowledge Base** | An identifiable, versioned, executable rule set that puts into operation guidance from one or more Schedule Authorities, possibly with jurisdictional or local adaptations. A CDS engine applies one Knowledge Base per request. See [Knowledge Bases](02-knowledge-bases-and-capabilities.md#knowledge-bases). |
 | **Support report** | The part of a response that says which submitted conditions and vaccine codes the engine used, ignored, did not support, or found invalid. |
-| **Capability discovery** | Finding out what an engine supports before sending patient data. See [Capability discovery](02-knowledge-bases-and-capabilities.md#capability-discovery). |
+| **Capability discovery** | Asking an engine what it supports, such as its Knowledge Bases, code sets, and versions, before sending patient data. See [Capability discovery](02-knowledge-bases-and-capabilities.md#capability-discovery). |
 
 <!-- CONFIRM: These definitions are first drafts for the 12 November 2026 discussion. Expect them to change. -->
 
@@ -64,9 +64,10 @@ from assuming the engine handles everything.
 
 <!-- anchor: clinician-responsibility -->
 
-**Clinicians and programs** remain responsible for decisions. The results are
-machine-readable data for downstream systems, not text meant to be shown
-directly to a clinician.
+**Clinicians and programs** remain responsible for decisions. Most of a
+response is structured data for downstream systems, not something to show a
+clinician as it is. Some parts, such as a recommendation's narrative
+description, are written to be shown to clinicians.
 
 ## Request {#request}
 
@@ -85,6 +86,7 @@ directly to a clinician.
 | Dose evaluations | One per supplied dose and target disease |
 | Recommendations | The patient-specific forecast |
 | Knowledge Base used | The rule set actually applied |
+| Engine identity | Proposed: the engine, version, and release that produced the result ([OQ-23](90-working-decisions.md#oq-23)) |
 | Support report | Submitted conditions and vaccine codes used, ignored, unsupported, or invalid |
 | Additional context suggested | Conditions the engine could use if they were supplied |
 | Messages | Informational notes, warnings, partial results, and blocking errors |
@@ -106,15 +108,15 @@ That topic leaves three things to this interface. This section covers them.
 flowchart TB
   subgraph T7["Topic 7: CDS Contextual Conditions"]
     direction TB
-    A["What a condition means, its datatype, and who defines it"]
+    A["What a condition means,<br/>its datatype, and who defines it"]
     B["Absence is unknown, never No"]
-    C["A meaningful date is its own condition"]
+    C["A meaningful date is<br/>its own condition"]
   end
   subgraph T1["Topic 1: this interface"]
     direction TB
-    D["How conditions travel in the FHIR request"]
-    E["How an engine declares which conditions it supports"]
-    F["How a response reports used, ignored, unsupported, and invalid conditions"]
+    D["How conditions travel<br/>in the FHIR request"]
+    E["How an engine declares<br/>which conditions it supports"]
+    F["How a response reports used,<br/>ignored, unsupported,<br/>and invalid conditions"]
   end
   T7 -->|"concept used by"| T1
 ```

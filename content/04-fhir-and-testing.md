@@ -4,7 +4,7 @@
 
 <!-- anchor: r6-target -->
 
-This work proposes an R6 solution ([WD-9](90-working-decisions.md#working-decisions)).
+This work proposes an R6 solution ([WD-9](90-working-decisions.md#wd-9)).
 No R4 implementation needs backward compatibility; the only known R4 work is a
 partial implementation by NIST, under the former NIST Health IT Program, that
 was never fully tested. If an R4 version is
@@ -19,10 +19,10 @@ state.
 
 | Concept | FHIR resource | Notes |
 |---|---|---|
-| Forecast interaction | `OperationDefinition` | ImmDS 1.0.0 used `$immds-forecast`; the September draft uses `$immds-halo-forecast` ([OQ-3](90-working-decisions.md#open-questions)) |
+| Forecast interaction | `OperationDefinition` | ImmDS 1.0.0 used `$immds-forecast`; the September draft uses `$immds-halo-forecast` ([OQ-3](90-working-decisions.md#oq-3)) |
 | Patient | `Patient` | Date of birth is the minimum |
 | Immunization history | `Immunization` | |
-| Contextual Condition | `Observation` | Code from the Schedule Authority's code system, value in `value[x]`. A meaningful date is a separate condition, not `effective[x]` ([WD-12](90-working-decisions.md#working-decisions)) |
+| Contextual Condition | `Observation` | Code from the Schedule Authority's code system, value in `value[x]`. A meaningful date is a separate condition, not `effective[x]` ([WD-12](90-working-decisions.md#wd-12)) |
 | Supported or suggested condition | `ObservationDefinition` | |
 | Optional question set | `Questionnaire` | Answers map directly to conditions |
 | Dose evaluation | `ImmunizationEvaluation` | |
@@ -45,7 +45,7 @@ The operation's parameters in the September draft are:
 
 Several needs are met today with extensions. The working direction is to move
 them into the base resources through FHIR change requests, rather than keep
-permanent extensions ([WD-15](90-working-decisions.md#working-decisions)).
+permanent extensions ([WD-15](90-working-decisions.md#wd-15)).
 `ImmunizationEvaluation` and `ImmunizationRecommendation` are not normative, so
 they can still change.
 
@@ -70,7 +70,7 @@ These resources are being developed in an R6 incubator. Implementers have to
 decide whether to stay conformant with the current incubator or build to where
 the change requests are heading. At least one implementer prefers to build as
 close to the expected final form as possible, so as not to split its interface
-twice ([OQ-16](90-working-decisions.md#open-questions)).
+twice ([OQ-16](90-working-decisions.md#oq-16)).
 
 ## Testing and validation {#testing}
 
@@ -113,11 +113,11 @@ and runs at [tools.valitheus.com/fits](https://tools.valitheus.com/fits/#/home).
 
 - **Past work.** Earlier NIST work on FITS and the R4 ImmDS interface is
   history. It informs this work but sets no compatibility requirement
-  ([WD-9](90-working-decisions.md#working-decisions)).
+  ([WD-9](90-working-decisions.md#wd-9)).
 - **Future work.** SITT FITS is a primary target for ImmDS + HALO support. It
   is expected to be used to test how the new CDS engines support HALO, that
   is, how they use Contextual Conditions and report the ones they do not
-  support ([WD-19](90-working-decisions.md#working-decisions)).
+  support ([WD-19](90-working-decisions.md#wd-19)).
 
 <!-- CONFIRM: Check how SITT FITS plans to support the R6 interface and Contextual Conditions, and its timeline, with Prometheus Computing. -->
 
@@ -127,7 +127,7 @@ Test cases take a lot of work to write, so a standard way to export and import
 them between tools would help. Most existing test cases use relative dates,
 such as "two months after birth", rather than fixed dates. FHIR resources
 expect fixed dates, so a test case format may need extensions or a separate
-structure ([OQ-17](90-working-decisions.md#open-questions)).
+structure ([OQ-17](90-working-decisions.md#oq-17)).
 
 ## Discussion examples {#examples}
 
@@ -145,8 +145,8 @@ These scenarios test the design. They are not clinical guidance.
 | Target disease not handled, such as rabies | Reported as not handled, not as a patient status |
 | Contraindication | Status and the specific reason |
 | Seasonal vaccine | The season the recommendation is for |
-| Dates differ by product: COVID-19, next dose at 4 or 8 weeks | Which dates apply to which product ([OQ-20](90-working-decisions.md#open-questions)) |
-| Risk-based and routine recommendations for MMR at 6 months | Both recommendations, each with its category, without appearing to conflict ([OQ-21](90-working-decisions.md#open-questions)) |
+| Dates differ by product: COVID-19, next dose at 4 or 8 weeks | Which dates apply to which product ([OQ-20](90-working-decisions.md#oq-20)) |
+| Risk-based and routine recommendations for MMR at 6 months | Both recommendations, each with its category, without appearing to conflict ([OQ-21](90-working-decisions.md#oq-21)) |
 
 Examples still needed include unknown vaccine codes, partial and blocked
 results, recommendation categories, and guidance that differs by jurisdiction.

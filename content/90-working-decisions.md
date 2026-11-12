@@ -7,8 +7,10 @@ resolved it.
 
 ## Working decisions {#decisions}
 
+<!-- row-anchors -->
+
 | ID | Working decision | Basis |
-|---|---|---|
+|---|------------------|---------|
 | WD-1 | This Topic Reference is the single maintained source for the topic. The ImmDS + HALO FHIR IG working draft will become one of its products. | Project direction, November 2026 |
 | WD-2 | The interaction is stateless. The engine evaluates only what the current request contains. | ImmDS 1.0.0; scope statement |
 | WD-3 | Leaving out a Contextual Condition means unknown, not No, as defined by topic 7. | Topic 7 |
@@ -31,10 +33,12 @@ resolved it.
 
 ## Open questions {#open-questions}
 
+<!-- row-anchors -->
+
 | ID | Question | Context | Status |
-|---|---|---|---|
+|---|-----------|-----------|-----|
 | OQ-1 | Should "Schedule Authority" be renamed? | "Schedule" may be too narrow, and "authority" may suggest governance that does not exist. The name is in use in topics 1 and 7. | Open |
-| OQ-2 | How do the role names map to the earlier four roles? | | Resolved by WD-11 |
+| OQ-2 | How do this topic's roles, the Schedule Authority and the Knowledge Base, together with topic 7's terminology steward, map to the four roles of earlier sources (Code System, Publishing, Namespace, and CDS Authority)? | Wording clarified in community comments, November 2026. | Resolved by WD-11 |
 | OQ-3 | Should the operation keep the name `$immds-forecast` or use `$immds-halo-forecast`? | With no compatibility requirement (WD-9), the choice is about what the name signals. | Open |
 | OQ-4 | Does the guide depend on the ImmDS 1.0.0 R4 guide? | | Resolved by WD-9 |
 | OQ-5 | How are Knowledge Bases identified, versioned, discovered, requested, and named in the response? | Identifiers are local to each engine. Parameters are placeholders. | Open |
@@ -45,12 +49,16 @@ resolved it.
 | OQ-10 | How does the FHIR binding handle condition dates? | | Resolved by WD-12 |
 | OQ-11 | Which FHIR version? | | Resolved by WD-9 |
 | OQ-12 | Which examples are needed before broad implementation review? | See the example list in the FHIR chapter. | Open |
-| OQ-13 | How does a recommendation point to the rule behind it? | A URL, or a reference to a `PlanDefinition`, `Library`, or `DeviceDefinition`. Raised 17 September and 1 October 2026. | Open |
+| OQ-13 | How does a recommendation for a particular target disease point to the rule behind it? | A URL, or a reference to a `PlanDefinition`, `Library`, or `DeviceDefinition`. Raised 17 September and 1 October 2026. | Open |
 | OQ-14 | What are the standard forecast status values, and where are they published? | "Conditional" and "Not available" are in use but not in the LOINC list. "Not available" may belong in capability discovery instead. Values could be hosted at hl7.org. | Open |
-| OQ-15 | How are seasons identified, so that a season on an evaluation or recommendation is unambiguous? | Raised 17 September 2026; FHIR-59487, FHIR-59488. A group may be convened on seasons. | Open |
+| OQ-15 | How is a season associated with an evaluation or recommendation, and how are seasons identified so the association is unambiguous? | Raised 17 September 2026; FHIR-59487, FHIR-59488. A group may be convened on seasons. | Open |
 | OQ-16 | Should implementers stay conformant with the current R6 incubator, or build to where the change requests are heading? Can the change requests be fast-tracked? | Raised 1 October 2026. | Open |
 | OQ-17 | Should there be a standard format for exchanging test cases between testing tools, and how are relative dates represented? | Notes on the HL7 Public Health Immunization Decision Support page. | Open |
 | OQ-18 | How should this work align with the European Vaccination CDS guide (EUVABECO)? | Similar functions, including a questionnaire for patient context. | Open |
 | OQ-19 | How should vaccine codes be reported as recognized, not evaluated, or unknown, in discovery and in each response? | Proposed in the 2025 difference summary and the capability concept. | Open |
 | OQ-20 | When the dates differ by vaccine product or series pathway, does the engine return separate recommendations or one recommendation with several date sets? How are product, pathway, and dates linked? | COVID-19 and MenB examples. Relates to WD-13 (vaccine code only for a specific vaccine) and to series (FHIR-59486). Raised in community comments, November 2026. | Open |
 | OQ-21 | When several recommendations for one target disease differ by recommendation category, how does the requesting system tell them apart? Must the category be present in that case? | MMR example for a 6-month-old: a conditional risk-based recommendation and a future routine one. Relates to OQ-9. Raised in community comments, November 2026. | Open |
+| OQ-22 | When a Knowledge Base is configured or modified locally, should the response identify the changes? If so, how should they be communicated? | A Knowledge Base may include jurisdictional or local adaptations. Relates to WD-5. Raised in community comments, November 2026. | Open |
+| OQ-23 | Should a response identify the CDS engine, such as its product, version, and release, in addition to the Knowledge Base? If so, how? | Discussed by the group as useful, and distinct from the Knowledge Base and the Schedule Authority. See Engine identity in the Knowledge Bases chapter. Raised in community comments, November 2026. | Open |
+| OQ-24 | When a submitted Contextual Condition is used or influences a forecast, should it be returned with the recommendation for that target disease, in addition to the support report? | The support report covers the whole response. Relates to WD-13 and OQ-13. Raised in community comments, November 2026. | Open |
+| OQ-25 | What is the expected format of the support report? | OQ-7 asks what the report must contain. The September FHIR draft uses separate output parameters and `OperationOutcome`. Raised in community comments, November 2026. | Open |

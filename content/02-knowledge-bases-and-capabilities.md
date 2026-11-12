@@ -1,4 +1,4 @@
-# Knowledge Bases and Capabilities
+# Knowledge Bases, Engines, and Capabilities
 
 ## Knowledge Bases {#knowledge-bases}
 
@@ -39,6 +39,9 @@ flowchart LR
   The requesting system cannot assemble authorities in a request.
 - **Locally defined identifiers.** Each engine names its own Knowledge Bases.
   There is no global registry.
+- **Local changes.** Whether a response should say when a Knowledge Base has
+  been configured or modified locally, and how, is open
+  ([OQ-22](90-working-decisions.md#oq-22)).
 - **Authority behind each result.** Within one Knowledge Base, different
   recommendations may come from different authorities. For example, influenza
   guidance from one authority and tuberculosis guidance from another, for the
@@ -51,14 +54,14 @@ Knowledge Base. Publishing Contextual Condition code systems adds a third, the
 terminology steward, defined by
 [topic 7](https://immregistries.github.io/contextual-conditions/latest/#authorities)
 together with how these three replace the four roles of earlier sources
-([WD-11](90-working-decisions.md#working-decisions)). Whether "Schedule
+([WD-11](90-working-decisions.md#wd-11)). Whether "Schedule
 Authority" is the right name is open
-([OQ-1](90-working-decisions.md#open-questions)).
+([OQ-1](90-working-decisions.md#oq-1)).
 
 <!-- anchor: authority-placement -->
 
 Where the authority is recorded is under discussion
-([OQ-6](90-working-decisions.md#open-questions)). FHIR currently allows at most
+([OQ-6](90-working-decisions.md#oq-6)). FHIR currently allows at most
 one `authority` on `ImmunizationEvaluation` and on `ImmunizationRecommendation`,
 at the resource level, as a reference to an organization. Change requests
 propose allowing several, moving the recommendation's authority down to each
@@ -83,19 +86,40 @@ Candidate FHIR approaches include an element or extension on the
 recommendation that references a `PlanDefinition`, `Library`, or
 `DeviceDefinition`, or simply carries a URL. Whether to expose rule URLs is
 each engine's choice; the interface only needs a place to put them
-([OQ-13](90-working-decisions.md#open-questions)).
+([OQ-13](90-working-decisions.md#oq-13)).
+
+## Engine identity {#engine-identity}
+
+<!-- CONFIRM: Engine identity has been discussed by the group but not agreed. This section is a placeholder for discussion (OQ-23). -->
+
+The CDS engine is the software that runs a Knowledge Base. It is distinct from
+the Knowledge Base it applies and from the Schedule Authorities whose guidance
+that Knowledge Base puts into operation. One engine may offer several
+Knowledge Bases, and one Knowledge Base may run on more than one release of an
+engine.
+
+Identifying the engine itself, such as its product name, version, and release,
+has been discussed as useful alongside the Knowledge Base used. For example, it
+could show whether a change in results came from new software or from changed
+rules. Whether a response must identify the engine, and how, is open
+([OQ-23](90-working-decisions.md#oq-23)).
 
 ## Capability discovery {#capability-discovery}
 
 A response's support report says what happened in one request. Capability
-discovery says what an engine can do in general, before any patient data is
-sent. Keeping them apart stops the forecast response from becoming overloaded
-([WD-6](90-working-decisions.md#working-decisions)).
+discovery lets a requesting system ask an engine what it supports in general,
+before any patient data is sent. Keeping them apart stops the forecast response
+from becoming overloaded
+([WD-6](90-working-decisions.md#wd-6)).
 
 Discovery may describe:
 
+- the engine itself: product, version, and release (see
+  [Engine identity](#engine-identity));
 - the Knowledge Bases offered, with versions, the Schedule Authorities they
   draw on, effective dates, and documentation;
+- the code sets the engine uses, such as vaccine and Contextual Condition code
+  systems, with their versions;
 - the target diseases each Knowledge Base forecasts, and the vaccines that
   count toward each;
 - vaccine codes recognized, with a status for each: recognized but not a valid
@@ -115,4 +139,4 @@ everything in one bundle, and artifacts published at stable addresses
 (`CapabilityStatement`, `ValueSet`, `ConceptMap`, `ObservationDefinition`) with
 a light index. The September FHIR draft has only a basic `CapabilityStatement`
 and one `ObservationDefinition` example. No design has been chosen
-([OQ-8](90-working-decisions.md#open-questions)).
+([OQ-8](90-working-decisions.md#oq-8)).
