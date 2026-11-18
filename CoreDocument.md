@@ -14,23 +14,21 @@ The authoritative source is in content/. Regenerate this reading copy with:
 
 ---
 
-# Scope and Use Cases
+# Executive Summary
 
-## Status
+> **Version 0.3.0: working preview for community reaction.**
+>
+> This is a working draft, not a standard, approved specification, ballot
+> artifact, or clinical guidance. It gathers in one place what the Immunization
+> CDS (ImmDS + HALO) work has proposed and discussed so far, so the community can
+> correct it. It is unfinished. Disagreements and open questions are left visible
+> on purpose, in [Working Decisions](content/90-working-decisions.md#working-decisions).
+>
+> Corrections are welcome as comments on the published page, as GitHub issues,
+> or in the
+> [topic 1 meetings](https://informatics.immregistries.org/hub/es/topic/1).
 
-**Version 0.3.0: working preview for community reaction.**
-
-This is a working draft, not a standard, approved specification, ballot
-artifact, or clinical guidance. It gathers in one place what the Immunization
-CDS (ImmDS + HALO) work has proposed and discussed so far, so the community can
-correct it. It is unfinished. Disagreements and open questions are left visible
-on purpose, in [Working Decisions](content/90-working-decisions.md#working-decisions).
-
-Corrections are welcome as comments on the published page, as GitHub issues,
-or in the
-[topic 1 meetings](https://informatics.immregistries.org/hub/es/topic/1).
-
-## In brief
+> **Changed in v0.4.0:** The guide now opens with this summary and a separate Scope. Use cases, basis and history, and related work moved to the Background chapter.
 
 Immunization clinical decision support (CDS) engines evaluate a patient's
 immunization history and recommend the vaccinations due now or later. Many
@@ -53,21 +51,20 @@ the subject of [topic 7](https://informatics.immregistries.org/hub/es/topic/7):
 neutral, coded facts about a patient's circumstances that the requesting system
 supplies and the engine may use.
 
-## Use cases {#use-cases}
+---
 
-The interface serves two primary use cases.
+# What changed in v0.4.0
 
-1. **Access to CDS from any provider.** An immunization information system
-   (IIS), electronic health record (EHR), pharmacy system, public health
-   application, or any other health information system calls immunization CDS
-   services from different vendors and organizations through one common
-   integration. It can change or add engines without building a new interface.
+- [Executive Summary](#executive-summary): The guide now opens with this summary and a separate Scope. Use cases, basis and history, and related work moved to the Background chapter.
 
-2. **Testing and validation.** A testing platform sends published test cases
-   to a CDS engine through the same interface and compares the results with the
-   expected outcomes. See [Testing and validation](content/04-fhir-and-testing.md#testing).
+---
 
-## What is in scope {#in-scope}
+# Scope
+
+This Topic Reference defines one common service interface between systems that
+request immunization decision support and the engines that provide it.
+
+## In scope {#in-scope}
 
 - The stateless request and response between a requesting system and a CDS
   engine: assessment date, patient, immunization history, and Contextual
@@ -85,21 +82,43 @@ The interface serves two primary use cases.
 - A FHIR R6 representation, with the changes to FHIR resources it needs, plus
   examples, terminology guidance, and support for testing.
 
-## What is out of scope {#out-of-scope}
+## Out of scope {#out-of-scope}
+
+<!-- CONFIRM: Items marked "(not covered by any current topic)" were added
+to meet the new Scope rule; confirm that no InteropHub topic covers each. -->
 
 - Clinical decision logic, vaccination schedules, forecasting methods, and how
-  an engine computes its results.
+  an engine computes its results (not covered by any current topic).
 - How Contextual Conditions are collected, inferred, maintained, or governed,
   and how an engine uses them. What a Contextual Condition *is* belongs to
   [topic 7](https://informatics.immregistries.org/hub/es/topic/7).
 - Engines retrieving data from other systems, interpreting medical records, or
-  inferring missing information.
+  inferring missing information (not covered by any current topic).
 - Clinician workflow, user interface, and presentation of results. This
   includes calling CDS at points in an EHR workflow, which is the role of CDS
-  Hooks (see [Related work](#related-work)).
-- Persisting patient data in the engine between requests.
+  Hooks (see [Related work](content/00-background.md#related-work)).
+- Persisting patient data in the engine between requests (not covered by any
+  current topic).
 - Who may send or receive this information, and how it is used, disclosed, or
-  protected.
+  protected (not covered by any current topic).
+
+---
+
+# Background
+
+## Use cases {#use-cases}
+
+The interface serves two primary use cases.
+
+1. **Access to CDS from any provider.** An immunization information system
+   (IIS), electronic health record (EHR), pharmacy system, public health
+   application, or any other health information system calls immunization CDS
+   services from different vendors and organizations through one common
+   integration. It can change or add engines without building a new interface.
+
+2. **Testing and validation.** A testing platform sends published test cases
+   to a CDS engine through the same interface and compares the results with the
+   expected outcomes. See [Testing and validation](content/04-fhir-and-testing.md#testing).
 
 ## International by design {#international}
 
@@ -120,8 +139,8 @@ built on the `$immds-forecast` operation, and extends what the request and
 response can carry. It targets FHIR R6 and does not need to remain
 wire-compatible with the R4 guide ([WD-9](content/90-working-decisions.md#wd-9)).
 
-The scope above follows the "Latest Proposed Language" on the HL7 Public Health
-Work Group's
+The [Scope](content/00-scope.md#scope) follows the "Latest Proposed Language" on the
+HL7 Public Health Work Group's
 [Immunization Decision Support](https://confluence.hl7.org/spaces/PHWG/pages/230556918/Immunization+Decision+Support)
 page. HL7 Public Health, the sponsoring work group, judged that the expanded
 scope fits within the existing project scope statement,
@@ -663,7 +682,7 @@ twice ([OQ-16](content/90-working-decisions.md#oq-16)).
 
 ## Testing and validation {#testing}
 
-Testing is the second use case in [Use cases](content/00-status-and-scope.md#use-cases).
+Testing is the second use case in [Use cases](content/00-background.md#use-cases).
 Labeling a result with its authority shows where the guidance came from, but
 not whether the engine applied it correctly. Only systematic, repeated testing
 shows that.

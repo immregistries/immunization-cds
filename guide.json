@@ -3,11 +3,12 @@
   "documentType": "Topic Reference",
   "status": "Draft",
   "visibility": "public",
+  "version": "v0.4.0",
   "interophubTopic": 1,
   "repository": "https://github.com/immregistries/immunization-cds",
   "license": "Content licensed CC BY 4.0",
   "navLabels": {
-    "status-and-scope": "Scope",
+    "background": "Background",
     "service-interaction": "Interaction",
     "knowledge-bases-and-capabilities": "Knowledge Bases",
     "evaluations-and-recommendations": "Results",

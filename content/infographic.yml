@@ -12,7 +12,7 @@ arrangement: set
 title: "Immunization CDS (ImmDS + HALO)"
 purpose:
   text: "One common service interface for immunization CDS engines: standardizes the exchange, not the clinical logic."
-  ref: status-and-scope
+  ref: scope
 ideas:
   - id: idea-1
     label: "Two use cases"

@@ -74,7 +74,7 @@ twice ([OQ-16](90-working-decisions.md#oq-16)).
 
 ## Testing and validation {#testing}
 
-Testing is the second use case in [Use cases](00-status-and-scope.md#use-cases).
+Testing is the second use case in [Use cases](00-background.md#use-cases).
 Labeling a result with its authority shows where the guidance came from, but
 not whether the engine applied it correctly. Only systematic, repeated testing
 shows that.

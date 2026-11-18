@@ -13,6 +13,8 @@ format:
   docx:
     toc: true
     reference-doc: process/templates/word/aira-reference-document.docx
+    filters:
+      - process/templates/word/topic-reference.lua
   html:
     toc: true
     embed-resources: true
