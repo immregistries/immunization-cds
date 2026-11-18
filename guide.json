@@ -2,6 +2,7 @@
   "id": "immunization-cds",
   "documentType": "Topic Reference",
   "status": "Draft",
+  "visibility": "public",
   "interophubTopic": 1,
   "repository": "https://github.com/immregistries/immunization-cds",
   "license": "Content licensed CC BY 4.0",
